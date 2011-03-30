@@ -45,11 +45,11 @@ CONFIG_CLEAN_FILES =
 CONFIG_CLEAN_VPATH_FILES =
 am__installdirs = "$(DESTDIR)$(bindir)"
 PROGRAMS = $(bin_PROGRAMS)
-am_xy_OBJECTS = osd.$(OBJEXT) xy.$(OBJEXT) util.$(OBJEXT) \
-	wmcheck.$(OBJEXT) restart.$(OBJEXT) xinerama.$(OBJEXT) \
-	screen.$(OBJEXT) color.$(OBJEXT) display.$(OBJEXT) \
-	configuration.$(OBJEXT) logging.$(OBJEXT) xyxlib.$(OBJEXT) \
-	sysinfo.$(OBJEXT)
+am_xy_OBJECTS = state.$(OBJEXT) startup.$(OBJEXT) osd.$(OBJEXT) \
+	xy.$(OBJEXT) util.$(OBJEXT) wmcheck.$(OBJEXT) \
+	restart.$(OBJEXT) xinerama.$(OBJEXT) screen.$(OBJEXT) \
+	color.$(OBJEXT) display.$(OBJEXT) configuration.$(OBJEXT) \
+	logging.$(OBJEXT) xyxlib.$(OBJEXT) sysinfo.$(OBJEXT)
 xy_OBJECTS = $(am_xy_OBJECTS)
 xy_DEPENDENCIES =
 DEFAULT_INCLUDES = -I.@am__isrc@ -I$(top_builddir)
@@ -167,7 +167,9 @@ top_srcdir = @top_srcdir@
 INCLUDES = -I$(top_srcdir) -I/usr/include/freetype2
 AM_CFLAGS = -D_GNU_SOURCE
 AM_LDFLAGS = "-Wl,--as-needed"
-xy_SOURCES = osd.c \
+xy_SOURCES = state.c \
+			 startup.c \
+			 osd.c \
 			 xy.c \
 			 util.c \
 			 wmcheck.c \
@@ -274,6 +276,8 @@ distclean-compile:
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/osd.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/restart.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/screen.Po@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/startup.Po@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/state.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/sysinfo.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/util.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/wmcheck.Po@am__quote@

@@ -9,7 +9,7 @@ log4c_category_t *xylog;
 
 int main(int argc, char **argv) {
     if (!start_logging()) {
-        fprintf(stderr, "xy: failed to start logging\n");
+        fprintf(stderr, INIT_LOGGING_FAILURE);
         exit(1);
     }
     xylog = get_logger("xy");
