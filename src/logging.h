@@ -10,7 +10,7 @@
 #define DEBUG LOG4C_PRIORITY_DEBUG
 #define TRACE LOG4C_PRIORITY_TRACE
 
-bool start_logging();
+bool logging_init();
 
 log4c_category_t * get_logger(const char *);
 
@@ -24,7 +24,7 @@ void log_warn(const log4c_category_t *, const char *);
 
 void log_trace(const log4c_category_t *, const char *);
 
-bool stop_logging();
+bool logging_terminate();
 
 #endif
 

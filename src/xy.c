@@ -8,10 +8,8 @@ CONFIG *cfg;
 log4c_category_t *xylog;
 
 int main(int argc, char **argv) {
-    if (!start_logging()) {
-        fprintf(stderr, INIT_LOGGING_FAILURE);
-        exit(1);
-    }
+    transition(INITIALIZING_MODULES);
+
     xylog = get_logger("xy");
     FUNCTION_TRACE
 
@@ -32,11 +30,11 @@ int main(int argc, char **argv) {
     if (clients) clients_list_free(clients);
     else log_fatal(xylog, "failed to get clients");
 
-    stop_logging();
-
     if (cfg) free_config(cfg);
     if (screen) free(screen);
     close_display(d);
+
+    transition(TERMINATING_MODULES);
 }
 
 void configure(CONFIG *cfg) {

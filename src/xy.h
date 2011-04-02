@@ -13,6 +13,7 @@
 #include "configuration.h"
 #include "xyxlib.h"
 #include "sysinfo.h"
+#include "state.h"
 
 int main(int, char **);
 CONFIG * get_configuration();

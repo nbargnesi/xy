@@ -6,6 +6,9 @@ void transition(const State state) {
         case INITIALIZING_MODULES:
             module_init();
             break;
+        case TERMINATING_MODULES:
+            module_terminate();
+            break;
     }
 }
 

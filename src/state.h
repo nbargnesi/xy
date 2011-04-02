@@ -2,7 +2,8 @@
 #define STATE_H_
 
 enum STATE_ENUM {
-    INITIALIZING_MODULES
+    INITIALIZING_MODULES,
+    TERMINATING_MODULES
 };
 typedef enum STATE_ENUM State;
 

@@ -1,6 +1,6 @@
 #include "logging.h"
 
-bool start_logging() {
+bool logging_init() {
     if (log4c_init() == 0)
         return true;
     return false;
@@ -34,7 +34,7 @@ void log_trace(const log4c_category_t *cat, const char *msg) {
     __log__(cat, TRACE, msg);
 }
 
-bool stop_logging() {
+bool logging_terminate() {
     if (log4c_fini() == 0)
         return true;
     return false;

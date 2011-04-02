@@ -8,5 +8,12 @@
  */
 void module_init();
 
+/*
+ * Function: module_terminate
+ *
+ * Calls <module_name>_terminate for each module.
+ */
+void module_terminate();
+
 #endif
 
