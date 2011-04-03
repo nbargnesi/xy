@@ -2,6 +2,7 @@
 #define _XY_H_
 
 #include "core.h"
+#include "constants.h"
 #include "util.h"
 #include "color.h"
 #include "display.h"

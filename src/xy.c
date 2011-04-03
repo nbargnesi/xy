@@ -41,18 +41,18 @@ void configure(CONFIG *cfg) {
     FUNCTION_TRACE
 
     // Should we skip the window manager check?
-    const char *wmcheck = get_config_value(cfg, "skip_window_manager_check");
+    const char *wmcheck = get_config_value(cfg, CFG_NAME_SKIP_WINDOW_MGR_CHECK);
     if (!wmcheck || strcmp(wmcheck, "true") != 0) {
         if (is_window_manager_running(d)) {
-            log_fatal(xylog, "another window manager is already running");
+            log_fatal(xylog, WINDOW_MGR_RUNNING);
         }
     } else
-        log_info(xylog, "skipping window manager check per configuration");
+        log_info(xylog, SKIP_WINDOW_MGR_CHECK_MSG);
 
     // Should we change the window manager's name?
-    char *wmname = get_config_value(cfg, "window_manager_name");
+    char *wmname = get_config_value(cfg, CFG_NAME_WINDOW_MANAGER_NAME);
     if (wmname) {
-        log_info(xylog, "changing window manager name per configuration");
+        log_info(xylog, CHANGE_WINDOW_MGR_NAME_MSG);
         change_name(d, wmname);
     }
 }
@@ -68,17 +68,17 @@ CONFIG * get_configuration() {
     char *path = strcat(home, CONFIG_FILE);
 
     if (stat(path, st) != 0) {
-        log(xylog, DEBUG, "couldn't read %s", path);
+        log(xylog, INFO, "no configuration %s", path);
         goto default_configuration;
     }
-    log_info(xylog, "read configuration file");
+    log_info(xylog, CONFIGURATION_READ_MSG);
 
     cfg = get_config(path);
     free(st);
     return cfg;
 
 default_configuration:
-    log_warn(xylog, "using default configuration");
+    log_warn(xylog, USING_DEFAULT_CONFIGURATION_MSG);
     cfg = empty_config();
     return cfg;
 }
