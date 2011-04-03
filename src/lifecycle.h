@@ -9,6 +9,16 @@
 void module_init();
 
 /*
+ * Function: setup
+ */
+void setup();
+
+/*
+ * Function: shutdown
+ */
+void shutdown();
+
+/*
  * Function: module_terminate
  *
  * Calls <module_name>_terminate for each module.

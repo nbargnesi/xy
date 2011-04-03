@@ -19,5 +19,9 @@
 
 #define USING_DEFAULT_CONFIGURATION_MSG "using default configuration"
 
+#define FAILED_TO_GET_CLIENTS "failed to get clients"
+
+#define NO_CONFIGURATION "no configuration"
+
 #endif
 

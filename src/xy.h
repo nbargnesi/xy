@@ -17,8 +17,22 @@
 #include "state.h"
 
 int main(int, char **);
-CONFIG * get_configuration();
 void configure(CONFIG *);
+
+/*
+ * Global display.
+ */
+Display *global_display;
+
+/*
+ * Global configuration.
+ */
+CONFIG *global_cfg;
+
+/*
+ * Global logger.
+ */
+log4c_category_t *xylog;
 
 #endif
 

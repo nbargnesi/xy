@@ -1,13 +1,16 @@
 #include "state.h"
-#include "startup.h"
+#include "lifecycle.h"
 
 void transition(const State state) {
     switch (state) {
-        case INITIALIZING_MODULES:
+        case STARTING_UP:
             module_init();
+            setup();
             break;
-        case TERMINATING_MODULES:
-            module_terminate();
+        case STARTED:
+            break;
+        case SHUTTING_DOWN:
+            shutdown();
             break;
     }
 }

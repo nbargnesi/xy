@@ -6,7 +6,7 @@ AM_LDFLAGS = "-Wl,--as-needed"
 bin_PROGRAMS = xy
 
 xy_SOURCES = state.c \
-			 startup.c \
+			 lifecycle.c \
 			 osd.c \
 			 xy.c \
 			 util.c \
