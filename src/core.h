@@ -30,12 +30,16 @@
 #include <X11/extensions/Xdamage.h>
 #include <X11/extensions/Xrender.h>
 
-#define CONFIG_FILE "/.xyrc"
+#define XY_DIR "/.xy"
+#define IPC_SOCKET_PATH XY_DIR"/ipc"
+#define XY_CONFIG XY_DIR"/rc"
 
 #define START_CLOCK clock_t start = clock();
 #define STOP_CLOCK clock_t stop = clock();
 #define CLOCK_DELTA (((double) (stop - start) ) / CLOCKS_PER_SEC)
 
 #define SECONDS(x) x * 1000000
+
+#define DIE fprintf(stderr, "DIE %s\n", __func__)
 
 #endif

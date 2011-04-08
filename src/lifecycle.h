@@ -9,6 +9,11 @@
 void module_init();
 
 /*
+ * Function: directory_init
+ */
+void directory_init();
+
+/*
  * Function: setup
  */
 void setup();
