@@ -15,13 +15,15 @@
 
 #define WINDOW_MGR_RUNNING "a window manager is already running"
 
-#define CONFIGURATION_READ_MSG "configuration read"
+#define READING_CONFIGURATION_MSG "reading configuration"
 
 #define USING_DEFAULT_CONFIGURATION_MSG "using default configuration"
 
 #define FAILED_TO_GET_CLIENTS "failed to get clients"
 
 #define NO_CONFIGURATION "no configuration"
+
+#define CREATING_XY_DIR "creating xy directory"
 
 #endif
 
