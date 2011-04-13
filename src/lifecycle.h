@@ -2,33 +2,24 @@
 #define STARTUP_H_
 
 /*
- * Function: module_init
- *
- * Calls <module_name>_init for each module.
+ * Function: startup
  */
-void module_init();
+void startup();
 
 /*
- * Function: directory_init
+ * Function: started
  */
-void directory_init();
+void started();
 
 /*
- * Function: setup
+ * Function: shutting_down
  */
-void setup();
+void shutting_down();
 
 /*
  * Function: shutdown
  */
 void shutdown();
-
-/*
- * Function: module_terminate
- *
- * Calls <module_name>_terminate for each module.
- */
-void module_terminate();
 
 #endif
 

@@ -30,8 +30,25 @@
 #include <X11/extensions/Xdamage.h>
 #include <X11/extensions/Xrender.h>
 
-#define XY_DIR "/.xy"
+/*
+ * Macro: XY_DIR
+ *
+ * The xy home directory: ".xy"
+ */
+#define XY_DIR ".xy"
+
+/*
+ * Macro: IP_SOCKET_PATH
+ *
+ * The xy IPC path: ".xy/ipc"
+ */
 #define IPC_SOCKET_PATH XY_DIR"/ipc"
+
+/*
+ * Macro: XY_CONFIG
+ *
+ * The xy configuration path: ".xy/rc"
+ */
 #define XY_CONFIG XY_DIR"/rc"
 
 #define START_CLOCK clock_t start = clock();
@@ -40,6 +57,6 @@
 
 #define SECONDS(x) x * 1000000
 
-#define DIE fprintf(stderr, "DIE %s\n", __func__)
+#define DIE fprintf(stderr, "DIE %s:%d\n", __func__, __LINE__)
 
 #endif

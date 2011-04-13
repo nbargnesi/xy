@@ -4,7 +4,8 @@
 enum STATE_ENUM {
     STARTING_UP,
     STARTED,
-    SHUTTING_DOWN
+    SHUTTING_DOWN,
+    SHUTDOWN
 };
 typedef enum STATE_ENUM State;
 

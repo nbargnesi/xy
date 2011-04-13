@@ -7,20 +7,20 @@
 #include <dirent.h>
 #include <stdio.h>
 
-void module_init() {
-    if (!logging_init()) {
-        fprintf(stderr, INIT_LOGGING_FAILURE);
-        exit(1);
-    }
-    osd_init();
-}
-
-void directory_init() {
+/*
+ * Function: xy_dir_init
+ *
+ * Creates <XY_DIR> if needed.
+ */
+static void xy_dir_init() {
     char *home = getenv("HOME");
     if (!home) DIE;
 
-    char *path = malloc(strlen(home) + strlen(XY_DIR));
+    const int bufsize = strlen(home) + strlen(XY_DIR) + 1;
+    char *path = malloc(bufsize);
+    memset(path, 0, bufsize);
     strcat(path, home);
+    strcat(path, "/");
     strcat(path, XY_DIR);
 
     DIR *dir = opendir(path);
@@ -29,12 +29,16 @@ void directory_init() {
         return;
     }
 
-    log_info(xylog, CREATING_XY_DIR);
     int rc = mkdir(path, S_IRUSR | S_IWUSR | S_IXUSR);
     if (rc != 0) DIE;
 }
 
-static CONFIG * get_configuration() {
+/*
+ * Function: xy_rc_init
+ *
+ * Initializes the configuration.
+ */
+static CONFIG * xy_rc_init() {
     CONFIG *ret = NULL;
 
     char *home = getenv("HOME");
@@ -61,15 +65,46 @@ default_configuration:
     return ret;
 }
 
-void setup() {
+/*
+ * Function: ipc_init
+ *
+ * Creates IPC_SOCKET_PATH.
+ */
+static void ipc_init() {
+    // TODO
+}
+
+void startup() {
+    if (!logging_init()) {
+        fprintf(stderr, INIT_LOGGING_FAILURE);
+        exit(1);
+    }
     xylog = get_logger("xy");
+    log_info(xylog, STARTUP_MSG);
+    xy_dir_init();
+    global_cfg = xy_rc_init();
+    ipc_init();
     global_display = open_display();
-    global_cfg = get_configuration();
+    transition(STARTED);
+}
+
+void started() {
+    log_info(xylog, STARTED_MSG);
+}
+
+void shutting_down() {
+    log_info(xylog, SHUTTING_DOWN_MSG);
+    transition(SHUTDOWN);
 }
 
 void shutdown() {
+    log_info(xylog, SHUTDOWN_MSG);
     if (global_cfg) free_config(global_cfg);
     close_display(global_display);
+}
+
+void module_init() {
+    osd_init();
 }
 
 void module_terminate() {

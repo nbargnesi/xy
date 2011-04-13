@@ -4,13 +4,15 @@
 void transition(const State state) {
     switch (state) {
         case STARTING_UP:
-            module_init();
-            directory_init();
-            setup();
+            startup();
             break;
         case STARTED:
+            started();
             break;
         case SHUTTING_DOWN:
+            shutting_down();
+            break;
+        case SHUTDOWN:
             shutdown();
             break;
     }

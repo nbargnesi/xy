@@ -1,6 +1,14 @@
 #ifndef CONSTANTS_H_
 #define CONSTANTS_H_
 
+#define STARTUP_MSG "starting up"
+
+#define STARTED_MSG "started"
+
+#define SHUTTING_DOWN_MSG "shutting down"
+
+#define SHUTDOWN_MSG "shutdown"
+
 #define INIT_LOGGING_FAILURE "failed to start logging"
 
 #define GET_CLIENTS_FAILURE "failed to get clients"
