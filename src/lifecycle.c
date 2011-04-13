@@ -44,8 +44,10 @@ static CONFIG * xy_rc_init() {
     char *home = getenv("HOME");
     if (!home) goto default_configuration;
 
-    char *rcpath = malloc(strlen(home) + strlen(XY_CONFIG));
+    char *rcpath = malloc(strlen(home) + strlen(XY_CONFIG) + 1);
+    memset(rcpath, 0, strlen(rcpath));
     strcat(rcpath, home);
+    strcat(rcpath, "/");
     strcat(rcpath, XY_CONFIG);
 
     struct stat *st = malloc(sizeof(struct stat));;
