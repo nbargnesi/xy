@@ -3,6 +3,7 @@
 
 #include "core.h"
 
+/*! Get color. */
 ulong get_color(const char *, Display *, Colormap);
 
 #endif

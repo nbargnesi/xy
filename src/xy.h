@@ -19,19 +19,13 @@
 int main(int, char **);
 void configure(CONFIG *);
 
-/*
- * Global display.
- */
+/*! Global display. */
 Display *global_display;
 
-/*
- * Global configuration.
- */
+/*! Global configuration. */
 CONFIG *global_cfg;
 
-/*
- * Global logger.
- */
+/*! Global logger. */
 log4c_category_t *xylog;
 
 #endif
