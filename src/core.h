@@ -35,30 +35,78 @@
 /*
  * Macro: XY_DIR
  *
- * The xy home directory: ".xy"
+ * The xy home directory.
+ * (code)
+ * .xy
+ * (end)
  */
 #define XY_DIR ".xy"
 
 /*
  * Macro: IP_SOCKET_PATH
  *
- * The xy IPC path: ".xy/ipc"
+ * The xy IPC path (uses <XY_DIR>).
+ * (code)
+ * .xy/ipc
+ * (end)
  */
 #define IPC_SOCKET_PATH XY_DIR"/ipc"
 
 /*
  * Macro: XY_CONFIG
  *
- * The xy configuration path: ".xy/rc"
+ * The xy configuration path (uses <XY_DIR>).
+ * (code)
+ * .xy/rc
+ * (end)
  */
 #define XY_CONFIG XY_DIR"/rc"
 
+/*
+ * Macro: START_CLOCK
+ *
+ * Calls clock.
+ * (code)
+ * clock_t start = clock();
+ * (end)
+ */
 #define START_CLOCK clock_t start = clock();
+
+/*
+ * Macro: STOP_CLOCK
+ *
+ * Calls clock.
+ * (code)
+ * clock_t stop = clock;
+ * (end)
+ */
 #define STOP_CLOCK clock_t stop = clock();
+
+/*
+ * Macro: CLOCK_DELTA
+ *
+ * Calculate the different between calls to <START_CLOCK> and <STOP_CLOCK>.
+ * (code)
+ * (((double) (stop - start) ) / CLOCKS_PER_SEC)
+ * (end)
+ */
 #define CLOCK_DELTA (((double) (stop - start) ) / CLOCKS_PER_SEC)
 
+/*
+ * Macro: SECONDS(x)
+ *
+ * Converts <CLOCK_DELTA> to seconds.
+ * (code)
+ * x * 1000000
+ * (end)
+ */
 #define SECONDS(x) x * 1000000
 
+/*
+ * Macro: DIE
+ *
+ * Dies a dignified death, i.e., with function and line number.
+ */
 #define DIE fprintf(stderr, "DIE %s:%d\n", __func__, __LINE__)
 
 #endif

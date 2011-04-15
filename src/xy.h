@@ -15,6 +15,7 @@
 #include "xyxlib.h"
 #include "sysinfo.h"
 #include "state.h"
+#include "broadcast.h"
 
 int main(int, char **);
 void configure(CONFIG *);

@@ -115,6 +115,7 @@ void xy_startup() {
         fprintf(stderr, INIT_BROADCAST_FAILURE);
         exit(1);
     }
+    broadcast_send(STARTUP_MSG);
     global_display = open_display();
     transition(STARTED);
 }

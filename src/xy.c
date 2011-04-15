@@ -23,7 +23,7 @@ int main(int argc, char **argv) {
 
     if (screen) free(screen);
 
-    broadcast_send("shutting down");
+    broadcast_send(SHUTTING_DOWN_MSG);
     transition(SHUTTING_DOWN);
 }
 
