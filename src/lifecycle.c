@@ -3,9 +3,11 @@
 #include "osd.h"
 #include "logging.h"
 #include "constants.h"
+#include "broadcast.h"
 
 #include <dirent.h>
 #include <stdio.h>
+#include <fcntl.h>
 
 /*
  * Function: xy_dir_init
@@ -16,7 +18,7 @@ static void xy_dir_init() {
     char *home = getenv("HOME");
     if (!home) DIE;
 
-    const int bufsize = strlen(home) + strlen(XY_DIR) + 1;
+    const int bufsize = strlen(home) + strlen(XY_DIR) + 2;
     char *path = malloc(bufsize);
     memset(path, 0, bufsize);
     strcat(path, home);
@@ -26,11 +28,33 @@ static void xy_dir_init() {
     DIR *dir = opendir(path);
     if (dir) {
         free(dir);
+        free(path);
         return;
     }
 
     int rc = mkdir(path, S_IRUSR | S_IWUSR | S_IXUSR);
     if (rc != 0) DIE;
+    free(path);
+}
+
+static void write_default_config(const char *rcpath) {
+    FILE *cfg = fopen(rcpath, "w");
+
+    fprintf(cfg, "%s\n", DEFAULT_CFG_FILE_HDR);
+
+    fprintf(cfg, "%s = ", CFG_SKIP_WINDOW_MGR_CHECK);
+    fprintf(cfg, "%s\n", DEFAULT_SKIP_WINDOW_MGR_CHECK);
+
+    fprintf(cfg, "%s = ", CFG_WINDOW_MGR_NAME);
+    fprintf(cfg, "%s\n", DEFAULT_WINDOW_MGR_NAME);
+
+    fprintf(cfg, "%s = ", CFG_BROADCAST_GROUP);
+    fprintf(cfg, "%s\n", DEFAULT_BROADCAST_GROUP);
+
+    fprintf(cfg, "%s = ", CFG_BROADCAST_PORT);
+    fprintf(cfg, "%d\n", DEFAULT_BROADCAST_PORT);
+
+    fclose(cfg);
 }
 
 /*
@@ -39,13 +63,14 @@ static void xy_dir_init() {
  * Initializes the configuration.
  */
 static CONFIG * xy_rc_init() {
+    char *home = getenv("HOME");
+    if (!home) DIE;
+
     CONFIG *ret = NULL;
 
-    char *home = getenv("HOME");
-    if (!home) goto default_configuration;
-
-    char *rcpath = malloc(strlen(home) + strlen(XY_CONFIG) + 1);
-    memset(rcpath, 0, strlen(rcpath));
+    const int bufsize = strlen(home) + strlen(XY_CONFIG) + 2;
+    char *rcpath = malloc(bufsize);
+    memset(rcpath, 0, bufsize);
     strcat(rcpath, home);
     strcat(rcpath, "/");
     strcat(rcpath, XY_CONFIG);
@@ -53,17 +78,13 @@ static CONFIG * xy_rc_init() {
     struct stat *st = malloc(sizeof(struct stat));;
 
     if (stat(rcpath, st) != 0) {
-        goto default_configuration;
+        write_default_config(rcpath);
     }
 
     log_info(xylog, READING_CONFIGURATION_MSG);
     ret = get_config(rcpath);
     free(st);
-    return ret;
-
-default_configuration:
-    log_info(xylog, USING_DEFAULT_CONFIGURATION_MSG);
-    ret = empty_config();
+    free(rcpath);
     return ret;
 }
 
@@ -76,7 +97,7 @@ static void ipc_init() {
     // TODO
 }
 
-void startup() {
+void xy_startup() {
     if (!logging_init()) {
         fprintf(stderr, INIT_LOGGING_FAILURE);
         exit(1);
@@ -86,30 +107,32 @@ void startup() {
     xy_dir_init();
     global_cfg = xy_rc_init();
     ipc_init();
+    const char *group = get_config_value(global_cfg, CFG_BROADCAST_GROUP);
+    const char *portstr = get_config_value(global_cfg, CFG_BROADCAST_PORT);
+    const uint port = atoi(portstr);
+
+    if (!broadcast_init(group, port)) {
+        fprintf(stderr, INIT_BROADCAST_FAILURE);
+        exit(1);
+    }
     global_display = open_display();
     transition(STARTED);
 }
 
-void started() {
+void xy_started() {
     log_info(xylog, STARTED_MSG);
 }
 
-void shutting_down() {
+void xy_shutting_down() {
     log_info(xylog, SHUTTING_DOWN_MSG);
     transition(SHUTDOWN);
 }
 
-void shutdown() {
+void xy_shutdown() {
     log_info(xylog, SHUTDOWN_MSG);
     if (global_cfg) free_config(global_cfg);
     close_display(global_display);
-}
-
-void module_init() {
-    osd_init();
-}
-
-void module_terminate() {
+    broadcast_terminate();
     logging_terminate();
 }
 

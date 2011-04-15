@@ -21,6 +21,7 @@ PKG_CHECK_MODULES([XFT], [xft])
 PKG_CHECK_MODULES([LIBUSB], [libusb])
 
 AC_CHECK_LIB(xosd, xosd_create)
+AC_CHECK_LIB(pthread, pthread_create)
 AC_CHECK_HEADERS(xosd.h)
 
 AC_CHECK_LIB(log4c, log4c_init)

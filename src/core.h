@@ -14,10 +14,12 @@
 #include <getopt.h>
 #include <time.h>
 #include <sys/types.h>
+#include <sys/socket.h>
 #include <sys/wait.h>
 #include <sys/poll.h>
 #include <sys/time.h>
 #include <sys/stat.h>
+#include <arpa/inet.h>
 
 #include <X11/cursorfont.h>
 #include <X11/keysym.h>

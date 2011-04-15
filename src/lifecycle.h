@@ -1,25 +1,13 @@
 #ifndef STARTUP_H_
 #define STARTUP_H_
 
-/*
- * Function: startup
- */
-void startup();
+void xy_startup();
 
-/*
- * Function: started
- */
-void started();
+void xy_started();
 
-/*
- * Function: shutting_down
- */
-void shutting_down();
+void xy_shutting_down();
 
-/*
- * Function: shutdown
- */
-void shutdown();
+void xy_shutdown();
 
 #endif
 

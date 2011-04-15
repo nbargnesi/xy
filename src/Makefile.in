@@ -49,7 +49,8 @@ am_xy_OBJECTS = state.$(OBJEXT) lifecycle.$(OBJEXT) osd.$(OBJEXT) \
 	xy.$(OBJEXT) util.$(OBJEXT) wmcheck.$(OBJEXT) \
 	restart.$(OBJEXT) xinerama.$(OBJEXT) screen.$(OBJEXT) \
 	color.$(OBJEXT) display.$(OBJEXT) configuration.$(OBJEXT) \
-	logging.$(OBJEXT) xyxlib.$(OBJEXT) sysinfo.$(OBJEXT)
+	logging.$(OBJEXT) xyxlib.$(OBJEXT) sysinfo.$(OBJEXT) \
+	broadcast.$(OBJEXT)
 xy_OBJECTS = $(am_xy_OBJECTS)
 xy_DEPENDENCIES =
 DEFAULT_INCLUDES = -I.@am__isrc@ -I$(top_builddir)
@@ -181,7 +182,8 @@ xy_SOURCES = state.c \
 			 configuration.c \
 			 logging.c \
 			 xyxlib.c \
-			 sysinfo.c
+			 sysinfo.c \
+			 broadcast.c
 
 xy_LDADD = @XLIB_LIBS@ \
 		   @XINERAMA_LIBS@ \
@@ -269,6 +271,7 @@ mostlyclean-compile:
 distclean-compile:
 	-rm -f *.tab.c
 
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/broadcast.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/color.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/configuration.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/display.Po@am__quote@

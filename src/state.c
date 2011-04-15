@@ -4,16 +4,16 @@
 void transition(const State state) {
     switch (state) {
         case STARTING_UP:
-            startup();
+            xy_startup();
             break;
         case STARTED:
-            started();
+            xy_started();
             break;
         case SHUTTING_DOWN:
-            shutting_down();
+            xy_shutting_down();
             break;
         case SHUTDOWN:
-            shutdown();
+            xy_shutdown();
             break;
     }
 }
