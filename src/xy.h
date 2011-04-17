@@ -29,5 +29,7 @@ CONFIG *global_cfg;
 /*! Global logger. */
 log4c_category_t *xylog;
 
+int ipc_fd;
+
 #endif
 

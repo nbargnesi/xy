@@ -20,7 +20,8 @@ xy_SOURCES = state.c \
 			 logging.c \
 			 xyxlib.c \
 			 sysinfo.c \
-			 broadcast.c
+			 broadcast.c \
+			 ipc.c
 
 xy_LDADD = @XLIB_LIBS@ \
 		   @XINERAMA_LIBS@ \

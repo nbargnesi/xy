@@ -4,6 +4,7 @@
 #include "logging.h"
 #include "constants.h"
 #include "broadcast.h"
+#include "ipc.h"
 
 #include <dirent.h>
 #include <stdio.h>
@@ -88,15 +89,6 @@ static CONFIG * xy_rc_init() {
     return ret;
 }
 
-/*
- * Function: ipc_init
- *
- * Creates IPC_SOCKET_PATH.
- */
-static void ipc_init() {
-    // TODO
-}
-
 void xy_startup() {
     if (!logging_init()) {
         fprintf(stderr, INIT_LOGGING_FAILURE);
@@ -106,7 +98,8 @@ void xy_startup() {
     log_info(xylog, STARTUP_MSG);
     xy_dir_init();
     global_cfg = xy_rc_init();
-    ipc_init();
+    // TODO fill_config(globalcfg);
+    ipc_init("/home/nick/.xy/ipc");
     const char *group = get_config_value(global_cfg, CFG_BROADCAST_GROUP);
     const char *portstr = get_config_value(global_cfg, CFG_BROADCAST_PORT);
     const uint port = atoi(portstr);
@@ -134,6 +127,7 @@ void xy_shutdown() {
     if (global_cfg) free_config(global_cfg);
     close_display(global_display);
     broadcast_terminate();
+    ipc_terminate();
     logging_terminate();
 }
 

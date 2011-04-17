@@ -19,6 +19,7 @@
 #include <sys/poll.h>
 #include <sys/time.h>
 #include <sys/stat.h>
+#include <sys/un.h>
 #include <arpa/inet.h>
 
 #include <X11/cursorfont.h>

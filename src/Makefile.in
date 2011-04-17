@@ -50,7 +50,7 @@ am_xy_OBJECTS = state.$(OBJEXT) lifecycle.$(OBJEXT) osd.$(OBJEXT) \
 	restart.$(OBJEXT) xinerama.$(OBJEXT) screen.$(OBJEXT) \
 	color.$(OBJEXT) display.$(OBJEXT) configuration.$(OBJEXT) \
 	logging.$(OBJEXT) xyxlib.$(OBJEXT) sysinfo.$(OBJEXT) \
-	broadcast.$(OBJEXT)
+	broadcast.$(OBJEXT) ipc.$(OBJEXT)
 xy_OBJECTS = $(am_xy_OBJECTS)
 xy_DEPENDENCIES =
 DEFAULT_INCLUDES = -I.@am__isrc@ -I$(top_builddir)
@@ -183,7 +183,8 @@ xy_SOURCES = state.c \
 			 logging.c \
 			 xyxlib.c \
 			 sysinfo.c \
-			 broadcast.c
+			 broadcast.c \
+			 ipc.c
 
 xy_LDADD = @XLIB_LIBS@ \
 		   @XINERAMA_LIBS@ \
@@ -275,6 +276,7 @@ distclean-compile:
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/color.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/configuration.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/display.Po@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/ipc.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/lifecycle.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/logging.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/osd.Po@am__quote@
