@@ -3,25 +3,27 @@
 #define log log4c_category_log
 #define FUNCTION_TRACE log_trace(xylog, __FUNCTION__);
 
-int main(int argc, char **argv) {
-    transition(STARTING_UP);
-    FUNCTION_TRACE
+void main_loop() {
+    // Push configuration call into lifecycle
     configure(global_cfg);
 
-    SCREEN *screen = default_screen(global_display);
-    CLIENTS_LIST *clients = get_clients(global_display, screen->root);
-    for (int i = 0; i < clients->num_children; i++) {
-        Window w = clients->children[i];
-        XWindowAttributes *attrs = get_attributes(global_display, w);
-        if (attrs->map_state == IsViewable)
-        fprintf(stderr, "%d: x: %d, y: %d, w: %d, h: %d\n",
-                w, attrs->x, attrs->y, attrs->width, attrs->height);
-        free(attrs);
-    }
-    if (clients) clients_list_free(clients);
-    else log_fatal(xylog, FAILED_TO_GET_CLIENTS);
+    int max_sd, rc;
+    fd_set set;
 
-    if (screen) free(screen);
+    FD_ZERO(&set);
+    max_sd = ipc_fd;
+    FD_SET(ipc_fd, &set);
+
+    rc = select(max_sd + 1, &set, NULL, NULL, NULL);
+
+    if (rc < 0) {
+        perror("select()");
+    }
+}
+
+int main(int argc, char **argv) {
+    FUNCTION_TRACE
+    transition(STARTING_UP);
 
     broadcast_send(SHUTTING_DOWN_MSG);
     transition(SHUTTING_DOWN);

@@ -115,6 +115,7 @@ void xy_startup() {
 
 void xy_started() {
     log_info(xylog, STARTED_MSG);
+    main_loop();
 }
 
 void xy_shutting_down() {

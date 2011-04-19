@@ -21,6 +21,8 @@
 #include <sys/stat.h>
 #include <sys/un.h>
 #include <arpa/inet.h>
+#include <sys/ioctl.h>
+#include <sys/select.h>
 
 #include <X11/cursorfont.h>
 #include <X11/keysym.h>

@@ -19,6 +19,7 @@
 
 int main(int, char **);
 void configure(CONFIG *);
+void main_loop();
 
 /*! Global display. */
 Display *global_display;
@@ -29,6 +30,9 @@ CONFIG *global_cfg;
 /*! Global logger. */
 log4c_category_t *xylog;
 
+/**
+ * Global: ipc_fd
+ */
 int ipc_fd;
 
 #endif
