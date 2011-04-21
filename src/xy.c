@@ -4,9 +4,6 @@
 #define FUNCTION_TRACE log_trace(xylog, __FUNCTION__);
 
 void main_loop() {
-    // Push configuration call into lifecycle
-    configure(global_cfg);
-
     int max_sd, rc;
     fd_set set;
 
@@ -27,6 +24,7 @@ int main(int argc, char **argv) {
 
     broadcast_send(SHUTTING_DOWN_MSG);
     transition(SHUTTING_DOWN);
+    return 0;
 }
 
 void configure(CONFIG *cfg) {

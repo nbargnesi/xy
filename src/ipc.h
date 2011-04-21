@@ -22,7 +22,7 @@ bool ipc_init();
  *
  * Terminates the broadcast module and closes the multicast connection.
  */
-void ipc_close();
+void ipc_terminate();
 
 #endif
 

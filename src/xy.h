@@ -17,17 +17,31 @@
 #include "state.h"
 #include "broadcast.h"
 
+/**
+ * Function: main
+ *
+ * Application entry point.
+ */
 int main(int, char **);
+
+/**
+ * Function: configure
+ *
+ * Processes the application's configuration.
+ */
 void configure(CONFIG *);
+
+/**
+ * Function: main_loop
+ *
+ * The main application loop.
+ */
 void main_loop();
 
-/*! Global display. */
 Display *global_display;
 
-/*! Global configuration. */
 CONFIG *global_cfg;
 
-/*! Global logger. */
 log4c_category_t *xylog;
 
 /**

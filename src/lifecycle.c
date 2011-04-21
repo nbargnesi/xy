@@ -98,7 +98,11 @@ void xy_startup() {
     log_info(xylog, STARTUP_MSG);
     xy_dir_init();
     global_cfg = xy_rc_init();
+    global_display = open_display();
+    configure(global_cfg);
+
     // TODO fill_config(globalcfg);
+    //
     ipc_init("/home/nick/.xy/ipc");
     const char *group = get_config_value(global_cfg, CFG_BROADCAST_GROUP);
     const char *portstr = get_config_value(global_cfg, CFG_BROADCAST_PORT);
@@ -109,7 +113,6 @@ void xy_startup() {
         exit(1);
     }
     broadcast_send(STARTUP_MSG);
-    global_display = open_display();
     transition(STARTED);
 }
 
