@@ -8,8 +8,8 @@ bool ipc_init(const char *path) {
     ipc_path = strdup(path);
     unlink(ipc_path);
     ipc_sckt = malloc(sizeof(struct sockaddr_un));
-    ipc_fd = socket(AF_UNIX, SOCK_DGRAM, 0);
-    if (ipc_fd < 0) {
+    global_ipc_fd = socket(AF_UNIX, SOCK_DGRAM, 0);
+    if (global_ipc_fd < 0) {
         perror("opening IPC");
         return false;
     }
@@ -17,7 +17,8 @@ bool ipc_init(const char *path) {
     ipc_sckt->sun_family = AF_UNIX;
     strcpy(ipc_sckt->sun_path, ipc_path);
 
-    if (bind(ipc_fd, (struct sockaddr *) ipc_sckt, sizeof(struct sockaddr_un))) {
+    ssize_t size = sizeof(struct sockaddr_un);
+    if (bind(global_ipc_fd, (struct sockaddr *) ipc_sckt, size)) {
         perror("binding to IPC");
         return false;
     }

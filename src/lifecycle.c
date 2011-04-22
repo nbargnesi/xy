@@ -82,7 +82,7 @@ static CONFIG * xy_rc_init() {
         write_default_config(rcpath);
     }
 
-    log_info(xylog, READING_CONFIGURATION_MSG);
+    log_info(global_log, READING_CONFIGURATION_MSG);
     ret = get_config(rcpath);
     free(st);
     free(rcpath);
@@ -94,11 +94,12 @@ void xy_startup() {
         fprintf(stderr, INIT_LOGGING_FAILURE);
         exit(1);
     }
-    xylog = get_logger("xy");
-    log_info(xylog, STARTUP_MSG);
+    global_log = get_logger("xy");
+    log_info(global_log, STARTUP_MSG);
     xy_dir_init();
     global_cfg = xy_rc_init();
     global_display = open_display();
+    global_x_fd = ConnectionNumber(global_display);
     configure(global_cfg);
 
     // TODO fill_config(globalcfg);
@@ -117,19 +118,20 @@ void xy_startup() {
 }
 
 void xy_started() {
-    log_info(xylog, STARTED_MSG);
+    log_info(global_log, STARTED_MSG);
     main_loop();
 }
 
 void xy_shutting_down() {
-    log_info(xylog, SHUTTING_DOWN_MSG);
+    log_info(global_log, SHUTTING_DOWN_MSG);
     transition(SHUTDOWN);
 }
 
 void xy_shutdown() {
-    log_info(xylog, SHUTDOWN_MSG);
+    log_info(global_log, SHUTDOWN_MSG);
     if (global_cfg) free_config(global_cfg);
     close_display(global_display);
+    close(global_x_fd);
     broadcast_terminate();
     ipc_terminate();
     logging_terminate();

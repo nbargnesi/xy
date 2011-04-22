@@ -38,16 +38,30 @@ void configure(CONFIG *);
  */
 void main_loop();
 
+/**
+ * Global: global_display
+ */
 Display *global_display;
 
+/**
+ * Global: global_cfg
+ */
 CONFIG *global_cfg;
 
-log4c_category_t *xylog;
+/**
+ * Global: global_log
+ */
+log4c_category_t *global_log;
 
 /**
- * Global: ipc_fd
+ * Global: global_ipc_fd
  */
-int ipc_fd;
+int global_ipc_fd;
+
+/**
+ * Global: global_x_fd
+ */
+int global_x_fd;
 
 #endif
 
