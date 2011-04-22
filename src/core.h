@@ -35,6 +35,8 @@
 #include <X11/extensions/Xdamage.h>
 #include <X11/extensions/Xrender.h>
 
+void die(const char *, ...);
+
 /*
  * Macro: XY_DIR
  *
@@ -110,6 +112,20 @@
  *
  * Dies a dignified death, i.e., with function and line number.
  */
-#define DIE fprintf(stderr, "DIE %s:%d\n", __func__, __LINE__)
+#define DIE die("DIE %s:%d\n", __func__, __LINE__);
+
+/*
+ * Macro: likely
+ *
+ * Likely branch prediction.
+ */
+#define likely(x) __builtin_expect(!!(x), 1)
+
+/*
+ * Macro: unlikely
+ *
+ * Unlikely branch prediction.
+ */
+#define unlikely(x) __builtin_expect(!!(x), 0)
 
 #endif

@@ -45,8 +45,8 @@ CONFIG_CLEAN_FILES =
 CONFIG_CLEAN_VPATH_FILES =
 am__installdirs = "$(DESTDIR)$(bindir)"
 PROGRAMS = $(bin_PROGRAMS)
-am_xy_OBJECTS = state.$(OBJEXT) lifecycle.$(OBJEXT) osd.$(OBJEXT) \
-	xy.$(OBJEXT) util.$(OBJEXT) wmcheck.$(OBJEXT) \
+am_xy_OBJECTS = die.$(OBJEXT) state.$(OBJEXT) lifecycle.$(OBJEXT) \
+	osd.$(OBJEXT) xy.$(OBJEXT) util.$(OBJEXT) wmcheck.$(OBJEXT) \
 	restart.$(OBJEXT) xinerama.$(OBJEXT) screen.$(OBJEXT) \
 	color.$(OBJEXT) display.$(OBJEXT) configuration.$(OBJEXT) \
 	logging.$(OBJEXT) xyxlib.$(OBJEXT) sysinfo.$(OBJEXT) \
@@ -168,7 +168,8 @@ top_srcdir = @top_srcdir@
 INCLUDES = -I$(top_srcdir) -I/usr/include/freetype2
 AM_CFLAGS = -D_GNU_SOURCE -Werror
 AM_LDFLAGS = "-Wl,--as-needed"
-xy_SOURCES = state.c \
+xy_SOURCES = die.c \
+			 state.c \
 			 lifecycle.c \
 			 osd.c \
 			 xy.c \
@@ -275,6 +276,7 @@ distclean-compile:
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/broadcast.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/color.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/configuration.Po@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/die.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/display.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/ipc.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/lifecycle.Po@am__quote@

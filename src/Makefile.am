@@ -5,7 +5,8 @@ AM_LDFLAGS = "-Wl,--as-needed"
 
 bin_PROGRAMS = xy
 
-xy_SOURCES = state.c \
+xy_SOURCES = die.c \
+			 state.c \
 			 lifecycle.c \
 			 osd.c \
 			 xy.c \
