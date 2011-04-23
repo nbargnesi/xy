@@ -57,9 +57,6 @@ void main_loop() {
 int main(int argc, char **argv) {
     FUNCTION_TRACE
     transition(STARTING_UP);
-
-    broadcast_send(SHUTTING_DOWN_MSG);
-    transition(SHUTTING_DOWN);
     return 0;
 }
 
@@ -84,6 +81,7 @@ void configure(CONFIG *cfg) {
 }
 
 void ipc_quit() {
+    broadcast_send(SHUTTING_DOWN_MSG);
     transition(SHUTTING_DOWN);
 }
 
