@@ -23,4 +23,6 @@ src/xinerama.o
 src/xy
 src/xy.o
 src/xyxlib.o
+src/die.o
 autom4te.cache
+
