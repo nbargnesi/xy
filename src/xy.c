@@ -22,27 +22,42 @@
 #define FUNCTION_TRACE log_trace(global_log, __FUNCTION__);
 
 void main_loop() {
+
+    /*
+    int s = DefaultScreen(global_display);
+    Display *d = global_display;
+    Window w = XCreateSimpleWindow(d, RootWindow(d, s), 10, 10, 200, 200, 1,
+            BlackPixel(d, s), WhitePixel(d, s));
+    XSelectInput(d, w, ExposureMask | KeyPressMask);
+    XMapWindow(d, w);
+    XSync(global_display, False);
+    XEvent e;
+    */
+
+    Display *d = global_display;
+    XEvent e;
     int max_sd, rc;
     fd_set set;
     char *ipc_buffer;
 
-    FD_ZERO(&set);
-    FD_SET(global_ipc_fd, &set);
-    FD_SET(global_x_fd, &set);
     if (global_x_fd > global_ipc_fd)
         max_sd = global_x_fd + 1;
     else
         max_sd = global_ipc_fd + 1;
 
     for (;;) {
+        FD_ZERO(&set);
+        FD_SET(global_ipc_fd, &set);
+        FD_SET(global_x_fd, &set);
         rc = select(max_sd, &set, NULL, NULL, NULL);
         if (unlikely(rc < 0)) {
             perror("select()");
             DIE
         }
+
         if (FD_ISSET(global_x_fd, &set)) {
             log_debug(global_log, "servicing X");
-            // TODO service X connection
+            XNextEvent(d, &e);
         } else if (FD_ISSET(global_ipc_fd, &set)) {
             log_debug(global_log, "servicing IPC");
             ipc_buffer = malloc(MSG_LEN);
