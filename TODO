@@ -1,4 +1,0 @@
-* Wrap XWindowAttributes-related functions with custom structs.
-
-* Rule-based system to match properties of windows?
-    1. Remember window position and size
