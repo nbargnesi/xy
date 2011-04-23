@@ -18,6 +18,8 @@
 #include "util.h"
 #include "types.h"
 
+#include <ctype.h>
+
 void change_name(Display *d, const char *name) {
     if (!name) return;
     Window root = DefaultRootWindow(d);
@@ -32,3 +34,25 @@ void change_name(Display *d, const char *name) {
     XChangeProperty(d, root, wmname, utfstring, 8, PropModeReplace, data, len);
 }
 
+static char * left_trim(char *str) {
+    while (isspace(*str)) str++;
+    return str;
+}
+
+static char * right_trim(char *str) {
+    char *c = str + strlen(str);
+    while (isspace(*--c));
+    *(c + 1) = '\0';
+    return str;
+}
+
+char * trim(char *str) {
+    return right_trim(left_trim(str));
+}
+
+bool streq(const char *s1, const char *s2) {
+    if (s1 == NULL && s2 == NULL) return true;
+    else if (s1 == NULL || s2 == NULL) return false;
+    if (strcmp(s1, s2) == 0) return true;
+    return false;
+}

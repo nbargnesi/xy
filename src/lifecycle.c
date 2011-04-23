@@ -45,7 +45,7 @@ static void xy_dir_init() {
 
     DIR *dir = opendir(path);
     if (dir) {
-        free(dir);
+        closedir(dir);
         free(path);
         return;
     }
@@ -141,16 +141,19 @@ void xy_started() {
 
 void xy_shutting_down() {
     log_info(global_log, SHUTTING_DOWN_MSG);
-    transition(SHUTDOWN);
-}
 
-void xy_shutdown() {
-    log_info(global_log, SHUTDOWN_MSG);
     if (global_cfg) free_config(global_cfg);
     close_display(global_display);
     close(global_x_fd);
     broadcast_terminate();
     ipc_terminate();
+
+    transition(SHUTDOWN);
+}
+
+void xy_shutdown() {
+    log_info(global_log, SHUTDOWN_MSG);
     logging_terminate();
+    exit(EXIT_SUCCESS);
 }
 

@@ -20,7 +20,26 @@
 
 #include "core.h"
 
+/*
+ * Function: change_name
+ *
+ * TODO Document me.
+ */
 void change_name(Display *, const char *);
+
+/*
+ * Function: streq
+ *
+ * TODO Document me.
+ */
+bool streq(const char *, const char *);
+
+/*
+ * Function: trim
+ *
+ * TODO Document me.
+ */
+char * trim(char *str);
 
 #endif
 

@@ -80,5 +80,15 @@ int global_ipc_fd;
  */
 int global_x_fd;
 
+/**
+ * Function: ipc_quit
+ */
+void ipc_quit();
+
+/**
+ * Function: ipc_ping
+ */
+void ipc_ping();
+
 #endif
 

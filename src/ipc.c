@@ -17,6 +17,7 @@
 
 #include "ipc.h"
 #include "xy.h"
+#include "util.h"
 
 static struct sockaddr_un *ipc_sckt;
 static const char *ipc_path;
@@ -43,7 +44,30 @@ bool ipc_init(const char *path) {
     return true;
 }
 
+void process_ipc_buffer(const char *buffer) {
+    Command cmd = convert_command_str(buffer);
+    switch (cmd) {
+        case QUIT:
+            ipc_quit();
+            break;
+        case PING:
+            ipc_ping();
+            break;
+        case NO_OP:
+            break;
+    }
+}
+
+Command convert_command_str(const char *cmd) {
+    if (streq("QUIT", cmd) || streq("QUIT", cmd))
+        return QUIT;
+    else if (streq("PING", cmd) || streq("ping", cmd))
+        return PING;
+    return NO_OP;
+}
+
 void ipc_terminate() {
+    close(global_ipc_fd);
     unlink(ipc_path);
 }
 

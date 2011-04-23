@@ -16,6 +16,7 @@
  */
 
 #include "xy.h"
+#include "ipc.h"
 
 #define log log4c_category_log
 #define FUNCTION_TRACE log_trace(global_log, __FUNCTION__);
@@ -23,6 +24,7 @@
 void main_loop() {
     int max_sd, rc;
     fd_set set;
+    char *ipc_buffer;
 
     FD_ZERO(&set);
     FD_SET(global_ipc_fd, &set);
@@ -43,7 +45,11 @@ void main_loop() {
             // TODO service X connection
         } else if (FD_ISSET(global_ipc_fd, &set)) {
             log_debug(global_log, "servicing IPC");
-            // TODO service IPC connection
+            ipc_buffer = malloc(MSG_LEN);
+            memset(ipc_buffer, 0, MSG_LEN);
+            read(global_ipc_fd, ipc_buffer, MSG_LEN);
+            process_ipc_buffer(ipc_buffer);
+            free(ipc_buffer);
         }
     }
 }
@@ -75,5 +81,13 @@ void configure(CONFIG *cfg) {
         log_info(global_log, CHANGE_WINDOW_MGR_NAME_MSG);
         change_name(global_display, wmname);
     }
+}
+
+void ipc_quit() {
+    transition(SHUTTING_DOWN);
+}
+
+void ipc_ping() {
+    broadcast_send(PONG_MSG);
 }
 

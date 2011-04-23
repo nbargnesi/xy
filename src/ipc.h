@@ -20,12 +20,19 @@
 
 #include "core.h"
 
-/**
- * Define: IPC_MSG_LENGTH
- *
- * IPC message length.
+/*
+ * Enum: IPC_COMMAND
  */
-#define IPC_MSG_LENGTH 256
+enum IPC_COMMAND {
+    QUIT,
+    PING,
+    NO_OP
+};
+
+/*
+ * Typedef: Command
+ */
+typedef enum IPC_COMMAND Command;
 
 /*
  * Function: ipc_init
@@ -40,6 +47,16 @@ bool ipc_init();
  * Terminates the broadcast module and closes the multicast connection.
  */
 void ipc_terminate();
+
+/*
+ * Function: process_ipc_buffer
+ */
+void process_ipc_buffer(const char *);
+
+/*
+ * Function: convert_command_str
+ */
+Command convert_command_str(const char *);
 
 #endif
 

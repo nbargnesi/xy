@@ -120,6 +120,8 @@
 
 #define SHUTDOWN_MSG "shutdown"
 
+#define PONG_MSG "PONG"
+
 #define INIT_LOGGING_FAILURE "failed to start logging"
 
 #define INIT_BROADCAST_FAILURE "failed to start broadcast"

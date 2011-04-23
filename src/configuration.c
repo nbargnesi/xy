@@ -20,23 +20,8 @@
 #include <stdlib.h>
 #include <stdio.h>
 #include <string.h>
-#include <ctype.h>
 
-static char * left_trim(char *str) {
-    while (isspace(*str)) str++;
-    return str;
-}
-
-static char * right_trim(char *str) {
-    char *c = str + strlen(str);
-    while (isspace(*--c));
-    *(c + 1) = '\0';
-    return str;
-}
-
-static char * trim(char *str) {
-    return right_trim(left_trim(str));
-}
+#include "util.h"
 
 CONFIG * get_config(const char *pathname) {
 
