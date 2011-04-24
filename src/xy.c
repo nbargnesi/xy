@@ -69,12 +69,14 @@ void main_loop() {
     }
 }
 
+// TODO break out into main.c
 int main(int argc, char **argv) {
     FUNCTION_TRACE
     transition(STARTING_UP);
     return 0;
 }
 
+// TODO push into configuration.c
 void configure(CONFIG *cfg) {
     FUNCTION_TRACE
 

@@ -23,6 +23,8 @@
 
 #include "util.h"
 
+// TODO accessors for each config item
+
 CONFIG * get_config(const char *pathname) {
 
     FILE *fp = fopen(pathname, "r");
@@ -98,7 +100,7 @@ void free_config(CONFIG *cfg) {
 
 char *get_config_value(CONFIG *cfg, const char *name) {
     for (CONFIG_ENTRY *c = cfg->head; c; c = c->next) {
-        if (strcmp(c->name, name) == 0) return c->value;
+        if (streq(c->name, name)) return c->value;
     }
     return NULL;
 }
