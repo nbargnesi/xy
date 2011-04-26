@@ -34,61 +34,59 @@
 #include "state.h"
 #include "broadcast.h"
 
-/**
+/*
  * Function: main
  *
  * Application entry point.
  */
 int main(int, char **);
 
-/**
- * Function: configure
- *
- * Processes the application's configuration.
- */
-void configure(CONFIG *);
-
-/**
+/*
  * Function: main_loop
  *
  * The main application loop.
  */
 void main_loop();
 
-/**
+/*
  * Global: global_display
  */
 Display *global_display;
 
-/**
+/*
  * Global: global_cfg
  */
 CONFIG *global_cfg;
 
-/**
+/*
  * Global: global_log
  */
 log4c_category_t *global_log;
 
-/**
+/*
  * Global: global_ipc_fd
  */
 int global_ipc_fd;
 
-/**
+/*
  * Global: global_x_fd
  */
 int global_x_fd;
 
-/**
+/*
  * Function: ipc_quit
  */
 void ipc_quit();
 
-/**
+/*
  * Function: ipc_ping
  */
 void ipc_ping();
+
+/*
+ * Function: key_pressed
+ */
+void key_pressed(XEvent *ev);
 
 #endif
 

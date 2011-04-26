@@ -42,7 +42,24 @@ CONFIG * empty_config();
 
 void free_config(CONFIG *);
 
-char * get_config_value(CONFIG *, const char *);
+const char * get_config_value(CONFIG *, const char *);
+
+/*
+ * Function: configure
+ *
+ * Processes the application's configuration.
+ */
+void configure(CONFIG *);
+
+/*
+ * Function: skipWindowManagerCheck
+ */
+bool skipWindowManagerCheck();
+
+/*
+ * Function: changeWindowManagerName
+ */
+const char * changeWindowManagerName();
 
 #endif
 

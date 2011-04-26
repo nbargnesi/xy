@@ -6,6 +6,7 @@ AM_LDFLAGS = "-Wl,--as-needed"
 bin_PROGRAMS = xy
 
 xy_SOURCES = die.c \
+			 event.c \
 			 state.c \
 			 lifecycle.c \
 			 osd.c \

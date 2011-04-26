@@ -15,6 +15,9 @@
  * along with xy.  If not, see <http://www.gnu.org/licenses/>.
  */
 
+#include "constants.h"
+#include "wmcheck.h"
+#include "xy.h"
 #include "configuration.h"
 
 #include <stdlib.h>
@@ -22,8 +25,6 @@
 #include <string.h>
 
 #include "util.h"
-
-// TODO accessors for each config item
 
 CONFIG * get_config(const char *pathname) {
 
@@ -98,10 +99,39 @@ void free_config(CONFIG *cfg) {
     }
 }
 
-char *get_config_value(CONFIG *cfg, const char *name) {
+const char *get_config_value(CONFIG *cfg, const char *name) {
     for (CONFIG_ENTRY *c = cfg->head; c; c = c->next) {
         if (streq(c->name, name)) return c->value;
     }
     return NULL;
+}
+
+void configure(CONFIG *cfg) {
+    // Should we skip the window manager check?
+    if (!skipWindowManagerCheck()) {
+        if (is_window_manager_running(global_display)) {
+            log_fatal(global_log, WINDOW_MGR_RUNNING);
+        }
+    } else
+        log_info(global_log, SKIP_WINDOW_MGR_CHECK_MSG);
+
+    // Should we change the window manager's name?
+    const char *wmname = changeWindowManagerName();
+    if (wmname) {
+        log_info(global_log, CHANGE_WINDOW_MGR_NAME_MSG);
+        change_name(global_display, wmname);
+    }
+}
+
+bool skipWindowManagerCheck() {
+    const char *wmcheck = get_config_value(global_cfg, CFG_SKIP_WINDOW_MGR_CHECK);
+    if (!wmcheck || streq(wmcheck, "true"))
+        return true;
+    return false;
+}
+
+const char * changeWindowManagerName() {
+    const char *wmname = get_config_value(global_cfg, CFG_WINDOW_MGR_NAME);
+    return wmname;
 }
 
