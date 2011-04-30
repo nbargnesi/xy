@@ -33,6 +33,8 @@
 #include "sysinfo.h"
 #include "state.h"
 #include "broadcast.h"
+#include "ipc.h"
+#include "event.h"
 
 /*
  * Function: main
@@ -86,7 +88,12 @@ void ipc_ping();
 /*
  * Function: key_pressed
  */
-void key_pressed(XEvent *ev);
+void key_pressed(XEvent *);
+
+/*
+ * Function: key_released
+ */
+void key_released(XEvent *);
 
 #endif
 

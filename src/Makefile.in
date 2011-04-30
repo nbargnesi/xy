@@ -166,7 +166,7 @@ top_build_prefix = @top_build_prefix@
 top_builddir = @top_builddir@
 top_srcdir = @top_srcdir@
 INCLUDES = -I$(top_srcdir) -I/usr/include/freetype2
-AM_CFLAGS = -D_GNU_SOURCE -Werror
+AM_CFLAGS = -D_GNU_SOURCE -Wno-unused-variable -Werror
 AM_LDFLAGS = "-Wl,--as-needed"
 xy_SOURCES = die.c \
 			 event.c \

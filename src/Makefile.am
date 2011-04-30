@@ -1,5 +1,5 @@
 INCLUDES = -I$(top_srcdir) -I/usr/include/freetype2
-AM_CFLAGS = -D_GNU_SOURCE -Werror
+AM_CFLAGS = -D_GNU_SOURCE -Wno-unused-variable -Werror
 
 AM_LDFLAGS = "-Wl,--as-needed"
 

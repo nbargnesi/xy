@@ -22,10 +22,9 @@ void event_handler(XEvent *xev) {
     switch (xev->type) {
         case KeyPress:
             key_pressed(xev);
-            fprintf(stderr, "key press event\n");
             break;
         case KeyRelease:
-            fprintf(stderr, "key release event\n");
+            key_released(xev);
             break;
         case ButtonPress:
             fprintf(stderr, "button press event\n");

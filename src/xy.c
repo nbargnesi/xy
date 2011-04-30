@@ -16,8 +16,6 @@
  */
 
 #include "xy.h"
-#include "ipc.h"
-#include "event.h"
 
 #define log log4c_category_log
 #define FUNCTION_TRACE log_trace(global_log, __FUNCTION__);
@@ -25,15 +23,12 @@
 void main_loop() {
 
     Display *d = global_display;
-    /*
     int s = DefaultScreen(global_display);
-    Display *d = global_display;
     Window w = XCreateSimpleWindow(d, RootWindow(d, s), 10, 10, 200, 200, 1,
             BlackPixel(d, s), WhitePixel(d, s));
     XSelectInput(d, w, 0x1ffff);
     XMapWindow(d, w);
     XSync(global_display, False);
-    */
 
     XEvent e;
     int max_sd, rc;
@@ -87,5 +82,13 @@ void ipc_ping() {
 }
 
 void key_pressed(XEvent *ev) {
+    XKeyEvent *xke = &ev->xkey;
+    KeySym keysym = XKeycodeToKeysym(global_display, xke->keycode, 0);
+    const char *keystr = XKeysymToString(keysym);
+    int state = xke->state;
+    if (is_shift_pressed(xke)) fprintf(stderr, "shifting\n");
+}
+
+void key_released(XEvent *ev) {
 }
 
