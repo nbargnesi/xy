@@ -56,3 +56,34 @@ bool streq(const char *s1, const char *s2) {
     if (strcmp(s1, s2) == 0) return true;
     return false;
 }
+
+bool is_control_pressed(XKeyEvent *xke) {
+    if (!xke) return false;
+    return (xke->state & ControlMask) == ControlMask;
+}
+
+bool is_shift_pressed(XKeyEvent *xke) {
+    if (!xke) return false;
+    return (xke->state & ShiftMask) == ShiftMask;
+}
+
+bool is_mod1_pressed(XKeyEvent *xke) {
+    if (!xke) return false;
+    return (xke->state & Mod1Mask) == Mod1Mask;
+}
+
+bool is_mod2_pressed(XKeyEvent *xke) {
+    if (!xke) return false;
+    return (xke->state & Mod2Mask) == Mod2Mask;
+}
+
+bool is_mod3_pressed(XKeyEvent *xke) {
+    if (!xke) return false;
+    return (xke->state & Mod3Mask) == Mod3Mask;
+}
+
+bool is_mod4_pressed(XKeyEvent *xke) {
+    if (!xke) return false;
+    return (xke->state & Mod4Mask) == Mod4Mask;
+}
+
