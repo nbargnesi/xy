@@ -51,11 +51,9 @@ void main_loop() {
         }
 
         if (FD_ISSET(global_x_fd, &set)) {
-            log_debug(global_log, "servicing X");
             XNextEvent(d, &e);
             event_handler(&e);
         } else if (FD_ISSET(global_ipc_fd, &set)) {
-            log_debug(global_log, "servicing IPC");
             ipc_buffer = malloc(MSG_LEN);
             memset(ipc_buffer, 0, MSG_LEN);
             read(global_ipc_fd, ipc_buffer, MSG_LEN);
@@ -85,8 +83,6 @@ void key_pressed(XEvent *ev) {
     XKeyEvent *xke = &ev->xkey;
     KeySym keysym = XKeycodeToKeysym(global_display, xke->keycode, 0);
     const char *keystr = XKeysymToString(keysym);
-    int state = xke->state;
-    if (is_shift_pressed(xke)) fprintf(stderr, "shifting\n");
 }
 
 void key_released(XEvent *ev) {
