@@ -17,6 +17,7 @@
 
 #include "util.h"
 #include "types.h"
+#include "constants.h"
 
 #include <ctype.h>
 
@@ -85,5 +86,30 @@ bool is_mod3_pressed(XKeyEvent *xke) {
 bool is_mod4_pressed(XKeyEvent *xke) {
     if (!xke) return false;
     return (xke->state & Mod4Mask) == Mod4Mask;
+}
+
+bool is_ks_pressed(const char *ks, XKeyEvent *xke) {
+    if (!ks) return false;
+    // XXX: ks2 is never freed
+    fprintf(stderr, "ks: %s\n", ks);
+    char *ks2 = strdup(ks);
+    bool shft = is_shift_pressed(xke);
+    bool ctrl = is_control_pressed(xke);
+    bool mod1 = is_mod1_pressed(xke);
+    bool mod2 = is_mod2_pressed(xke);
+    bool mod3 = is_mod3_pressed(xke);
+    bool mod4 = is_mod4_pressed(xke);
+    char *token = strtok(ks2, " ");
+    while (token) {
+        fprintf(stderr, "%s\n", token);
+        if (streq(token, SHIFT_KS) && !shft) return false;
+        if (streq(token, CTRL_KS) && !ctrl) return false;
+        if (streq(token, MOD1_KS) && !mod1) return false;
+        if (streq(token, MOD2_KS) && !mod2) return false;
+        if (streq(token, MOD3_KS) && !mod3) return false;
+        if (streq(token, MOD4_KS) && !mod4) return false;
+        token = strtok(NULL, " ");
+    }
+    return true;
 }
 

@@ -36,13 +36,37 @@ struct Config {
 
 typedef struct Config CONFIG;
 
+/*
+ * Function: get_config
+ */
 CONFIG * get_config(const char *);
 
+/*
+ * Function: empty_config
+ */
 CONFIG * empty_config();
 
+/*
+ * Function: free_config
+ */
 void free_config(CONFIG *);
 
+/*
+ * Function: get_config_value
+ */
 const char * get_config_value(CONFIG *, const char *);
+
+/*
+ * Function: set_config_value
+ */
+void set_config_value(CONFIG *, const char *, const char *);
+
+/*
+ * Function: fill_config
+ *
+ * Inserts any missing configuration items into the provided configuration.
+ */
+void fill_config(CONFIG *);
 
 /*
  * Function: configure
@@ -52,14 +76,19 @@ const char * get_config_value(CONFIG *, const char *);
 void configure(CONFIG *);
 
 /*
- * Function: skipWindowManagerCheck
+ * Function: skip_window_manager_check
  */
-bool skipWindowManagerCheck();
+bool skip_window_manager_check();
 
 /*
- * Function: changeWindowManagerName
+ * Function: change_window_manager_name
  */
-const char * changeWindowManagerName();
+const char * change_window_manager_name();
+
+/*
+ * Function: get_menu_shortcut
+ */
+const char * get_menu_shortcut();
 
 #endif
 

@@ -110,9 +110,76 @@
  * 47002
  * (end)
  */
-#define DEFAULT_BROADCAST_PORT 47002
+#define DEFAULT_BROADCAST_PORT "47002"
+
+/*
+ * Define: KS_SEPARATOR
+ *
+ * Defines how key shortcuts are to specified and parsed.
+ */
+#define KS_SEPARATOR " "
+
+/*
+ * Define: MOD1_KS
+ */
+#define MOD1_KS "Mod1"
+
+/*
+ * Define: MOD2_KS
+ */
+#define MOD2_KS "Mod2"
+
+/*
+ * Define: MOD3_KS
+ */
+#define MOD3_KS "Mod3"
+
+/*
+ * Define: MOD4_KS
+ */
+#define MOD4_KS "Mod4"
+
+/*
+ * Define: SHIFT_KS
+ */
+#define SHIFT_KS "Shift"
+
+/*
+ * Define: CTRL_KS
+ */
+#define CTRL_KS "Control"
+
+/*
+ * Define: CFG_KS_MENU
+ *
+ * <XY_CONFIG> entry to control the key shortcut used to launch the menu.
+ * (code)
+ * key_shortcut_menu = <mask> <keyname>
+ * (end)
+ *
+ * Examples masks: Mod4 Shift Control
+ *
+ * Defaults to <DEFAULT_KS_MENU>.
+ */
+#define CFG_KS_MENU "key_shortcut_menu"
+
+/*
+ * Define: DEFAULT_KS_MENU
+ *
+ * <XY_CONFIG> entry default value of <CFG_KS_MENU>.
+ *
+ * Default:
+ * (code)
+ * Mod4 Return
+ * (end)
+ */
+#define DEFAULT_KS_MENU "Mod4"KS_SEPARATOR"Return"
 
 #define STARTUP_MSG "starting up"
+
+#define IPC_STARTUP_MSG "IPC started"
+
+#define BROADCAST_STARTUP_MSG "broadcast started"
 
 #define STARTED_MSG "started"
 
@@ -123,6 +190,8 @@
 #define PONG_MSG "PONG"
 
 #define INIT_LOGGING_FAILURE "failed to start logging"
+
+#define INIT_IPC_FAILURE "failed to start IPC"
 
 #define INIT_BROADCAST_FAILURE "failed to start broadcast"
 

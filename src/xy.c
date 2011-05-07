@@ -83,6 +83,9 @@ void key_pressed(XEvent *ev) {
     XKeyEvent *xke = &ev->xkey;
     KeySym keysym = XKeycodeToKeysym(global_display, xke->keycode, 0);
     const char *keystr = XKeysymToString(keysym);
+    if (is_ks_pressed(get_menu_shortcut(), xke)) {
+        // TODO: launch a menu
+    }
 }
 
 void key_released(XEvent *ev) {

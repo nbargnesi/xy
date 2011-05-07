@@ -106,9 +106,62 @@ const char *get_config_value(CONFIG *cfg, const char *name) {
     return NULL;
 }
 
+void set_config_value(CONFIG *cfg, const char *name, const char *value) {
+    // Create a CONFIG_ENTRY for the name/value tokens.
+    CONFIG_ENTRY *ce = malloc(sizeof(CONFIG_ENTRY));
+    memset(ce, 0, sizeof(CONFIG_ENTRY));
+    ce->name = strdup(name);
+    ce->value = strdup(value);
+    ce->next = NULL;
+
+    // If no entries exist...
+    if (cfg->num_entries == 0) {
+        // ce becomes head and tail
+        cfg->head = ce;
+        cfg->tail = ce;
+    } else {
+        // ce becomes tail
+        cfg->tail->next = ce;
+        cfg->tail = ce;
+    }
+}
+
+void fill_config(CONFIG *cfg) {
+
+    char *name = CFG_SKIP_WINDOW_MGR_CHECK;
+    char *value = DEFAULT_SKIP_WINDOW_MGR_CHECK;
+    if (!get_config_value(global_cfg, name)) {
+        set_config_value(global_cfg, name, value);
+    }
+
+    name = CFG_WINDOW_MGR_NAME;
+    value = DEFAULT_WINDOW_MGR_NAME;
+    if (!get_config_value(global_cfg, name)) {
+        set_config_value(global_cfg, name, value);
+    }
+
+    name = CFG_BROADCAST_GROUP;
+    value = DEFAULT_BROADCAST_GROUP;
+    if (!get_config_value(global_cfg, name)) {
+        set_config_value(global_cfg, name, value);
+    }
+
+    name = CFG_BROADCAST_PORT;
+    value = DEFAULT_BROADCAST_PORT;
+    if (!get_config_value(global_cfg, name)) {
+        set_config_value(global_cfg, name, value);
+    }
+
+    name = CFG_KS_MENU;
+    value = DEFAULT_KS_MENU;
+    if (!get_config_value(global_cfg, name)) {
+        set_config_value(global_cfg, name, value);
+    }
+}
+
 void configure(CONFIG *cfg) {
     // Should we skip the window manager check?
-    if (!skipWindowManagerCheck()) {
+    if (!skip_window_manager_check()) {
         if (is_window_manager_running(global_display)) {
             log_fatal(global_log, WINDOW_MGR_RUNNING);
         }
@@ -116,22 +169,27 @@ void configure(CONFIG *cfg) {
         log_info(global_log, SKIP_WINDOW_MGR_CHECK_MSG);
 
     // Should we change the window manager's name?
-    const char *wmname = changeWindowManagerName();
+    const char *wmname = change_window_manager_name();
     if (wmname) {
         log_info(global_log, CHANGE_WINDOW_MGR_NAME_MSG);
         change_name(global_display, wmname);
     }
 }
 
-bool skipWindowManagerCheck() {
+bool skip_window_manager_check() {
     const char *wmcheck = get_config_value(global_cfg, CFG_SKIP_WINDOW_MGR_CHECK);
     if (!wmcheck || streq(wmcheck, "true"))
         return true;
     return false;
 }
 
-const char * changeWindowManagerName() {
+const char * change_window_manager_name() {
     const char *wmname = get_config_value(global_cfg, CFG_WINDOW_MGR_NAME);
     return wmname;
+}
+
+const char * get_menu_shortcut() {
+    const char *ks = get_config_value(global_cfg, CFG_KS_MENU);
+    return ks;
 }
 

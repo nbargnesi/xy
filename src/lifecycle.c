@@ -70,7 +70,7 @@ static void write_default_config(const char *rcpath) {
     fprintf(cfg, "%s\n", DEFAULT_BROADCAST_GROUP);
 
     fprintf(cfg, "%s = ", CFG_BROADCAST_PORT);
-    fprintf(cfg, "%d\n", DEFAULT_BROADCAST_PORT);
+    fprintf(cfg, "%s\n", DEFAULT_BROADCAST_PORT);
 
     fclose(cfg);
 }
@@ -117,11 +117,15 @@ void xy_startup() {
     global_cfg = xy_rc_init();
     global_display = open_display();
     global_x_fd = ConnectionNumber(global_display);
+    fill_config(global_cfg);
     configure(global_cfg);
 
-    // TODO fill_config(globalcfg);
-    //
-    ipc_init("/home/nick/.xy/ipc");
+    if (!ipc_init()) {
+        fprintf(stderr, INIT_IPC_FAILURE);
+        exit(1);
+    }
+    log_info(global_log, IPC_STARTUP_MSG);
+
     const char *group = get_config_value(global_cfg, CFG_BROADCAST_GROUP);
     const char *portstr = get_config_value(global_cfg, CFG_BROADCAST_PORT);
     const uint port = atoi(portstr);
@@ -130,6 +134,8 @@ void xy_startup() {
         fprintf(stderr, INIT_BROADCAST_FAILURE);
         exit(1);
     }
+    log_info(global_log, BROADCAST_STARTUP_MSG);
+
     broadcast_send(STARTUP_MSG);
     transition(STARTED);
 }

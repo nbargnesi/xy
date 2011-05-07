@@ -22,8 +22,19 @@
 static struct sockaddr_un *ipc_sckt;
 static const char *ipc_path;
 
-bool ipc_init(const char *path) {
+bool ipc_init() {
+    char *home = getenv("HOME");
+    if (!home) DIE;
+
+    const int bufsize = strlen(home) + strlen(IPC_SOCKET_PATH) + 2;
+    char *path = malloc(bufsize);
+    memset(path, 0, bufsize);
+    strcat(path, home);
+    strcat(path, "/");
+    strcat(path, IPC_SOCKET_PATH);
+
     ipc_path = strdup(path);
+    free(path);
     unlink(ipc_path);
     ipc_sckt = malloc(sizeof(struct sockaddr_un));
     global_ipc_fd = socket(AF_UNIX, SOCK_DGRAM, 0);
