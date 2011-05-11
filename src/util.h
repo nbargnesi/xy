@@ -21,6 +21,13 @@
 #include "core.h"
 
 /*
+ * Function: dump_stack
+ *
+ * Dumps some number of stack frames to stderr.
+ */
+void dump_stack(int);
+
+/*
  * Function: change_name
  *
  * TODO Document me.

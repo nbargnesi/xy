@@ -65,7 +65,6 @@ void main_loop() {
 
 // TODO break out into main.c
 int main(int argc, char **argv) {
-    FUNCTION_TRACE
     transition(STARTING_UP);
     return 0;
 }
@@ -82,9 +81,8 @@ void ipc_ping() {
 void key_pressed(XEvent *ev) {
     XKeyEvent *xke = &ev->xkey;
     KeySym keysym = XKeycodeToKeysym(global_display, xke->keycode, 0);
-    const char *keystr = XKeysymToString(keysym);
     if (is_ks_pressed(get_menu_shortcut(), xke)) {
-        // TODO: launch a menu
+        fprintf(stderr, "menu shortcut pressed\n");
     }
 }
 

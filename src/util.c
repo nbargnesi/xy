@@ -15,11 +15,22 @@
  * along with xy.  If not, see <http://www.gnu.org/licenses/>.
  */
 
+#include "xy.h"
 #include "util.h"
 #include "types.h"
 #include "constants.h"
 
 #include <ctype.h>
+#include <execinfo.h>
+
+void dump_stack(int num_frames) {
+    void *ptrs[num_frames];
+    size_t count = backtrace(ptrs, num_frames);
+    char **funcs = backtrace_symbols(ptrs, num_frames);
+    for (uint i = 0; i < count; i++)
+        fprintf(stderr, "%s\n", funcs[i]);
+    free(funcs);
+}
 
 void change_name(Display *d, const char *name) {
     if (!name) return;
@@ -89,9 +100,11 @@ bool is_mod4_pressed(XKeyEvent *xke) {
 }
 
 bool is_ks_pressed(const char *ks, XKeyEvent *xke) {
-    if (!ks) return false;
-    // XXX: ks2 is never freed
-    fprintf(stderr, "ks: %s\n", ks);
+    if (!ks) {
+        return false;
+    }
+    KeySym keysym = XKeycodeToKeysym(global_display, xke->keycode, 0);
+    const char *keystr = XKeysymToString(keysym);
     char *ks2 = strdup(ks);
     bool shft = is_shift_pressed(xke);
     bool ctrl = is_control_pressed(xke);
@@ -101,15 +114,26 @@ bool is_ks_pressed(const char *ks, XKeyEvent *xke) {
     bool mod4 = is_mod4_pressed(xke);
     char *token = strtok(ks2, " ");
     while (token) {
-        fprintf(stderr, "%s\n", token);
-        if (streq(token, SHIFT_KS) && !shft) return false;
-        if (streq(token, CTRL_KS) && !ctrl) return false;
-        if (streq(token, MOD1_KS) && !mod1) return false;
-        if (streq(token, MOD2_KS) && !mod2) return false;
-        if (streq(token, MOD3_KS) && !mod3) return false;
-        if (streq(token, MOD4_KS) && !mod4) return false;
+        if (streq(token, SHIFT_KS) && !shft) goto return_false;
+        else if (streq(token, CTRL_KS) && !ctrl) goto return_false;
+        else if (streq(token, MOD1_KS) && !mod1) goto return_false;
+        else if (streq(token, MOD2_KS) && !mod2) goto return_false;
+        else if (streq(token, MOD3_KS) && !mod3) goto return_false;
+        else if (streq(token, MOD4_KS) && !mod4) goto return_false;
+
+        if (streq(token, keystr)) {
+            goto return_true;
+        }
+
         token = strtok(NULL, " ");
     }
+
+return_false:
+    free(ks2);
+    return false;
+
+return_true:
+    free(ks2);
     return true;
 }
 
