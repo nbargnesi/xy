@@ -83,6 +83,8 @@ void key_pressed(XEvent *ev) {
     KeySym keysym = XKeycodeToKeysym(global_display, xke->keycode, 0);
     if (is_ks_pressed(get_menu_shortcut(), xke)) {
         fprintf(stderr, "menu shortcut pressed\n");
+    } else if (is_ks_pressed(get_terminal_shortcut(), xke)) {
+        fprintf(stderr, "terminal shortcut pressed\n");
     }
 }
 

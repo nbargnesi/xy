@@ -90,5 +90,10 @@ const char * change_window_manager_name();
  */
 const char * get_menu_shortcut();
 
+/*
+ * Function: get_terminal_shortcut
+ */
+const char * get_terminal_shortcut();
+
 #endif
 

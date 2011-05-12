@@ -170,10 +170,36 @@
  *
  * Default:
  * (code)
+ * Mod4 p
+ * (end)
+ */
+#define DEFAULT_KS_MENU "Mod4"KS_SEPARATOR"p"
+
+/*
+ * Define: CFG_KS_TERMINAL
+ *
+ * <XY_CONFIG> entry to control the key shortcut used to launch a terminal.
+ * (code)
+ * key_shortcut_terminal = <mask> <keyname>
+ * (end)
+ *
+ * Examples masks: Mod4 Shift Control
+ *
+ * Defaults to <DEFAULT_KS_TERMINAL>.
+ */
+#define CFG_KS_TERMINAL "key_shortcut_terminal"
+
+/*
+ * Define: DEFAULT_KS_TERMINAL
+ *
+ * <XY_CONFIG> entry default value of <CFG_KS_TERMINAL>.
+ *
+ * Default:
+ * (code)
  * Mod4 Return
  * (end)
  */
-#define DEFAULT_KS_MENU "Mod4"KS_SEPARATOR"Return"
+#define DEFAULT_KS_TERMINAL "Mod4"KS_SEPARATOR"Return"
 
 #define STARTUP_MSG "starting up"
 
