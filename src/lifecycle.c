@@ -146,6 +146,7 @@ void xy_started() {
 }
 
 void xy_shutting_down() {
+    broadcast_send(SHUTTING_DOWN_MSG);
     log_info(global_log, SHUTTING_DOWN_MSG);
 
     if (global_cfg) free_config(global_cfg);

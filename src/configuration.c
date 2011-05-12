@@ -163,6 +163,12 @@ void fill_config(CONFIG *cfg) {
     if (!get_config_value(global_cfg, name)) {
         set_config_value(global_cfg, name, value);
     }
+
+    name = CFG_KS_QUIT;
+    value = DEFAULT_KS_QUIT;
+    if (!get_config_value(global_cfg, name)) {
+        set_config_value(global_cfg, name, value);
+    }
 }
 
 void configure(CONFIG *cfg) {
@@ -201,6 +207,11 @@ const char * get_menu_shortcut() {
 
 const char * get_terminal_shortcut() {
     const char *ks = get_config_value(global_cfg, CFG_KS_TERMINAL);
+    return ks;
+}
+
+const char * get_quit_shortcut() {
+    const char *ks = get_config_value(global_cfg, CFG_KS_QUIT);
     return ks;
 }
 

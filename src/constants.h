@@ -201,6 +201,32 @@
  */
 #define DEFAULT_KS_TERMINAL "Mod4"KS_SEPARATOR"Return"
 
+/*
+ * Define: CFG_KS_QUIT
+ *
+ * <XY_CONFIG> entry to control the key shortcut used to quit.
+ * (code)
+ * key_shortcut_terminal = <mask> <keyname>
+ * (end)
+ *
+ * Examples masks: Mod4 Shift Control
+ *
+ * Defaults to <DEFAULT_KS_QUIT>.
+ */
+#define CFG_KS_QUIT "key_shortcut_quit"
+
+/*
+r* Define: DEFAULT_KS_QUIT
+ *
+ * <XY_CONFIG> entry default value of <CFG_KS_QUIT>.
+ *
+ * Default:
+ * (code)
+ * Mod4 q
+ * (end)
+ */
+#define DEFAULT_KS_QUIT "Mod4"KS_SEPARATOR"q"
+
 #define STARTUP_MSG "starting up"
 
 #define IPC_STARTUP_MSG "IPC started"

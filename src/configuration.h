@@ -95,5 +95,10 @@ const char * get_menu_shortcut();
  */
 const char * get_terminal_shortcut();
 
+/*
+ * Function: get_quit_shortcut
+ */
+const char * get_quit_shortcut();
+
 #endif
 

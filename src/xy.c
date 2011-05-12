@@ -70,7 +70,6 @@ int main(int argc, char **argv) {
 }
 
 void ipc_quit() {
-    broadcast_send(SHUTTING_DOWN_MSG);
     transition(SHUTTING_DOWN);
 }
 
@@ -85,6 +84,8 @@ void key_pressed(XEvent *ev) {
         fprintf(stderr, "menu shortcut pressed\n");
     } else if (is_ks_pressed(get_terminal_shortcut(), xke)) {
         fprintf(stderr, "terminal shortcut pressed\n");
+    } else if (is_ks_pressed(get_quit_shortcut(), xke)) {
+        transition(SHUTTING_DOWN);
     }
 }
 
