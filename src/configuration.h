@@ -62,6 +62,11 @@ const char * get_config_value(CONFIG *, const char *);
 void set_config_value(CONFIG *, const char *, const char *);
 
 /*
+ * Function: write_default_config
+ */
+void write_default_config(const char *);
+
+/*
  * Function: fill_config
  *
  * Inserts any missing configuration items into the provided configuration.
@@ -99,6 +104,11 @@ const char * get_terminal_shortcut();
  * Function: get_quit_shortcut
  */
 const char * get_quit_shortcut();
+
+/*
+ * Function: get_terminal_command
+ */
+const char * get_terminal_command();
 
 #endif
 

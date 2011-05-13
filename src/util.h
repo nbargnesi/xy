@@ -28,6 +28,18 @@
 void dump_stack(int);
 
 /*
+ * Function: parse_command
+ */
+void parse_command(char *, char **);
+
+/*
+ * Function: exec
+ *
+ * Executes the supplied command, forking first.
+ */
+void exec(const char *);
+
+/*
  * Function: change_name
  *
  * TODO Document me.

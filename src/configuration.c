@@ -126,6 +126,39 @@ void set_config_value(CONFIG *cfg, const char *name, const char *value) {
     }
 }
 
+void write_default_config(const char *rcpath) {
+    FILE *cfg = fopen(rcpath, "w");
+    // XXX: validate cfg
+
+    fprintf(cfg, "%s\n", DEFAULT_CFG_FILE_HDR);
+
+    fprintf(cfg, "%s = ", CFG_SKIP_WINDOW_MGR_CHECK);
+    fprintf(cfg, "%s\n", DEFAULT_SKIP_WINDOW_MGR_CHECK);
+
+    fprintf(cfg, "%s = ", CFG_WINDOW_MGR_NAME);
+    fprintf(cfg, "%s\n", DEFAULT_WINDOW_MGR_NAME);
+
+    fprintf(cfg, "%s = ", CFG_BROADCAST_GROUP);
+    fprintf(cfg, "%s\n", DEFAULT_BROADCAST_GROUP);
+
+    fprintf(cfg, "%s = ", CFG_BROADCAST_PORT);
+    fprintf(cfg, "%s\n", DEFAULT_BROADCAST_PORT);
+
+    fprintf(cfg, "%s = ", CFG_KS_QUIT);
+    fprintf(cfg, "%s\n", DEFAULT_KS_QUIT);
+
+    fprintf(cfg, "%s = ", CFG_KS_TERMINAL);
+    fprintf(cfg, "%s\n", DEFAULT_KS_TERMINAL);
+
+    fprintf(cfg, "%s = ", CFG_KS_MENU);
+    fprintf(cfg, "%s\n", DEFAULT_KS_MENU);
+
+    fprintf(cfg, "%s = ", CFG_TERMINAL_COMMAND);
+    fprintf(cfg, "%s\n", DEFAULT_TERMINAL_COMMAND);
+
+    fclose(cfg);
+}
+
 void fill_config(CONFIG *cfg) {
 
     char *name = CFG_SKIP_WINDOW_MGR_CHECK;
@@ -166,6 +199,12 @@ void fill_config(CONFIG *cfg) {
 
     name = CFG_KS_QUIT;
     value = DEFAULT_KS_QUIT;
+    if (!get_config_value(global_cfg, name)) {
+        set_config_value(global_cfg, name, value);
+    }
+
+    name = CFG_TERMINAL_COMMAND;
+    value = DEFAULT_TERMINAL_COMMAND;
     if (!get_config_value(global_cfg, name)) {
         set_config_value(global_cfg, name, value);
     }
@@ -213,5 +252,10 @@ const char * get_terminal_shortcut() {
 const char * get_quit_shortcut() {
     const char *ks = get_config_value(global_cfg, CFG_KS_QUIT);
     return ks;
+}
+
+const char * get_terminal_command() {
+    const char *cmd = get_config_value(global_cfg, CFG_TERMINAL_COMMAND);
+    return cmd;
 }
 

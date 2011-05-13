@@ -24,11 +24,19 @@ void main_loop() {
 
     Display *d = global_display;
     int s = DefaultScreen(global_display);
-    Window w = XCreateSimpleWindow(d, RootWindow(d, s), 10, 10, 200, 200, 1,
+    Window root = RootWindow(d, s);
+    Window w = XCreateSimpleWindow(d, root, 10, 10, 200, 200, 1,
             BlackPixel(d, s), WhitePixel(d, s));
     XSelectInput(d, w, 0x1ffff);
     XMapWindow(d, w);
     XSync(global_display, False);
+
+    /*
+    XSetWindowAttributes wa;
+    wa.event_mask = SubstructureRedirectMask|SubstructureNotifyMask|StructureNotifyMask|PropertyChangeMask;
+    XChangeWindowAttributes(d, root, CWEventMask, &wa);
+    XSelectInput(d, root, wa.event_mask | 0x1ffff);
+    */
 
     XEvent e;
     int max_sd, rc;
@@ -84,6 +92,7 @@ void key_pressed(XEvent *ev) {
         fprintf(stderr, "menu shortcut pressed\n");
     } else if (is_ks_pressed(get_terminal_shortcut(), xke)) {
         fprintf(stderr, "terminal shortcut pressed\n");
+        exec(get_terminal_command());
     } else if (is_ks_pressed(get_quit_shortcut(), xke)) {
         transition(SHUTTING_DOWN);
     }

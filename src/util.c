@@ -32,6 +32,30 @@ void dump_stack(int num_frames) {
     free(funcs);
 }
 
+void parse_command(char *cmd, char **argv) {
+    while (*cmd != '\0') {
+        while (*cmd == ' ') *cmd++ = '\0';
+        *argv++ = cmd;
+        while (*cmd != '\0' && *cmd != ' ') cmd++;
+    }
+    *argv = '\0';
+}
+
+void exec(const char *cmd) {
+    char * cmd_dup = strdup(cmd);
+    char *argv[64];
+    parse_command(cmd_dup, argv);
+    pid_t pid = fork();
+    if (pid < 0) {
+        perror("fork failed");
+        DIE
+    } else if (pid == 0) {
+        execvp(*argv, argv);
+        exit(0);
+    }
+    free(cmd_dup);
+}
+
 void change_name(Display *d, const char *name) {
     if (!name) return;
     Window root = DefaultRootWindow(d);

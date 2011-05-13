@@ -55,26 +55,6 @@ static void xy_dir_init() {
     free(path);
 }
 
-static void write_default_config(const char *rcpath) {
-    FILE *cfg = fopen(rcpath, "w");
-
-    fprintf(cfg, "%s\n", DEFAULT_CFG_FILE_HDR);
-
-    fprintf(cfg, "%s = ", CFG_SKIP_WINDOW_MGR_CHECK);
-    fprintf(cfg, "%s\n", DEFAULT_SKIP_WINDOW_MGR_CHECK);
-
-    fprintf(cfg, "%s = ", CFG_WINDOW_MGR_NAME);
-    fprintf(cfg, "%s\n", DEFAULT_WINDOW_MGR_NAME);
-
-    fprintf(cfg, "%s = ", CFG_BROADCAST_GROUP);
-    fprintf(cfg, "%s\n", DEFAULT_BROADCAST_GROUP);
-
-    fprintf(cfg, "%s = ", CFG_BROADCAST_PORT);
-    fprintf(cfg, "%s\n", DEFAULT_BROADCAST_PORT);
-
-    fclose(cfg);
-}
-
 /*
  * Function: xy_rc_init
  *
@@ -116,6 +96,7 @@ void xy_startup() {
     xy_dir_init();
     global_cfg = xy_rc_init();
     global_display = open_display();
+    // XXX validate global_display
     global_x_fd = ConnectionNumber(global_display);
     fill_config(global_cfg);
     configure(global_cfg);

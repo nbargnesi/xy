@@ -113,6 +113,29 @@
 #define DEFAULT_BROADCAST_PORT "47002"
 
 /*
+ * Define: CFG_TERMINAL_COMMAND
+ *
+ * <XY_CONFIG> entry to control launching a terminal.
+ * (code)
+ * terminal_command = <terminal_command>
+ * (end)
+ * Defaults to <DEFAULT_TERMINAL_COMMAND>.
+ */
+#define CFG_TERMINAL_COMMAND "terminal_command"
+
+/*
+ * Define: DEFAULT_TERMINAL_COMMAND
+ *
+ * <XY_CONFIG> entry default value of <CFG_TERMINAL_COMMAND>.
+ *
+ * Default:
+ * (code)
+ * xterm
+ * (end)
+ */
+#define DEFAULT_TERMINAL_COMMAND "xterm"
+
+/*
  * Define: KS_SEPARATOR
  *
  * Defines how key shortcuts are to specified and parsed.
