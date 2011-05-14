@@ -19,12 +19,26 @@
 #include "xy.h"
 
 void event_handler(XEvent *xev) {
+    XKeyEvent *keyev;
+    XConfigureRequestEvent *conreqev;
+    XConfigureEvent *confev;
+    XDestroyWindowEvent *destroyev;
+    XCrossingEvent *crossev;
+    XExposeEvent *exposeev;
+    XFocusChangeEvent *focchgev;
+    XMappingEvent *mapev;
+    XMapRequestEvent *mapreqev;
+    XPropertyEvent *propev;
+    XUnmapEvent *unmapev;
+
     switch (xev->type) {
         case KeyPress:
-            key_pressed(xev);
+            keyev = &xev->xkey;
+            key_pressed(keyev);
             break;
         case KeyRelease:
-            key_released(xev);
+            keyev = &xev->xkey;
+            key_released(keyev);
             break;
         case ButtonPress:
             fprintf(stderr, "button press event\n");
@@ -36,13 +50,15 @@ void event_handler(XEvent *xev) {
             fprintf(stderr, "motion notify event\n");
             break;
         case EnterNotify:
-            fprintf(stderr, "enter notify\n");
+            crossev = &xev->xcrossing;
+            enter_notify(crossev);
             break;
         case LeaveNotify:
             fprintf(stderr, "leave notify\n");
             break;
         case FocusIn:
-            fprintf(stderr, "focus-in\n");
+            focchgev = &xev->xfocus;
+            focus_event(focchgev); 
             break;
         case FocusOut:
             fprintf(stderr, "focus-out\n");
@@ -51,7 +67,8 @@ void event_handler(XEvent *xev) {
             fprintf(stderr, "keymap notify\n");
             break;
         case Expose:
-            fprintf(stderr, "expose\n");
+            exposeev = &xev->xexpose;
+            expose(exposeev);
             break;
         case GraphicsExpose:
             fprintf(stderr, "graphics expose\n");
@@ -69,22 +86,27 @@ void event_handler(XEvent *xev) {
             fprintf(stderr, "destroy notify\n");
             break;
         case UnmapNotify:
-            fprintf(stderr, "unmap notify\n");
+            unmapev = &xev->xunmap;
+            unmap_notify(unmapev);
             break;
         case MapNotify:
-            fprintf(stderr, "map notify\n");
+            mapev = &xev->xmapping;
+            mapping_notify(mapev);
             break;
         case MapRequest:
-            fprintf(stderr, "map request\n");
+            mapreqev = &xev->xmaprequest;
+            map_request(mapreqev);
             break;
         case ReparentNotify:
             fprintf(stderr, "reparent notify\n");
             break;
         case ConfigureNotify:
-            fprintf(stderr, "configure notify\n");
+            confev = &xev->xconfigure;
+            configure_notify(confev);
             break;
         case ConfigureRequest:
-            fprintf(stderr, "configure request\n");
+            conreqev = &xev->xconfigurerequest;
+            configure_request(conreqev);
             break;
         case GravityNotify:
             fprintf(stderr, "gravity notify\n");
@@ -99,7 +121,8 @@ void event_handler(XEvent *xev) {
             fprintf(stderr, "circulate request\n");
             break;
         case PropertyNotify:
-            fprintf(stderr, "property notify\n");
+            propev = &xev->xproperty;
+            property_notify(propev);
             break;
         case SelectionClear:
             fprintf(stderr, "selection clear\n");

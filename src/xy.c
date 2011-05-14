@@ -85,19 +85,48 @@ void ipc_ping() {
     broadcast_send(PONG_MSG);
 }
 
-void key_pressed(XEvent *ev) {
-    XKeyEvent *xke = &ev->xkey;
-    KeySym keysym = XKeycodeToKeysym(global_display, xke->keycode, 0);
-    if (is_ks_pressed(get_menu_shortcut(), xke)) {
+void key_pressed(XKeyEvent *ev) {
+    KeySym keysym = XKeycodeToKeysym(global_display, ev->keycode, 0);
+    if (is_ks_pressed(get_menu_shortcut(), ev)) {
         fprintf(stderr, "menu shortcut pressed\n");
-    } else if (is_ks_pressed(get_terminal_shortcut(), xke)) {
+    } else if (is_ks_pressed(get_terminal_shortcut(), ev)) {
         fprintf(stderr, "terminal shortcut pressed\n");
         exec(get_terminal_command());
-    } else if (is_ks_pressed(get_quit_shortcut(), xke)) {
+    } else if (is_ks_pressed(get_quit_shortcut(), ev)) {
         transition(SHUTTING_DOWN);
     }
 }
 
-void key_released(XEvent *ev) {
+void key_released(XKeyEvent *ev) {
+}
+
+void configure_request(XConfigureRequestEvent *ev) {
+}
+
+void configure_notify(XConfigureEvent *ev) {
+}
+
+void destroy_notify(XDestroyWindowEvent *ev) {
+}
+
+void enter_notify(XCrossingEvent *ev) {
+}
+
+void expose(XExposeEvent *ev) {
+}
+
+void focus_event(XFocusChangeEvent *ev) {
+}
+
+void mapping_notify(XMappingEvent *ev) {
+}
+
+void map_request(XMapRequestEvent *ev) {
+}
+
+void property_notify(XPropertyEvent *ev) {
+}
+
+void unmap_notify(XUnmapEvent *ev) {
 }
 

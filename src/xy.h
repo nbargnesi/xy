@@ -88,12 +88,62 @@ void ipc_ping();
 /*
  * Function: key_pressed
  */
-void key_pressed(XEvent *);
+void key_pressed(XKeyEvent *);
 
 /*
  * Function: key_released
  */
-void key_released(XEvent *);
+void key_released(XKeyEvent *);
+
+/*
+ * Function: configure_request
+ */
+void configure_request(XConfigureRequestEvent *);
+
+/*
+ * Function: configure_notify
+ */
+void configure_notify(XConfigureEvent *);
+
+/*
+ * Function: destroy_notify
+ */
+void destroy_notify(XDestroyWindowEvent *);
+
+/*
+ * Function: enter_notify
+ */
+void enter_notify(XCrossingEvent *);
+
+/*
+ * Function: expose
+ */
+void expose(XExposeEvent *);
+
+/*
+ * Function: focus_event
+ */
+void focus_event(XFocusChangeEvent *);
+
+/*
+ * Function: mapping_notify
+ */
+void mapping_notify(XMappingEvent *);
+
+/*
+ * Function: map_request
+ */
+void map_request(XMapRequestEvent *);
+
+/*
+ * Function: property_notify
+ */
+void property_notify(XPropertyEvent *);
+
+/*
+ * Function: unmap_notify
+ */
+void unmap_notify(XUnmapEvent *);
 
 #endif
 
