@@ -1,0 +1,6 @@
+#!/usr/bin/env bash
+valgrind --tool=memcheck \
+         --leak-check=full \
+         --trace-children=yes \
+         --track-fds=yes \
+         src/xy
