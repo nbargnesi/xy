@@ -71,12 +71,6 @@ void main_loop() {
     }
 }
 
-// TODO break out into main.c
-int main(int argc, char **argv) {
-    transition(STARTING_UP);
-    return 0;
-}
-
 void ipc_quit() {
     transition(SHUTTING_DOWN);
 }

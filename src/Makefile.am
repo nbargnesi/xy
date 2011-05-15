@@ -23,7 +23,8 @@ xy_SOURCES = die.c \
 			 xyxlib.c \
 			 sysinfo.c \
 			 broadcast.c \
-			 ipc.c
+			 ipc.c \
+			 main.c
 
 xy_LDADD = @XLIB_LIBS@ \
 		   @XINERAMA_LIBS@ \
