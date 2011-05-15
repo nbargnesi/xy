@@ -25,5 +25,6 @@ src/xy.o
 src/xyxlib.o
 src/die.o
 src/event.o
+src/main.o
 autom4te.cache
 
