@@ -23,7 +23,7 @@
 /*
  * Function: is_xinerama_active
  *
- * Returns *true* if the Xinerama extension is active, *false* otherwise..
+ * Returns *true* if the Xinerama extension is active, *false* otherwise.
  */
 bool is_xinerama_active(Display *);
 
