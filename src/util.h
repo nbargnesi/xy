@@ -93,8 +93,8 @@ bool is_mod4_pressed(XKeyEvent *);
 /*
  * Function: is_ks_pressed
  *
- * Returns true if the key shortcut is being pressed in the key event, false
- * otherwise.
+ * Returns *true* if the key shortcut is being pressed in the key event,
+ * *false* otherwise.
  */
 bool is_ks_pressed(const char *, XKeyEvent *);
 

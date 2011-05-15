@@ -20,9 +20,26 @@
 
 #include "core.h"
 
+/*
+ * Function: is_xinerama_active
+ *
+ * Returns *true* if the Xinerama extension is active, *false* otherwise..
+ */
 bool is_xinerama_active(Display *);
+
+/*
+ * Function: get_xinerama_screen_count
+ *
+ * Returns the number of Xinerama screens.
+ */
 int get_xinerama_screen_count(Display *);
-XineramaScreenInfo * get_xinerama_screen(Display *, int);
+
+/*
+ * Function: get_xinerama_screens
+ *
+ * Returns the Xinerama screens for the supplied display, setting the number
+ * of displays to the integer pointed to by the second argument.
+ */
 XineramaScreenInfo * get_xinerama_screens(Display *, int *);
 
 #endif

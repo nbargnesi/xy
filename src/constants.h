@@ -286,5 +286,9 @@ r* Define: DEFAULT_KS_QUIT
 
 #define DEFAULT_CFG_FILE_HDR "# xy configuration file"
 
+#define DISPLAYS_FOUND "found %d displays"
+
+#define DISPLAY_MESSAGE "display %d characteristics: %d %d %d %d"
+
 #endif
 

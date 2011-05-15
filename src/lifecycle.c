@@ -22,6 +22,7 @@
 #include "constants.h"
 #include "broadcast.h"
 #include "ipc.h"
+#include "xinerama.h"
 
 #include <dirent.h>
 #include <stdio.h>
@@ -96,7 +97,11 @@ void xy_startup() {
     xy_dir_init();
     global_cfg = xy_rc_init();
     global_display = open_display();
-    // XXX validate global_display
+    if (!global_display) {
+        fprintf(stderr, "failed to open display\n");
+        DIE
+    }
+
     global_x_fd = ConnectionNumber(global_display);
     fill_config(global_cfg);
     configure(global_cfg);
@@ -118,6 +123,32 @@ void xy_startup() {
     log_info(global_log, BROADCAST_STARTUP_MSG);
 
     broadcast_send(STARTUP_MSG);
+
+    if (!is_xinerama_active(global_display)) {
+        fprintf(stderr, "Xinerama is not active\n");
+        DIE
+    }
+
+    global_num_screens = malloc(sizeof(uint *));
+    global_screens = XineramaQueryScreens(global_display, global_num_screens);
+
+    char buffer[MSG_LEN];
+    memset(buffer, 0, MSG_LEN);
+    sprintf(buffer, DISPLAYS_FOUND, *global_num_screens);
+    broadcast_send(buffer);
+    memset(buffer, 0, MSG_LEN);
+
+    for (int i = 0; i < *global_num_screens; i++) {
+        int sn = global_screens[i].screen_number;
+        int xorg = global_screens[i].x_org;
+        int yorg = global_screens[i].y_org;
+        int width = global_screens[i].width;
+        int height = global_screens[i].height;
+        sprintf(buffer, DISPLAY_MESSAGE, sn, xorg, yorg, width, height);
+        broadcast_send(buffer);
+        memset(buffer, 0, MSG_LEN);
+    }
+     
     transition(STARTED);
 }
 

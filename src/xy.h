@@ -51,29 +51,55 @@ int main(int, char **);
 void main_loop();
 
 /*
- * Global: global_display
+ * Variable: global_display
+ *
+ * Global X display connection.
  */
 Display *global_display;
 
 /*
- * Global: global_cfg
+ * Variable: global_cfg
+ *
+ * Global configuration.
  */
 CONFIG *global_cfg;
 
 /*
- * Global: global_log
+ * Variable: global_log
+ *
+ * Global log4c log.
  */
 log4c_category_t *global_log;
 
 /*
- * Global: global_ipc_fd
+ * Variable: global_ipc_fd
+ *
+ * Global IPC file descriptor.
  */
 int global_ipc_fd;
 
 /*
- * Global: global_x_fd
+ * Variable: global_x_fd
+ *
+ * Global X connection file descriptor.
  */
 int global_x_fd;
+
+/*
+ * Variable: global_num_screens
+ *
+ * The number of Xinerama screens available.
+ * See <global_screens>.
+ */
+int *global_num_screens;
+
+/*
+ * Variable: global_screens
+ *
+ * The Xinerama screens available.
+ * See <global_num_screens>.
+ */
+XineramaScreenInfo *global_screens;
 
 /*
  * Function: ipc_quit
