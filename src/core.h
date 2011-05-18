@@ -129,7 +129,15 @@ void die(const char *, ...);
  *
  * Dies a dignified death, i.e., with function and line number.
  */
-#define DIE die("DIE %s:%d\n", __func__, __LINE__);
+#define DIE die("DIE: %s:%d\n", __FILE__, __LINE__)
+
+/*
+ * Macro: DIE_MSG
+ *
+ * Dies a dignified death, i.e., with function, line number, and a suicide
+ * note.
+ */
+#define DIE_MSG(x) die("DIE (%s): %s:%d\n", x, __FILE__, __LINE__)
 
 /*
  * Macro: likely

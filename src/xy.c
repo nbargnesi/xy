@@ -55,7 +55,7 @@ void main_loop() {
         rc = select(max_sd, &set, NULL, NULL, NULL);
         if (unlikely(rc < 0)) {
             perror("select()");
-            DIE
+            DIE;
         }
 
         if (FD_ISSET(global_x_fd, &set)) {

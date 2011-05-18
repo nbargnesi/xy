@@ -98,8 +98,7 @@ void xy_startup() {
     global_cfg = xy_rc_init();
     global_display = open_display();
     if (!global_display) {
-        fprintf(stderr, "failed to open display\n");
-        DIE
+        DIE_MSG("failed to open display");
     }
 
     global_x_fd = ConnectionNumber(global_display);
@@ -124,10 +123,12 @@ void xy_startup() {
 
     broadcast_send(STARTUP_MSG);
 
+    /*
     if (!is_xinerama_active(global_display)) {
         fprintf(stderr, "Xinerama is not active\n");
-        DIE
+        DIE;
     }
+    */
 
     global_num_screens = malloc(sizeof(uint *));
     global_screens = XineramaQueryScreens(global_display, global_num_screens);

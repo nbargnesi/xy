@@ -48,7 +48,7 @@ void exec(const char *cmd) {
     pid_t pid = fork();
     if (pid < 0) {
         perror("fork failed");
-        DIE
+        DIE;
     } else if (pid == 0) {
         execvp(*argv, argv);
         exit(0);
