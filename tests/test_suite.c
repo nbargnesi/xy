@@ -15,22 +15,20 @@
  * along with xy.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#ifndef XYXLIB_H_
-#define XYXLIB_H_
-
+#include <check.h>
+#include <stdio.h>
 #include "core.h"
+#include "monitor.h"
+#include "xyxlib.h"
 
-typedef struct {
-    Window *root;
-    Window *parent;
-    Window *children;
-    uint num_children;
-} CLIENTS_LIST;
+/*
+ * TEST HARNESS MAIN FUNCTION
+ */
+int main(void) {
+    fprintf(stderr, "%s\n", __FILE__);
+    Display *d = open_display();
+    if (!d) fail("no display");
+    fail("display");
+    return 0;
+}
 
-CLIENTS_LIST * get_clients(Display *, Window);
-XWindowAttributes * get_attributes(Display *, Window);
-void clients_list_free(CLIENTS_LIST *);
-Display * open_display();
-void close_display(Display *);
-
-#endif

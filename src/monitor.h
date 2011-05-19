@@ -15,12 +15,19 @@
  * along with xy.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#include "display.h"
+#ifndef MONITOR_H_
+#define MONITOR_H_
 
-Display * open_display() {
-    return XOpenDisplay(NULL);
-}
-void close_display(Display *d) {
-    XCloseDisplay(d);
-}
+#include "types.h"
+
+struct Monitor {
+    uint ordinal;
+    uint width;
+    uint height;
+    uint xorigin;
+    uint yorigin;
+};
+typedef struct Monitor MONITOR;
+
+#endif
 

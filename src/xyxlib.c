@@ -57,3 +57,10 @@ void clients_list_free(CLIENTS_LIST *cl) {
     free(cl);
 }
 
+Display * open_display() {
+    return XOpenDisplay(NULL);
+}
+void close_display(Display *d) {
+    XCloseDisplay(d);
+}
+

@@ -1,3 +1,3 @@
-SUBDIRS = src
+SUBDIRS = src . tests
 
 mc: maintainer-clean

@@ -22,7 +22,6 @@
 #include "constants.h"
 #include "util.h"
 #include "color.h"
-#include "display.h"
 #include "restart.h"
 #include "screen.h"
 #include "wmcheck.h"
@@ -35,6 +34,7 @@
 #include "broadcast.h"
 #include "ipc.h"
 #include "event.h"
+#include "monitor.h"
 
 /*
  * Function: main

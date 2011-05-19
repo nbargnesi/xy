@@ -42,6 +42,9 @@
 /* Define to 1 if you have the <xosd.h> header file. */
 #undef HAVE_XOSD_H
 
+/* Define to 1 if your C compiler doesn't accept -c and -o together. */
+#undef NO_MINUS_C_MINUS_O
+
 /* Name of package */
 #undef PACKAGE
 
