@@ -32,8 +32,9 @@ POST_INSTALL = :
 NORMAL_UNINSTALL = :
 PRE_UNINSTALL = :
 POST_UNINSTALL = :
+@HAVE_CHECK_TRUE@TESTS = test_suite$(EXEEXT)
+@HAVE_CHECK_TRUE@test_suite_PROGRAMS = test_suite$(EXEEXT)
 bin_PROGRAMS = xy$(EXEEXT)
-noinst_PROGRAMS =
 subdir = src
 DIST_COMMON = $(srcdir)/Makefile.am $(srcdir)/Makefile.in
 ACLOCAL_M4 = $(top_srcdir)/aclocal.m4
@@ -44,17 +45,25 @@ mkinstalldirs = $(install_sh) -d
 CONFIG_HEADER = $(top_builddir)/config.h
 CONFIG_CLEAN_FILES =
 CONFIG_CLEAN_VPATH_FILES =
-am__installdirs = "$(DESTDIR)$(bindir)"
-PROGRAMS = $(bin_PROGRAMS) $(noinst_PROGRAMS)
-am_xy_OBJECTS = die.$(OBJEXT) monitor.$(OBJEXT) event.$(OBJEXT) \
-	state.$(OBJEXT) lifecycle.$(OBJEXT) osd.$(OBJEXT) xy.$(OBJEXT) \
-	util.$(OBJEXT) wmcheck.$(OBJEXT) restart.$(OBJEXT) \
-	xinerama.$(OBJEXT) screen.$(OBJEXT) color.$(OBJEXT) \
-	configuration.$(OBJEXT) logging.$(OBJEXT) xyxlib.$(OBJEXT) \
-	sysinfo.$(OBJEXT) broadcast.$(OBJEXT) ipc.$(OBJEXT) \
-	main.$(OBJEXT)
-xy_OBJECTS = $(am_xy_OBJECTS)
+am__installdirs = "$(DESTDIR)$(bindir)" "$(DESTDIR)$(test_suitedir)"
+PROGRAMS = $(bin_PROGRAMS) $(test_suite_PROGRAMS)
+am__test_suite_SOURCES_DIST = test_suite.c
+@HAVE_CHECK_TRUE@am_test_suite_OBJECTS =  \
+@HAVE_CHECK_TRUE@	test_suite-test_suite.$(OBJEXT)
+test_suite_OBJECTS = $(am_test_suite_OBJECTS)
 am__DEPENDENCIES_1 =
+@HAVE_CHECK_TRUE@test_suite_DEPENDENCIES = xyxlib.o monitor.o \
+@HAVE_CHECK_TRUE@	xinerama.o $(am__DEPENDENCIES_1)
+test_suite_LINK = $(CCLD) $(test_suite_CFLAGS) $(CFLAGS) $(AM_LDFLAGS) \
+	$(LDFLAGS) -o $@
+am_xy_OBJECTS = die.$(OBJEXT) monitor.$(OBJEXT) event.$(OBJEXT) \
+	state.$(OBJEXT) lifecycle.$(OBJEXT) osd.$(OBJEXT) \
+	util.$(OBJEXT) restart.$(OBJEXT) xinerama.$(OBJEXT) \
+	screen.$(OBJEXT) color.$(OBJEXT) configuration.$(OBJEXT) \
+	logging.$(OBJEXT) xyxlib.$(OBJEXT) sysinfo.$(OBJEXT) \
+	broadcast.$(OBJEXT) ipc.$(OBJEXT) wmcheck.$(OBJEXT) \
+	xy.$(OBJEXT) main.$(OBJEXT)
+xy_OBJECTS = $(am_xy_OBJECTS)
 xy_DEPENDENCIES = $(am__DEPENDENCIES_1)
 DEFAULT_INCLUDES = -I.@am__isrc@ -I$(top_builddir)
 depcomp = $(SHELL) $(top_srcdir)/depcomp
@@ -64,10 +73,12 @@ COMPILE = $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) \
 	$(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS)
 CCLD = $(CC)
 LINK = $(CCLD) $(AM_CFLAGS) $(CFLAGS) $(AM_LDFLAGS) $(LDFLAGS) -o $@
-SOURCES = $(xy_SOURCES)
-DIST_SOURCES = $(xy_SOURCES)
+SOURCES = $(test_suite_SOURCES) $(xy_SOURCES)
+DIST_SOURCES = $(am__test_suite_SOURCES_DIST) $(xy_SOURCES)
 ETAGS = etags
 CTAGS = ctags
+am__tty_colors = \
+red=; grn=; lgn=; blu=; std=
 DISTFILES = $(DIST_COMMON) $(DIST_SOURCES) $(TEXINFOS) $(EXTRA_DIST)
 ACLOCAL = @ACLOCAL@
 AMTAR = @AMTAR@
@@ -172,15 +183,28 @@ top_builddir = @top_builddir@
 top_srcdir = @top_srcdir@
 AM_CFLAGS = -D_GNU_SOURCE -Wno-unused-variable -Werror
 AM_LDFLAGS = "-Wl,--as-needed"
+XYLIBS = @XLIB_LIBS@ \
+		 @XINERAMA_LIBS@ \
+		 @XFT_LIBS@ \
+		 @LIBUSB_LIBS@
+
+@HAVE_CHECK_TRUE@test_suitedir = .
+@HAVE_CHECK_TRUE@test_suite_CFLAGS = @CHECK_CFLAGS@
+@HAVE_CHECK_TRUE@test_suite_SOURCES = test_suite.c
+@HAVE_CHECK_TRUE@test_suite_LDADD = @CHECK_LIBS@ \
+@HAVE_CHECK_TRUE@				   xyxlib.o \
+@HAVE_CHECK_TRUE@				   monitor.o \
+@HAVE_CHECK_TRUE@				   xinerama.o \
+@HAVE_CHECK_TRUE@				   $(XYLIBS)
+
 xy_SOURCES = die.c \
 			 monitor.c \
 			 event.c \
 			 state.c \
 			 lifecycle.c \
 			 osd.c \
-			 xy.c \
 			 util.c \
-			 wmcheck.c \
+			 modules \
 			 restart.c \
 			 xinerama.c \
 			 screen.c \
@@ -191,12 +215,9 @@ xy_SOURCES = die.c \
 			 sysinfo.c \
 			 broadcast.c \
 			 ipc.c \
+			 wmcheck.c \
+			 xy.c \
 			 main.c
-
-XYLIBS = @XLIB_LIBS@ \
-		 @XINERAMA_LIBS@ \
-		 @XFT_LIBS@ \
-		 @LIBUSB_LIBS@
 
 xy_LDADD = $(XYLIBS)
 all: all-am
@@ -270,9 +291,46 @@ uninstall-binPROGRAMS:
 
 clean-binPROGRAMS:
 	-test -z "$(bin_PROGRAMS)" || rm -f $(bin_PROGRAMS)
+install-test_suitePROGRAMS: $(test_suite_PROGRAMS)
+	@$(NORMAL_INSTALL)
+	test -z "$(test_suitedir)" || $(MKDIR_P) "$(DESTDIR)$(test_suitedir)"
+	@list='$(test_suite_PROGRAMS)'; test -n "$(test_suitedir)" || list=; \
+	for p in $$list; do echo "$$p $$p"; done | \
+	sed 's/$(EXEEXT)$$//' | \
+	while read p p1; do if test -f $$p; \
+	  then echo "$$p"; echo "$$p"; else :; fi; \
+	done | \
+	sed -e 'p;s,.*/,,;n;h' -e 's|.*|.|' \
+	    -e 'p;x;s,.*/,,;s/$(EXEEXT)$$//;$(transform);s/$$/$(EXEEXT)/' | \
+	sed 'N;N;N;s,\n, ,g' | \
+	$(AWK) 'BEGIN { files["."] = ""; dirs["."] = 1 } \
+	  { d=$$3; if (dirs[d] != 1) { print "d", d; dirs[d] = 1 } \
+	    if ($$2 == $$4) files[d] = files[d] " " $$1; \
+	    else { print "f", $$3 "/" $$4, $$1; } } \
+	  END { for (d in files) print "f", d, files[d] }' | \
+	while read type dir files; do \
+	    if test "$$dir" = .; then dir=; else dir=/$$dir; fi; \
+	    test -z "$$files" || { \
+	      echo " $(INSTALL_PROGRAM_ENV) $(INSTALL_PROGRAM) $$files '$(DESTDIR)$(test_suitedir)$$dir'"; \
+	      $(INSTALL_PROGRAM_ENV) $(INSTALL_PROGRAM) $$files "$(DESTDIR)$(test_suitedir)$$dir" || exit $$?; \
+	    } \
+	; done
 
-clean-noinstPROGRAMS:
-	-test -z "$(noinst_PROGRAMS)" || rm -f $(noinst_PROGRAMS)
+uninstall-test_suitePROGRAMS:
+	@$(NORMAL_UNINSTALL)
+	@list='$(test_suite_PROGRAMS)'; test -n "$(test_suitedir)" || list=; \
+	files=`for p in $$list; do echo "$$p"; done | \
+	  sed -e 'h;s,^.*/,,;s/$(EXEEXT)$$//;$(transform)' \
+	      -e 's/$$/$(EXEEXT)/' `; \
+	test -n "$$list" || exit 0; \
+	echo " ( cd '$(DESTDIR)$(test_suitedir)' && rm -f" $$files ")"; \
+	cd "$(DESTDIR)$(test_suitedir)" && rm -f $$files
+
+clean-test_suitePROGRAMS:
+	-test -z "$(test_suite_PROGRAMS)" || rm -f $(test_suite_PROGRAMS)
+test_suite$(EXEEXT): $(test_suite_OBJECTS) $(test_suite_DEPENDENCIES) 
+	@rm -f test_suite$(EXEEXT)
+	$(test_suite_LINK) $(test_suite_OBJECTS) $(test_suite_LDADD) $(LIBS)
 xy$(EXEEXT): $(xy_OBJECTS) $(xy_DEPENDENCIES) 
 	@rm -f xy$(EXEEXT)
 	$(LINK) $(xy_OBJECTS) $(xy_LDADD) $(LIBS)
@@ -298,6 +356,7 @@ distclean-compile:
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/screen.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/state.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/sysinfo.Po@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/test_suite-test_suite.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/util.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/wmcheck.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/xinerama.Po@am__quote@
@@ -317,6 +376,20 @@ distclean-compile:
 @AMDEP_TRUE@@am__fastdepCC_FALSE@	source='$<' object='$@' libtool=no @AMDEPBACKSLASH@
 @AMDEP_TRUE@@am__fastdepCC_FALSE@	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
 @am__fastdepCC_FALSE@	$(COMPILE) -c `$(CYGPATH_W) '$<'`
+
+test_suite-test_suite.o: test_suite.c
+@am__fastdepCC_TRUE@	$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(test_suite_CFLAGS) $(CFLAGS) -MT test_suite-test_suite.o -MD -MP -MF $(DEPDIR)/test_suite-test_suite.Tpo -c -o test_suite-test_suite.o `test -f 'test_suite.c' || echo '$(srcdir)/'`test_suite.c
+@am__fastdepCC_TRUE@	$(am__mv) $(DEPDIR)/test_suite-test_suite.Tpo $(DEPDIR)/test_suite-test_suite.Po
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	source='test_suite.c' object='test_suite-test_suite.o' libtool=no @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCC_FALSE@	$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(test_suite_CFLAGS) $(CFLAGS) -c -o test_suite-test_suite.o `test -f 'test_suite.c' || echo '$(srcdir)/'`test_suite.c
+
+test_suite-test_suite.obj: test_suite.c
+@am__fastdepCC_TRUE@	$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(test_suite_CFLAGS) $(CFLAGS) -MT test_suite-test_suite.obj -MD -MP -MF $(DEPDIR)/test_suite-test_suite.Tpo -c -o test_suite-test_suite.obj `if test -f 'test_suite.c'; then $(CYGPATH_W) 'test_suite.c'; else $(CYGPATH_W) '$(srcdir)/test_suite.c'; fi`
+@am__fastdepCC_TRUE@	$(am__mv) $(DEPDIR)/test_suite-test_suite.Tpo $(DEPDIR)/test_suite-test_suite.Po
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	source='test_suite.c' object='test_suite-test_suite.obj' libtool=no @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCC_FALSE@	$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(test_suite_CFLAGS) $(CFLAGS) -c -o test_suite-test_suite.obj `if test -f 'test_suite.c'; then $(CYGPATH_W) 'test_suite.c'; else $(CYGPATH_W) '$(srcdir)/test_suite.c'; fi`
 
 ID: $(HEADERS) $(SOURCES) $(LISP) $(TAGS_FILES)
 	list='$(SOURCES) $(HEADERS) $(LISP) $(TAGS_FILES)'; \
@@ -370,6 +443,98 @@ GTAGS:
 distclean-tags:
 	-rm -f TAGS ID GTAGS GRTAGS GSYMS GPATH tags
 
+check-TESTS: $(TESTS)
+	@failed=0; all=0; xfail=0; xpass=0; skip=0; \
+	srcdir=$(srcdir); export srcdir; \
+	list=' $(TESTS) '; \
+	$(am__tty_colors); \
+	if test -n "$$list"; then \
+	  for tst in $$list; do \
+	    if test -f ./$$tst; then dir=./; \
+	    elif test -f $$tst; then dir=; \
+	    else dir="$(srcdir)/"; fi; \
+	    if $(TESTS_ENVIRONMENT) $${dir}$$tst; then \
+	      all=`expr $$all + 1`; \
+	      case " $(XFAIL_TESTS) " in \
+	      *[\ \	]$$tst[\ \	]*) \
+		xpass=`expr $$xpass + 1`; \
+		failed=`expr $$failed + 1`; \
+		col=$$red; res=XPASS; \
+	      ;; \
+	      *) \
+		col=$$grn; res=PASS; \
+	      ;; \
+	      esac; \
+	    elif test $$? -ne 77; then \
+	      all=`expr $$all + 1`; \
+	      case " $(XFAIL_TESTS) " in \
+	      *[\ \	]$$tst[\ \	]*) \
+		xfail=`expr $$xfail + 1`; \
+		col=$$lgn; res=XFAIL; \
+	      ;; \
+	      *) \
+		failed=`expr $$failed + 1`; \
+		col=$$red; res=FAIL; \
+	      ;; \
+	      esac; \
+	    else \
+	      skip=`expr $$skip + 1`; \
+	      col=$$blu; res=SKIP; \
+	    fi; \
+	    echo "$${col}$$res$${std}: $$tst"; \
+	  done; \
+	  if test "$$all" -eq 1; then \
+	    tests="test"; \
+	    All=""; \
+	  else \
+	    tests="tests"; \
+	    All="All "; \
+	  fi; \
+	  if test "$$failed" -eq 0; then \
+	    if test "$$xfail" -eq 0; then \
+	      banner="$$All$$all $$tests passed"; \
+	    else \
+	      if test "$$xfail" -eq 1; then failures=failure; else failures=failures; fi; \
+	      banner="$$All$$all $$tests behaved as expected ($$xfail expected $$failures)"; \
+	    fi; \
+	  else \
+	    if test "$$xpass" -eq 0; then \
+	      banner="$$failed of $$all $$tests failed"; \
+	    else \
+	      if test "$$xpass" -eq 1; then passes=pass; else passes=passes; fi; \
+	      banner="$$failed of $$all $$tests did not behave as expected ($$xpass unexpected $$passes)"; \
+	    fi; \
+	  fi; \
+	  dashes="$$banner"; \
+	  skipped=""; \
+	  if test "$$skip" -ne 0; then \
+	    if test "$$skip" -eq 1; then \
+	      skipped="($$skip test was not run)"; \
+	    else \
+	      skipped="($$skip tests were not run)"; \
+	    fi; \
+	    test `echo "$$skipped" | wc -c` -le `echo "$$banner" | wc -c` || \
+	      dashes="$$skipped"; \
+	  fi; \
+	  report=""; \
+	  if test "$$failed" -ne 0 && test -n "$(PACKAGE_BUGREPORT)"; then \
+	    report="Please report to $(PACKAGE_BUGREPORT)"; \
+	    test `echo "$$report" | wc -c` -le `echo "$$banner" | wc -c` || \
+	      dashes="$$report"; \
+	  fi; \
+	  dashes=`echo "$$dashes" | sed s/./=/g`; \
+	  if test "$$failed" -eq 0; then \
+	    echo "$$grn$$dashes"; \
+	  else \
+	    echo "$$red$$dashes"; \
+	  fi; \
+	  echo "$$banner"; \
+	  test -z "$$skipped" || echo "$$skipped"; \
+	  test -z "$$report" || echo "$$report"; \
+	  echo "$$dashes$$std"; \
+	  test "$$failed" -eq 0; \
+	else :; fi
+
 distdir: $(DISTFILES)
 	@srcdirstrip=`echo "$(srcdir)" | sed 's/[].[^$$\\*]/\\\\&/g'`; \
 	topsrcdirstrip=`echo "$(top_srcdir)" | sed 's/[].[^$$\\*]/\\\\&/g'`; \
@@ -401,10 +566,11 @@ distdir: $(DISTFILES)
 	  fi; \
 	done
 check-am: all-am
+	$(MAKE) $(AM_MAKEFLAGS) check-TESTS
 check: check-am
 all-am: Makefile $(PROGRAMS)
 installdirs:
-	for dir in "$(DESTDIR)$(bindir)"; do \
+	for dir in "$(DESTDIR)$(bindir)" "$(DESTDIR)$(test_suitedir)"; do \
 	  test -z "$$dir" || $(MKDIR_P) "$$dir"; \
 	done
 install: install-am
@@ -434,7 +600,7 @@ maintainer-clean-generic:
 	@echo "it deletes files that may require special tools to rebuild."
 clean: clean-am
 
-clean-am: clean-binPROGRAMS clean-generic clean-noinstPROGRAMS \
+clean-am: clean-binPROGRAMS clean-generic clean-test_suitePROGRAMS \
 	mostlyclean-am
 
 distclean: distclean-am
@@ -455,7 +621,7 @@ info: info-am
 
 info-am:
 
-install-data-am:
+install-data-am: install-test_suitePROGRAMS
 
 install-dvi: install-dvi-am
 
@@ -500,22 +666,24 @@ ps: ps-am
 
 ps-am:
 
-uninstall-am: uninstall-binPROGRAMS
+uninstall-am: uninstall-binPROGRAMS uninstall-test_suitePROGRAMS
 
-.MAKE: install-am install-strip
+.MAKE: check-am install-am install-strip
 
-.PHONY: CTAGS GTAGS all all-am check check-am clean clean-binPROGRAMS \
-	clean-generic clean-noinstPROGRAMS ctags distclean \
-	distclean-compile distclean-generic distclean-tags distdir dvi \
-	dvi-am html html-am info info-am install install-am \
-	install-binPROGRAMS install-data install-data-am install-dvi \
-	install-dvi-am install-exec install-exec-am install-html \
-	install-html-am install-info install-info-am install-man \
-	install-pdf install-pdf-am install-ps install-ps-am \
-	install-strip installcheck installcheck-am installdirs \
-	maintainer-clean maintainer-clean-generic mostlyclean \
-	mostlyclean-compile mostlyclean-generic pdf pdf-am ps ps-am \
-	tags uninstall uninstall-am uninstall-binPROGRAMS
+.PHONY: CTAGS GTAGS all all-am check check-TESTS check-am clean \
+	clean-binPROGRAMS clean-generic clean-test_suitePROGRAMS ctags \
+	distclean distclean-compile distclean-generic distclean-tags \
+	distdir dvi dvi-am html html-am info info-am install \
+	install-am install-binPROGRAMS install-data install-data-am \
+	install-dvi install-dvi-am install-exec install-exec-am \
+	install-html install-html-am install-info install-info-am \
+	install-man install-pdf install-pdf-am install-ps \
+	install-ps-am install-strip install-test_suitePROGRAMS \
+	installcheck installcheck-am installdirs maintainer-clean \
+	maintainer-clean-generic mostlyclean mostlyclean-compile \
+	mostlyclean-generic pdf pdf-am ps ps-am tags uninstall \
+	uninstall-am uninstall-binPROGRAMS \
+	uninstall-test_suitePROGRAMS
 
 
 # Tell versions [3.59,3.63) of GNU make to not export all variables.

@@ -5040,11 +5040,13 @@ done
 
 # Check whether --enable-tests was given.
 if test "${enable_tests+set}" = set; then :
-  enableval=$enable_tests;
+  enableval=$enable_tests; disable_tests=yes
+else
+  disable_tests=no
 fi
 
 
-if test "x$enable_tests" != "xno"; then
+if test "x$disable_tests" != "xyes"; then
 
 pkg_failed=no
 { $as_echo "$as_me:${as_lineno-$LINENO}: checking for CHECK" >&5
@@ -5118,7 +5120,7 @@ else
     have_check=no
 fi
 
-if test "x$enable_tests" = "xyes" -a "x$have_check" != "xyes"; then
+if test "x$disable_tests" = "xno" -a "x$have_check" != "xyes"; then
     as_fn_error $? "Testing dependencies not met.  Check is required." "$LINENO" 5
 fi
 
@@ -5143,7 +5145,7 @@ _ACEOF
 fi
 
 
-ac_config_files="$ac_config_files Makefile src/Makefile tests/Makefile"
+ac_config_files="$ac_config_files Makefile src/Makefile"
 
 
 cat >confcache <<\_ACEOF
@@ -5869,7 +5871,6 @@ do
     "depfiles") CONFIG_COMMANDS="$CONFIG_COMMANDS depfiles" ;;
     "Makefile") CONFIG_FILES="$CONFIG_FILES Makefile" ;;
     "src/Makefile") CONFIG_FILES="$CONFIG_FILES src/Makefile" ;;
-    "tests/Makefile") CONFIG_FILES="$CONFIG_FILES tests/Makefile" ;;
 
   *) as_fn_error $? "invalid argument: \`$ac_config_target'" "$LINENO" 5;;
   esac

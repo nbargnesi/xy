@@ -32,7 +32,7 @@ int get_xinerama_screen_count(Display *d) {
     return i;
 }
 
-XineramaScreenInfo * get_xinerama_screen(Display *d, int *i) {
+XineramaScreenInfo * get_xinerama_screens(Display *d, int *i) {
     return XineramaQueryScreens(d, i);
 }
 
