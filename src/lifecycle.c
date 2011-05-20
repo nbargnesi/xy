@@ -131,7 +131,7 @@ void xy_startup() {
     */
 
     global_num_screens = malloc(sizeof(uint));
-    global_screens = XineramaQueryScreens(global_display, global_num_screens);
+    global_screens = get_xinerama_screens(global_display, global_num_screens);
 
     char buffer[MSG_LEN];
     memset(buffer, 0, MSG_LEN);
