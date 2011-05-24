@@ -60,43 +60,7 @@ bool streq(const char *, const char *);
  */
 char * trim(char *str);
 
-/*
- * Function: is_control_pressed
- */
-bool is_control_pressed(XKeyEvent *);
-
-/*
- * Function: is_shift_pressed
- */
-bool is_shift_pressed(XKeyEvent *);
-
-/*
- * Function: is_mod1_pressed
- */
-bool is_mod1_pressed(XKeyEvent *);
-
-/*
- * Function: is_mod2_pressed
- */
-bool is_mod2_pressed(XKeyEvent *);
-
-/*
- * Function: is_mod3_pressed
- */
-bool is_mod3_pressed(XKeyEvent *);
-
-/*
- * Function: is_mod4_pressed
- */
-bool is_mod4_pressed(XKeyEvent *);
-
-/*
- * Function: is_ks_pressed
- *
- * Returns *true* if the key shortcut is being pressed in the key event,
- * *false* otherwise.
- */
-bool is_ks_pressed(const char *, XKeyEvent *);
+void restart(const char *);
 
 #endif
 

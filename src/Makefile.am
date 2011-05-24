@@ -30,10 +30,7 @@ xy_SOURCES = die.c \
 			 osd.c \
 			 util.c \
 			 modules \
-			 restart.c \
 			 xinerama.c \
-			 screen.c \
-			 color.c \
 			 configuration.c \
 			 logging.c \
 			 xyxlib.c \

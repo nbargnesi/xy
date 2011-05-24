@@ -33,4 +33,9 @@ void clients_list_free(CLIENTS_LIST *);
 Display * open_display();
 void close_display(Display *);
 
+/*
+ * Function: get_color
+ */
+ulong get_color(const char *, Display *, Colormap);
+
 #endif

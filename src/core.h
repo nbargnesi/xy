@@ -52,6 +52,8 @@
 #include <X11/extensions/Xdamage.h>
 #include <X11/extensions/Xrender.h>
 
+#include "types.h"
+
 void die(const char *, ...);
 
 /*

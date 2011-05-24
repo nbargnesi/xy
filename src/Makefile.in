@@ -58,8 +58,7 @@ test_suite_LINK = $(CCLD) $(test_suite_CFLAGS) $(CFLAGS) $(AM_LDFLAGS) \
 	$(LDFLAGS) -o $@
 am_xy_OBJECTS = die.$(OBJEXT) monitor.$(OBJEXT) event.$(OBJEXT) \
 	state.$(OBJEXT) lifecycle.$(OBJEXT) osd.$(OBJEXT) \
-	util.$(OBJEXT) restart.$(OBJEXT) xinerama.$(OBJEXT) \
-	screen.$(OBJEXT) color.$(OBJEXT) configuration.$(OBJEXT) \
+	util.$(OBJEXT) xinerama.$(OBJEXT) configuration.$(OBJEXT) \
 	logging.$(OBJEXT) xyxlib.$(OBJEXT) sysinfo.$(OBJEXT) \
 	broadcast.$(OBJEXT) ipc.$(OBJEXT) wmcheck.$(OBJEXT) \
 	xy.$(OBJEXT) main.$(OBJEXT)
@@ -205,10 +204,7 @@ xy_SOURCES = die.c \
 			 osd.c \
 			 util.c \
 			 modules \
-			 restart.c \
 			 xinerama.c \
-			 screen.c \
-			 color.c \
 			 configuration.c \
 			 logging.c \
 			 xyxlib.c \
@@ -342,7 +338,6 @@ distclean-compile:
 	-rm -f *.tab.c
 
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/broadcast.Po@am__quote@
-@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/color.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/configuration.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/die.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/event.Po@am__quote@
@@ -352,8 +347,6 @@ distclean-compile:
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/main.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/monitor.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/osd.Po@am__quote@
-@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/restart.Po@am__quote@
-@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/screen.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/state.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/sysinfo.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/test_suite-test_suite.Po@am__quote@

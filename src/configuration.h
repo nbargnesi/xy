@@ -18,8 +18,6 @@
 #ifndef CONFIGURATION_H_
 #define CONFIGURATION_H_
 
-#include "types.h"
-
 struct ConfigEntry {
     char *name;
     char *value;

@@ -18,7 +18,7 @@
 #ifndef MONITOR_H_
 #define MONITOR_H_
 
-#include "types.h"
+#include "core.h"
 
 struct Monitor {
     uint ordinal;
