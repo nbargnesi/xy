@@ -16,7 +16,6 @@ test_suite_SOURCES = test_suite.c
 test_suite_LDADD = @CHECK_LIBS@ \
 				   xyxlib.o \
 				   monitor.o \
-				   xinerama.o \
 				   $(XYLIBS)
 endif
 
@@ -30,14 +29,12 @@ xy_SOURCES = die.c \
 			 osd.c \
 			 util.c \
 			 modules \
-			 xinerama.c \
 			 configuration.c \
 			 logging.c \
 			 xyxlib.c \
 			 sysinfo.c \
 			 broadcast.c \
 			 ipc.c \
-			 wmcheck.c \
 			 xy.c \
 			 main.c
 

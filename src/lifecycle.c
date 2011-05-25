@@ -22,7 +22,7 @@
 #include "constants.h"
 #include "broadcast.h"
 #include "ipc.h"
-#include "xinerama.h"
+#include "xyxlib.h"
 
 #include <dirent.h>
 #include <stdio.h>

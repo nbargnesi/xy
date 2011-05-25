@@ -53,15 +53,14 @@ am__test_suite_SOURCES_DIST = test_suite.c
 test_suite_OBJECTS = $(am_test_suite_OBJECTS)
 am__DEPENDENCIES_1 =
 @HAVE_CHECK_TRUE@test_suite_DEPENDENCIES = xyxlib.o monitor.o \
-@HAVE_CHECK_TRUE@	xinerama.o $(am__DEPENDENCIES_1)
+@HAVE_CHECK_TRUE@	$(am__DEPENDENCIES_1)
 test_suite_LINK = $(CCLD) $(test_suite_CFLAGS) $(CFLAGS) $(AM_LDFLAGS) \
 	$(LDFLAGS) -o $@
 am_xy_OBJECTS = die.$(OBJEXT) monitor.$(OBJEXT) event.$(OBJEXT) \
 	state.$(OBJEXT) lifecycle.$(OBJEXT) osd.$(OBJEXT) \
-	util.$(OBJEXT) xinerama.$(OBJEXT) configuration.$(OBJEXT) \
-	logging.$(OBJEXT) xyxlib.$(OBJEXT) sysinfo.$(OBJEXT) \
-	broadcast.$(OBJEXT) ipc.$(OBJEXT) wmcheck.$(OBJEXT) \
-	xy.$(OBJEXT) main.$(OBJEXT)
+	util.$(OBJEXT) configuration.$(OBJEXT) logging.$(OBJEXT) \
+	xyxlib.$(OBJEXT) sysinfo.$(OBJEXT) broadcast.$(OBJEXT) \
+	ipc.$(OBJEXT) xy.$(OBJEXT) main.$(OBJEXT)
 xy_OBJECTS = $(am_xy_OBJECTS)
 xy_DEPENDENCIES = $(am__DEPENDENCIES_1)
 DEFAULT_INCLUDES = -I.@am__isrc@ -I$(top_builddir)
@@ -193,7 +192,6 @@ XYLIBS = @XLIB_LIBS@ \
 @HAVE_CHECK_TRUE@test_suite_LDADD = @CHECK_LIBS@ \
 @HAVE_CHECK_TRUE@				   xyxlib.o \
 @HAVE_CHECK_TRUE@				   monitor.o \
-@HAVE_CHECK_TRUE@				   xinerama.o \
 @HAVE_CHECK_TRUE@				   $(XYLIBS)
 
 xy_SOURCES = die.c \
@@ -204,14 +202,12 @@ xy_SOURCES = die.c \
 			 osd.c \
 			 util.c \
 			 modules \
-			 xinerama.c \
 			 configuration.c \
 			 logging.c \
 			 xyxlib.c \
 			 sysinfo.c \
 			 broadcast.c \
 			 ipc.c \
-			 wmcheck.c \
 			 xy.c \
 			 main.c
 
@@ -351,8 +347,6 @@ distclean-compile:
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/sysinfo.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/test_suite-test_suite.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/util.Po@am__quote@
-@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/wmcheck.Po@am__quote@
-@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/xinerama.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/xy.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/xyxlib.Po@am__quote@
 

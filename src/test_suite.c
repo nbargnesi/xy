@@ -20,7 +20,6 @@
 #include "core.h"
 #include "monitor.h"
 #include "xyxlib.h"
-#include "xinerama.h"
 
 START_TEST(display) {
     Display *d = open_display();

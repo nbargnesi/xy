@@ -17,6 +17,13 @@
 
 #include "xyxlib.h"
 
+static bool errored;
+
+static int xerrorHandler(Display *d, XErrorEvent *ee) {
+    errored  = true;
+    return 0;
+}
+
 CLIENTS_LIST * cl_init() {
     CLIENTS_LIST *ret = malloc(sizeof(CLIENTS_LIST));
     memset(ret, 0, sizeof(CLIENTS_LIST));
@@ -69,5 +76,33 @@ ulong get_color(const char *color, Display *d, Colormap colormap) {
     if (!XAllocNamedColor(d, colormap, color, &xc, &xc))
         return 0L;
     return xc.pixel;
+}
+
+bool is_xinerama_active(Display *d) {
+    if (XineramaIsActive(d) == True)
+        return true;
+    return false;
+}
+
+int get_xinerama_screen_count(Display *d) {
+    int i;
+    XineramaScreenInfo *xsi = XineramaQueryScreens(d, &i);
+    XFree(xsi);
+    return i;
+}
+
+XineramaScreenInfo * get_xinerama_screens(Display *d, int *i) {
+    return XineramaQueryScreens(d, i);
+}
+
+bool is_window_manager_running(Display *d) {
+    errored = false;
+    int (*currentHandler)(Display *, XErrorEvent *);
+    currentHandler = XSetErrorHandler(xerrorHandler);
+    XSelectInput(d, DefaultRootWindow(d), SubstructureRedirectMask);
+    XSync(d, False);
+    XSetErrorHandler(currentHandler);
+    if (errored) return true;
+    return false;
 }
 

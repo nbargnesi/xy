@@ -16,7 +16,6 @@
  */
 
 #include "constants.h"
-#include "wmcheck.h"
 #include "xy.h"
 #include "configuration.h"
 
