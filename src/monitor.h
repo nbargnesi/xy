@@ -29,5 +29,13 @@ struct Monitor {
 };
 typedef struct Monitor MONITOR;
 
+struct Monitors {
+    uint count;
+    MONITOR* monitors;
+};
+typedef struct Monitors MONITORS;
+
+MONITORS * init_monitors(Display *);
+
 #endif
 

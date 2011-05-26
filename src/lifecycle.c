@@ -23,6 +23,7 @@
 #include "broadcast.h"
 #include "ipc.h"
 #include "xyxlib.h"
+#include "monitor.h"
 
 #include <dirent.h>
 #include <stdio.h>
@@ -130,9 +131,7 @@ void xy_startup() {
     }
     */
 
-    global_num_screens = malloc(sizeof(uint));
-    global_screens = get_xinerama_screens(global_display, global_num_screens);
-
+    /*
     char buffer[MSG_LEN];
     memset(buffer, 0, MSG_LEN);
     sprintf(buffer, DISPLAYS_FOUND, *global_num_screens);
@@ -149,6 +148,9 @@ void xy_startup() {
         broadcast_send(buffer);
         memset(buffer, 0, MSG_LEN);
     }
+    */
+    
+    init_monitors(global_display);
      
     transition(STARTED);
 }

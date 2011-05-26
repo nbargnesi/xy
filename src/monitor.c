@@ -16,4 +16,33 @@
  */
 
 #include "monitor.h"
+#include "xy.h"
+#include "xyxlib.h"
+
+MONITORS * init_monitors(Display *d) {
+    if (is_xinerama_active(d)) {
+        int count;
+        XineramaScreenInfo *screens = get_xinerama_screens(d, &count);
+        if (!screens) return NULL;
+        return NULL;
+    } else {
+        Screen *screen = DefaultScreenOfDisplay(d);
+        if (!screen) return NULL;
+
+        MONITOR *m = malloc(sizeof(MONITOR));
+        memset(m, 0, sizeof(MONITOR));
+        m->ordinal = 0;
+        m->width = screen->width;
+        m->height = screen->height;
+        m->xorigin = 0;
+        m->yorigin = 0;
+
+        MONITORS *ms = malloc(sizeof(MONITORS));
+        memset(ms, 0, sizeof(MONITORS));
+        ms->count = 1;
+        ms->monitors = calloc(1, sizeof(MONITOR));
+        ms->monitors = m;
+        return ms;
+    }
+}
 
