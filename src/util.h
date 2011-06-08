@@ -24,25 +24,48 @@
  * Function: dump_stack
  *
  * Dumps some number of stack frames to stderr.
+ *
+ * Parameters:
+ *
+ *  int - number of frames
  */
 void dump_stack(int);
 
 /*
  * Function: parse_command
+ *
+ * Parses the string into pointers to strings, tokenized by " ".
+ *
+ * Parameters:
+ *
+ *  char * - the string to parse
+ *  char ** - the returned strings
  */
 void parse_command(char *, char **);
 
 /*
  * Function: exec
  *
- * Executes the supplied command, forking first.
+ * Executes the supplied command by calling *execvp*.  The command will be
+ * parsed before the exec call.
+ *
+ * Parameters:
+ *
+ *  const char * - command to execute
+ *
+ * See <parse_command>.
  */
 void exec(const char *);
 
 /*
  * Function: change_name
  *
- * TODO Document me.
+ * Changes the window manager's name.
+ *
+ * Parameters:
+ *
+ *  Display * - The display to use.
+ *  const char * - The name to use; NULL will return immediately
  */
 void change_name(Display *, const char *);
 
