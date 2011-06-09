@@ -20,6 +20,15 @@
 #include "core.h"
 #include "monitor.h"
 #include "xyxlib.h"
+#include "util.h"
+
+START_TEST(string_trim) {
+    char *testconst = "   remove some whitespace   ";
+    char *test = strdup(testconst);
+    test = trim(test);
+    if (!streq(test, "remove some whitespace")) fail("strings not equal"); 
+}
+END_TEST
 
 START_TEST(display) {
     Display *d = open_display();
@@ -79,6 +88,9 @@ static Suite * test_suite() {
     tcase_add_test(tc_xlib, display);
     tcase_add_test(tc_xlib, monitor);
     suite_add_tcase(ret, tc_xlib);
+    TCase *tc_util = tcase_create("util");
+    tcase_add_test(tc_util, string_trim);
+    suite_add_tcase(ret, tc_util);
     return ret;
 }
 

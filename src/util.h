@@ -71,18 +71,43 @@ void change_name(Display *, const char *);
 
 /*
  * Function: streq
+ * 
+ * Parameters:
+ *  const char * - string one
+ *  const char * - string two
  *
- * TODO Document me.
+ * Returns true if:
+ * (code)
+ * str1 == NULL && str2 == NULL
+ * (end)
+ * or
+ * (code)
+ * strcmp(str1, str2) == 0
+ * (end)
  */
 bool streq(const char *, const char *);
 
 /*
  * Function: trim
  *
- * TODO Document me.
+ * Remove the leading and trailing whitespace from the string, returning
+ * a pointer to the trimmed string.
+ *
+ * Parameters:
+ *
+ *  char * - String to trim
  */
 char * trim(char *str);
 
+/**
+ * Function: restart
+ *
+ * Invokes execlp using using the supplied command.
+ *
+ * Parameters:
+ *  
+ *  char * - command to pass to execlp
+ */
 void restart(const char *);
 
 #endif

@@ -16,6 +16,8 @@ test_suite_SOURCES = test_suite.c
 test_suite_LDADD = @CHECK_LIBS@ \
 				   xyxlib.o \
 				   monitor.o \
+				   util.o \
+				   die.o \
 				   $(XYLIBS)
 endif
 

@@ -52,8 +52,8 @@ am__test_suite_SOURCES_DIST = test_suite.c
 @HAVE_CHECK_TRUE@	test_suite-test_suite.$(OBJEXT)
 test_suite_OBJECTS = $(am_test_suite_OBJECTS)
 am__DEPENDENCIES_1 =
-@HAVE_CHECK_TRUE@test_suite_DEPENDENCIES = xyxlib.o monitor.o \
-@HAVE_CHECK_TRUE@	$(am__DEPENDENCIES_1)
+@HAVE_CHECK_TRUE@test_suite_DEPENDENCIES = xyxlib.o monitor.o util.o \
+@HAVE_CHECK_TRUE@	die.o $(am__DEPENDENCIES_1)
 test_suite_LINK = $(CCLD) $(test_suite_CFLAGS) $(CFLAGS) $(AM_LDFLAGS) \
 	$(LDFLAGS) -o $@
 am_xy_OBJECTS = die.$(OBJEXT) monitor.$(OBJEXT) event.$(OBJEXT) \
@@ -192,6 +192,8 @@ XYLIBS = @XLIB_LIBS@ \
 @HAVE_CHECK_TRUE@test_suite_LDADD = @CHECK_LIBS@ \
 @HAVE_CHECK_TRUE@				   xyxlib.o \
 @HAVE_CHECK_TRUE@				   monitor.o \
+@HAVE_CHECK_TRUE@				   util.o \
+@HAVE_CHECK_TRUE@				   die.o \
 @HAVE_CHECK_TRUE@				   $(XYLIBS)
 
 xy_SOURCES = die.c \
