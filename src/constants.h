@@ -135,40 +135,71 @@
  */
 #define DEFAULT_TERMINAL_COMMAND "xterm"
 
-/*
- * Define: KS_SEPARATOR
- *
- * Defines how key shortcuts are to specified and parsed.
- */
 #define KS_SEPARATOR " "
 
 /*
  * Define: MOD1_KS
+ *
+ * The Mod1 key shortcut.
+ *
+ * (code)
+ * Mod1
+ * (end)
  */
 #define MOD1_KS "Mod1"
 
 /*
  * Define: MOD2_KS
+ *
+ * The Mod2 key shortcut.
+ *
+ * (code)
+ * Mod2
+ * (end)
  */
 #define MOD2_KS "Mod2"
 
 /*
  * Define: MOD3_KS
+ *
+ * The Mod3 key shortcut.
+ *
+ * (code)
+ * Mod3
+ * (end)
  */
 #define MOD3_KS "Mod3"
 
 /*
  * Define: MOD4_KS
+ *
+ * The Mod4 key shortcut.
+ *
+ * (code)
+ * Mod4
+ * (end)
  */
 #define MOD4_KS "Mod4"
 
 /*
  * Define: SHIFT_KS
+ *
+ * The Shift key shortcut.
+ *
+ * (code)
+ * Shift
+ * (end)
  */
 #define SHIFT_KS "Shift"
 
 /*
  * Define: CTRL_KS
+ *
+ * The Control key shortcut.
+ *
+ * (code)
+ * Control
+ * (end)
  */
 #define CTRL_KS "Control"
 
@@ -250,44 +281,184 @@ r* Define: DEFAULT_KS_QUIT
  */
 #define DEFAULT_KS_QUIT "Mod4"KS_SEPARATOR"q"
 
+/*
+ * Define: STARTUP_MSG
+ *
+ * (code)
+ * starting up
+ * (end)
+ */
 #define STARTUP_MSG "starting up"
 
+/*
+ * Define: IPC_STARTUP_MSG
+ *
+ * (code)
+ * IPC started
+ * (end)
+ */
 #define IPC_STARTUP_MSG "IPC started"
 
+/*
+ * Define: BROADCAST_STARTUP_MSG
+ *
+ * (code)
+ * broadcast started
+ * (end)
+ */
 #define BROADCAST_STARTUP_MSG "broadcast started"
 
+/*
+ * Define: STARTED_MSG
+ *
+ * (code)
+ * started
+ * (end)
+ */
 #define STARTED_MSG "started"
 
+/*
+ * Define: SHUTTING_DOWN_MSG
+ *
+ * (code)
+ * shutting down
+ * (end)
+ */
 #define SHUTTING_DOWN_MSG "shutting down"
 
+/*
+ * Define: SHUTDOWN_MSG
+ *
+ * (code)
+ * shutdown
+ * (end)
+ */
 #define SHUTDOWN_MSG "shutdown"
 
+/*
+ * Define: PONG_MSG
+ *
+ * (code)
+ * PONG
+ * (end)
+ */
 #define PONG_MSG "PONG"
 
+/*
+ * Define: INIT_LOGGING_FAILURE
+ *
+ * (code)
+ * failed to start logging
+ * (end)
+ */
 #define INIT_LOGGING_FAILURE "failed to start logging"
 
+/*
+ * Define: INIT_IPC_FAILURE
+ *
+ * (code)
+ * failed to start IPC
+ * (end)
+ */
 #define INIT_IPC_FAILURE "failed to start IPC"
 
+/*
+ * Define: INIT_BROADCAST_FAILURE
+ *
+ * (code)
+ * failed to start broadcast
+ * (end)
+ */
 #define INIT_BROADCAST_FAILURE "failed to start broadcast"
 
+/*
+ * Define: GET_CLIENTS_FAILURE
+ *
+ * (code)
+ * failed to get clients
+ * (end)
+ */
 #define GET_CLIENTS_FAILURE "failed to get clients"
 
+/*
+ * Define: WINDOW_MGR_RUNNING
+ *
+ * (code)
+ * a window manager is already running
+ * (end)
+ */
 #define WINDOW_MGR_RUNNING "a window manager is already running"
 
+/*
+ * Define: READING_CONFIGURATION_MSG
+ *
+ * (code)
+ * reading configuration
+ * (end)
+ */
 #define READING_CONFIGURATION_MSG "reading configuration"
 
+/*
+ * Define: USING_DEFAULT_CONFIGURATION_MSG
+ *
+ * (code)
+ * using default configuration
+ * (end)
+ */
 #define USING_DEFAULT_CONFIGURATION_MSG "using default configuration"
 
+/*
+ * Define: FAILED_TO_GET_CLIENTS
+ *
+ * (code)
+ * failed to get clients
+ * (end)
+ */
 #define FAILED_TO_GET_CLIENTS "failed to get clients"
 
+/*
+ * Define: NO_CONFIGURATION
+ *
+ * (code)
+ * no configuration
+ * (end)
+ */
 #define NO_CONFIGURATION "no configuration"
 
+/*
+ * Define: CREATING_XY_DIR
+ *
+ * (code)
+ * creating xy directory
+ * (end)
+ */
 #define CREATING_XY_DIR "creating xy directory"
 
+/*
+ * Define: DEFAULT_CFG_FILE_HDR
+ *
+ * (code)
+ * # xy configuration file
+ * (end)
+ */
 #define DEFAULT_CFG_FILE_HDR "# xy configuration file"
 
+/*
+ * Define: DISPLAYS_FOUND
+ *
+ * (code)
+ * found %d displays
+ * (end)
+ */
 #define DISPLAYS_FOUND "found %d displays"
 
+/*
+ * Define: DISPLAY_MESSAGE
+ *
+ * (code)
+ * display %d characteristics: %d %d %d %d
+ * (end)
+ */
 #define DISPLAY_MESSAGE "display %d characteristics: %d %d %d %d"
 
 #endif
