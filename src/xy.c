@@ -23,6 +23,7 @@
 void main_loop() {
 
     Display *d = global_display;
+    /*
     int s = DefaultScreen(global_display);
     Window root = RootWindow(d, s);
     Window w = XCreateSimpleWindow(d, root, 10, 10, 200, 200, 1,
@@ -31,7 +32,6 @@ void main_loop() {
     XMapWindow(d, w);
     XSync(global_display, False);
 
-    /*
     XSetWindowAttributes wa;
     wa.event_mask = SubstructureRedirectMask|SubstructureNotifyMask|StructureNotifyMask|PropertyChangeMask;
     XChangeWindowAttributes(d, root, CWEventMask, &wa);
@@ -48,6 +48,8 @@ void main_loop() {
     else
         max_sd = global_ipc_fd + 1;
 
+    log_info(global_log, STARTED_MSG);
+    broadcast_send(STARTED_MSG);
     for (;;) {
         FD_ZERO(&set);
         FD_SET(global_ipc_fd, &set);

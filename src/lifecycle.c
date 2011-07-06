@@ -156,7 +156,6 @@ void xy_startup() {
 }
 
 void xy_started() {
-    log_info(global_log, STARTED_MSG);
     main_loop();
 }
 
