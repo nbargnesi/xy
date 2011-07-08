@@ -4328,7 +4328,6 @@ installed software in a non-standard prefix.
 Alternatively, you may set the environment variables XLIB_CFLAGS
 and XLIB_LIBS to avoid the need to call pkg-config.
 See the pkg-config man page for more details." "$LINENO" 5
-
 elif test $pkg_failed = untried; then
      	{ $as_echo "$as_me:${as_lineno-$LINENO}: result: no" >&5
 $as_echo "no" >&6; }
@@ -4344,7 +4343,6 @@ See the pkg-config man page for more details.
 
 To get pkg-config, see <http://pkg-config.freedesktop.org/>.
 See \`config.log' for more details" "$LINENO" 5; }
-
 else
 	XLIB_CFLAGS=$pkg_cv_XLIB_CFLAGS
 	XLIB_LIBS=$pkg_cv_XLIB_LIBS
@@ -4419,7 +4417,6 @@ installed software in a non-standard prefix.
 Alternatively, you may set the environment variables XINERAMA_CFLAGS
 and XINERAMA_LIBS to avoid the need to call pkg-config.
 See the pkg-config man page for more details." "$LINENO" 5
-
 elif test $pkg_failed = untried; then
      	{ $as_echo "$as_me:${as_lineno-$LINENO}: result: no" >&5
 $as_echo "no" >&6; }
@@ -4435,7 +4432,6 @@ See the pkg-config man page for more details.
 
 To get pkg-config, see <http://pkg-config.freedesktop.org/>.
 See \`config.log' for more details" "$LINENO" 5; }
-
 else
 	XINERAMA_CFLAGS=$pkg_cv_XINERAMA_CFLAGS
 	XINERAMA_LIBS=$pkg_cv_XINERAMA_LIBS
@@ -4510,7 +4506,6 @@ installed software in a non-standard prefix.
 Alternatively, you may set the environment variables XFT_CFLAGS
 and XFT_LIBS to avoid the need to call pkg-config.
 See the pkg-config man page for more details." "$LINENO" 5
-
 elif test $pkg_failed = untried; then
      	{ $as_echo "$as_me:${as_lineno-$LINENO}: result: no" >&5
 $as_echo "no" >&6; }
@@ -4526,7 +4521,6 @@ See the pkg-config man page for more details.
 
 To get pkg-config, see <http://pkg-config.freedesktop.org/>.
 See \`config.log' for more details" "$LINENO" 5; }
-
 else
 	XFT_CFLAGS=$pkg_cv_XFT_CFLAGS
 	XFT_LIBS=$pkg_cv_XFT_LIBS
@@ -4602,7 +4596,6 @@ installed software in a non-standard prefix.
 Alternatively, you may set the environment variables LIBUSB_CFLAGS
 and LIBUSB_LIBS to avoid the need to call pkg-config.
 See the pkg-config man page for more details." "$LINENO" 5
-
 elif test $pkg_failed = untried; then
      	{ $as_echo "$as_me:${as_lineno-$LINENO}: result: no" >&5
 $as_echo "no" >&6; }
@@ -4618,7 +4611,6 @@ See the pkg-config man page for more details.
 
 To get pkg-config, see <http://pkg-config.freedesktop.org/>.
 See \`config.log' for more details" "$LINENO" 5; }
-
 else
 	LIBUSB_CFLAGS=$pkg_cv_LIBUSB_CFLAGS
 	LIBUSB_LIBS=$pkg_cv_LIBUSB_LIBS
@@ -5154,7 +5146,7 @@ _ACEOF
 fi
 
 
-ac_config_files="$ac_config_files Makefile src/Makefile"
+ac_config_files="$ac_config_files Makefile docs/Makefile src/Makefile"
 
 
 cat >confcache <<\_ACEOF
@@ -5897,6 +5889,7 @@ do
     "config.h") CONFIG_HEADERS="$CONFIG_HEADERS config.h" ;;
     "depfiles") CONFIG_COMMANDS="$CONFIG_COMMANDS depfiles" ;;
     "Makefile") CONFIG_FILES="$CONFIG_FILES Makefile" ;;
+    "docs/Makefile") CONFIG_FILES="$CONFIG_FILES docs/Makefile" ;;
     "src/Makefile") CONFIG_FILES="$CONFIG_FILES src/Makefile" ;;
 
   *) as_fn_error $? "invalid argument: \`$ac_config_target'" "$LINENO" 5;;
