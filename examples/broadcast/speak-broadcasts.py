@@ -28,17 +28,17 @@ TEXT2WAV_ARGS = '-o {0}'.format(WAV_FILE.name)
 TEXT2WAV_CMD = TEXT2WAV + ' ' + TEXT2WAV_ARGS
 WRITE_WAV_CMD = 'echo "{0}" | {1} 2>/dev/null'
 
-IP = "224.0.0.3" 
+MCAST_GROUP = "224.0.0.3" 
 PORT = 47002
+IP = '127.0.0.1'
+
+optval = inet_aton(MCAST_GROUP) + inet_aton(IP)
 
 sock = socket(AF_INET, SOCK_DGRAM)
-sock.setsockopt(SOL_SOCKET, SO_REUSEADDR, 1)
-sock.setsockopt(SOL_IP, IP_MULTICAST_LOOP, 1)
+sock.setsockopt(SOL_SOCKET, SO_REUSEADDR, True)
+sock.setsockopt(SOL_IP, IP_MULTICAST_LOOP, True)
+sock.setsockopt(SOL_IP, IP_ADD_MEMBERSHIP, optval)
 sock.bind(('', PORT))
-
-intf = gethostbyname(gethostname())
-sock.setsockopt(SOL_IP, IP_MULTICAST_IF, inet_aton(intf))
-sock.setsockopt(SOL_IP, IP_ADD_MEMBERSHIP, inet_aton(IP) + inet_aton(intf))
 
 audio = pyaudio.PyAudio()
 
