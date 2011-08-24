@@ -4148,6 +4148,7 @@ fi
 
 
 
+
 if test "x$ac_cv_env_PKG_CONFIG_set" != "xset"; then
 	if test -n "$ac_tool_prefix"; then
   # Extract the first word of "${ac_tool_prefix}pkg-config", so it can be a program name with args.
@@ -4276,6 +4277,7 @@ if test -n "$XLIB_CFLAGS"; then
   $as_echo "$as_me:${as_lineno-$LINENO}: \$? = $ac_status" >&5
   test $ac_status = 0; }; then
   pkg_cv_XLIB_CFLAGS=`$PKG_CONFIG --cflags "x11" 2>/dev/null`
+		      test "x$?" != "x0" && pkg_failed=yes
 else
   pkg_failed=yes
 fi
@@ -4292,6 +4294,7 @@ if test -n "$XLIB_LIBS"; then
   $as_echo "$as_me:${as_lineno-$LINENO}: \$? = $ac_status" >&5
   test $ac_status = 0; }; then
   pkg_cv_XLIB_LIBS=`$PKG_CONFIG --libs "x11" 2>/dev/null`
+		      test "x$?" != "x0" && pkg_failed=yes
 else
   pkg_failed=yes
 fi
@@ -4311,9 +4314,9 @@ else
         _pkg_short_errors_supported=no
 fi
         if test $_pkg_short_errors_supported = yes; then
-	        XLIB_PKG_ERRORS=`$PKG_CONFIG --short-errors --print-errors "x11" 2>&1`
+	        XLIB_PKG_ERRORS=`$PKG_CONFIG --short-errors --print-errors --cflags --libs "x11" 2>&1`
         else
-	        XLIB_PKG_ERRORS=`$PKG_CONFIG --print-errors "x11" 2>&1`
+	        XLIB_PKG_ERRORS=`$PKG_CONFIG --print-errors --cflags --libs "x11" 2>&1`
         fi
 	# Put the nasty error message in config.log where it belongs
 	echo "$XLIB_PKG_ERRORS" >&5
@@ -4365,6 +4368,7 @@ if test -n "$XINERAMA_CFLAGS"; then
   $as_echo "$as_me:${as_lineno-$LINENO}: \$? = $ac_status" >&5
   test $ac_status = 0; }; then
   pkg_cv_XINERAMA_CFLAGS=`$PKG_CONFIG --cflags "xinerama" 2>/dev/null`
+		      test "x$?" != "x0" && pkg_failed=yes
 else
   pkg_failed=yes
 fi
@@ -4381,6 +4385,7 @@ if test -n "$XINERAMA_LIBS"; then
   $as_echo "$as_me:${as_lineno-$LINENO}: \$? = $ac_status" >&5
   test $ac_status = 0; }; then
   pkg_cv_XINERAMA_LIBS=`$PKG_CONFIG --libs "xinerama" 2>/dev/null`
+		      test "x$?" != "x0" && pkg_failed=yes
 else
   pkg_failed=yes
 fi
@@ -4400,9 +4405,9 @@ else
         _pkg_short_errors_supported=no
 fi
         if test $_pkg_short_errors_supported = yes; then
-	        XINERAMA_PKG_ERRORS=`$PKG_CONFIG --short-errors --print-errors "xinerama" 2>&1`
+	        XINERAMA_PKG_ERRORS=`$PKG_CONFIG --short-errors --print-errors --cflags --libs "xinerama" 2>&1`
         else
-	        XINERAMA_PKG_ERRORS=`$PKG_CONFIG --print-errors "xinerama" 2>&1`
+	        XINERAMA_PKG_ERRORS=`$PKG_CONFIG --print-errors --cflags --libs "xinerama" 2>&1`
         fi
 	# Put the nasty error message in config.log where it belongs
 	echo "$XINERAMA_PKG_ERRORS" >&5
@@ -4454,6 +4459,7 @@ if test -n "$XFT_CFLAGS"; then
   $as_echo "$as_me:${as_lineno-$LINENO}: \$? = $ac_status" >&5
   test $ac_status = 0; }; then
   pkg_cv_XFT_CFLAGS=`$PKG_CONFIG --cflags "xft" 2>/dev/null`
+		      test "x$?" != "x0" && pkg_failed=yes
 else
   pkg_failed=yes
 fi
@@ -4470,6 +4476,7 @@ if test -n "$XFT_LIBS"; then
   $as_echo "$as_me:${as_lineno-$LINENO}: \$? = $ac_status" >&5
   test $ac_status = 0; }; then
   pkg_cv_XFT_LIBS=`$PKG_CONFIG --libs "xft" 2>/dev/null`
+		      test "x$?" != "x0" && pkg_failed=yes
 else
   pkg_failed=yes
 fi
@@ -4489,9 +4496,9 @@ else
         _pkg_short_errors_supported=no
 fi
         if test $_pkg_short_errors_supported = yes; then
-	        XFT_PKG_ERRORS=`$PKG_CONFIG --short-errors --print-errors "xft" 2>&1`
+	        XFT_PKG_ERRORS=`$PKG_CONFIG --short-errors --print-errors --cflags --libs "xft" 2>&1`
         else
-	        XFT_PKG_ERRORS=`$PKG_CONFIG --print-errors "xft" 2>&1`
+	        XFT_PKG_ERRORS=`$PKG_CONFIG --print-errors --cflags --libs "xft" 2>&1`
         fi
 	# Put the nasty error message in config.log where it belongs
 	echo "$XFT_PKG_ERRORS" >&5
@@ -4544,6 +4551,7 @@ if test -n "$LIBUSB_CFLAGS"; then
   $as_echo "$as_me:${as_lineno-$LINENO}: \$? = $ac_status" >&5
   test $ac_status = 0; }; then
   pkg_cv_LIBUSB_CFLAGS=`$PKG_CONFIG --cflags "libusb" 2>/dev/null`
+		      test "x$?" != "x0" && pkg_failed=yes
 else
   pkg_failed=yes
 fi
@@ -4560,6 +4568,7 @@ if test -n "$LIBUSB_LIBS"; then
   $as_echo "$as_me:${as_lineno-$LINENO}: \$? = $ac_status" >&5
   test $ac_status = 0; }; then
   pkg_cv_LIBUSB_LIBS=`$PKG_CONFIG --libs "libusb" 2>/dev/null`
+		      test "x$?" != "x0" && pkg_failed=yes
 else
   pkg_failed=yes
 fi
@@ -4579,9 +4588,9 @@ else
         _pkg_short_errors_supported=no
 fi
         if test $_pkg_short_errors_supported = yes; then
-	        LIBUSB_PKG_ERRORS=`$PKG_CONFIG --short-errors --print-errors "libusb" 2>&1`
+	        LIBUSB_PKG_ERRORS=`$PKG_CONFIG --short-errors --print-errors --cflags --libs "libusb" 2>&1`
         else
-	        LIBUSB_PKG_ERRORS=`$PKG_CONFIG --print-errors "libusb" 2>&1`
+	        LIBUSB_PKG_ERRORS=`$PKG_CONFIG --print-errors --cflags --libs "libusb" 2>&1`
         fi
 	# Put the nasty error message in config.log where it belongs
 	echo "$LIBUSB_PKG_ERRORS" >&5
@@ -5063,6 +5072,7 @@ if test -n "$CHECK_CFLAGS"; then
   $as_echo "$as_me:${as_lineno-$LINENO}: \$? = $ac_status" >&5
   test $ac_status = 0; }; then
   pkg_cv_CHECK_CFLAGS=`$PKG_CONFIG --cflags "check >= 0.9.8" 2>/dev/null`
+		      test "x$?" != "x0" && pkg_failed=yes
 else
   pkg_failed=yes
 fi
@@ -5079,6 +5089,7 @@ if test -n "$CHECK_LIBS"; then
   $as_echo "$as_me:${as_lineno-$LINENO}: \$? = $ac_status" >&5
   test $ac_status = 0; }; then
   pkg_cv_CHECK_LIBS=`$PKG_CONFIG --libs "check >= 0.9.8" 2>/dev/null`
+		      test "x$?" != "x0" && pkg_failed=yes
 else
   pkg_failed=yes
 fi
@@ -5098,9 +5109,9 @@ else
         _pkg_short_errors_supported=no
 fi
         if test $_pkg_short_errors_supported = yes; then
-	        CHECK_PKG_ERRORS=`$PKG_CONFIG --short-errors --print-errors "check >= 0.9.8" 2>&1`
+	        CHECK_PKG_ERRORS=`$PKG_CONFIG --short-errors --print-errors --cflags --libs "check >= 0.9.8" 2>&1`
         else
-	        CHECK_PKG_ERRORS=`$PKG_CONFIG --print-errors "check >= 0.9.8" 2>&1`
+	        CHECK_PKG_ERRORS=`$PKG_CONFIG --print-errors --cflags --libs "check >= 0.9.8" 2>&1`
         fi
 	# Put the nasty error message in config.log where it belongs
 	echo "$CHECK_PKG_ERRORS" >&5
