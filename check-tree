@@ -1,0 +1,20 @@
+#!/bin/bash
+SUCCESS="true"
+
+echo -en "Checking lib... "
+find lib -name *.c | while read file; do
+    FILE=$(basename $file)
+    RESULT=$(grep "$FILE" lib/Makefile.am 2>/dev/null)
+    if [ -z "$RESULT" ]; then
+        echo
+        echo -en "$FILE is missing from build!" >&2
+        SUCCESS="false"
+    fi
+done
+
+if [ "$SUCCESS" == "false" ]; then
+    exit 1
+fi
+
+echo -en "okay\n"
+exit 0

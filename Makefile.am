@@ -1,4 +1,4 @@
 EXTRA_DIST = COPYING README
-SUBDIRS = docs src .
+SUBDIRS = docs lib src .
 
 mc: maintainer-clean
