@@ -17,4 +17,14 @@ if [ "$SUCCESS" == "false" ]; then
 fi
 
 echo -en "okay\n"
+
+echo -en "Checking configure... "
+RESULT=$(grep 'sleep 1' configure)
+if [ ! -z "$RESULT" ]; then
+    echo
+    echo -en "configure contains 'sleep 1'" >&2
+    exit 1
+fi
+echo -en "okay\n"
+
 exit 0
