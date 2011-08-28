@@ -11,7 +11,7 @@ lib/.deps
 tests/.deps
 src/xy
 lib/libxy.a
-lib/test_suite
+tests/test_suite
 
 syntax: glob
 src/*.o
