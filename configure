@@ -724,6 +724,7 @@ LIBS
 CPPFLAGS
 XMKMF
 CPP
+CPPFLAGS
 PKG_CONFIG
 PKG_CONFIG_PATH
 PKG_CONFIG_LIBDIR
@@ -2294,8 +2295,6 @@ test -z "$INSTALL_DATA" && INSTALL_DATA='${INSTALL} -m 644'
 
 { $as_echo "$as_me:${as_lineno-$LINENO}: checking whether build environment is sane" >&5
 $as_echo_n "checking whether build environment is sane... " >&6; }
-# Just in case
-sleep 1
 echo timestamp > conftest.file
 # Reject unsafe characters in $srcdir or the absolute working directory
 # name.  Accept space and tab only in the latter.
@@ -5250,7 +5249,7 @@ _ACEOF
 fi
 
 
-ac_config_files="$ac_config_files Makefile docs/Makefile lib/Makefile src/Makefile"
+ac_config_files="$ac_config_files Makefile docs/Makefile lib/Makefile src/Makefile tests/Makefile"
 
 
 cat >confcache <<\_ACEOF
@@ -5996,6 +5995,7 @@ do
     "docs/Makefile") CONFIG_FILES="$CONFIG_FILES docs/Makefile" ;;
     "lib/Makefile") CONFIG_FILES="$CONFIG_FILES lib/Makefile" ;;
     "src/Makefile") CONFIG_FILES="$CONFIG_FILES src/Makefile" ;;
+    "tests/Makefile") CONFIG_FILES="$CONFIG_FILES tests/Makefile" ;;
 
   *) as_fn_error $? "invalid argument: \`$ac_config_target'" "$LINENO" 5;;
   esac

@@ -23,28 +23,3 @@ libxy_a_SOURCES = broadcast.c \
 				  xy.c \
 				  xyxlib.c
 
-if HAVE_CHECK
-TESTS = test_suite
-test_suite_PROGRAMS = test_suite
-test_suitedir = .
-test_suite_CFLAGS = @CHECK_CFLAGS@
-test_suite_SOURCES = test_suite.c
-test_suite_LDADD = @CHECK_LIBS@ \
-				   broadcast.o \
-				   configuration.o \
-				   die.o \
-				   event.o \
-				   ipc.o \
-				   lifecycle.o \
-				   logging.o \
-				   monitor.o \
-				   osd.o \
-				   state.o \
-				   sysinfo.o \
-				   util.o \
-				   xy.o \
-				   xyxlib.o \
-				   $(XYLIBS)
-
-endif
-
