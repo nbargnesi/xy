@@ -2295,6 +2295,8 @@ test -z "$INSTALL_DATA" && INSTALL_DATA='${INSTALL} -m 644'
 
 { $as_echo "$as_me:${as_lineno-$LINENO}: checking whether build environment is sane" >&5
 $as_echo_n "checking whether build environment is sane... " >&6; }
+# Just in case
+sleep 1
 echo timestamp > conftest.file
 # Reject unsafe characters in $srcdir or the absolute working directory
 # name.  Accept space and tab only in the latter.

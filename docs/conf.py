@@ -28,7 +28,7 @@ import sys, os
 extensions = []
 
 # Add any paths that contain templates here, relative to this directory.
-templates_path = ['custom_templates']
+templates_path = ['']
 
 # The suffix of source filenames.
 source_suffix = '.rst'
@@ -67,7 +67,8 @@ release = '0.1a'
 exclude_patterns = []
 
 # The reST default role (used for this markup: `text`) to use for all documents.
-#default_role = None
+default_role = 'c:func'
+primary_domain = 'c'
 
 # If true, '()' will be appended to :func: etc. cross-reference text.
 #add_function_parentheses = True
@@ -120,7 +121,7 @@ html_theme = 'default'
 # Add any paths that contain custom static files (such as style sheets) here,
 # relative to this directory. They are copied after the builtin static files,
 # so a file named "default.css" will overwrite the builtin "default.css".
-html_static_path = ['custom_static']
+# html_static_path = None
 
 # If not '', a 'Last updated on:' timestamp is inserted at every page bottom,
 # using the given strftime format.
