@@ -606,8 +606,8 @@ ac_subst_vars='am__EXEEXT_FALSE
 am__EXEEXT_TRUE
 LTLIBOBJS
 LIBOBJS
-HAVE_CHECK_FALSE
-HAVE_CHECK_TRUE
+TESTING_FALSE
+TESTING_TRUE
 CHECK_LIBS
 CHECK_CFLAGS
 EGREP
@@ -712,6 +712,7 @@ enable_option_checking
 enable_maintainer_mode
 enable_dependency_tracking
 with_x
+enable_optimizations
 enable_tests
 '
       ac_precious_vars='build_alias
@@ -1362,7 +1363,8 @@ Optional Features:
 			  (and sometimes confusing) to the casual installer
   --disable-dependency-tracking  speeds up one-time build
   --enable-dependency-tracking   do not reject slow dependency extractors
-  --disable-tests         Disable unit tests
+  --enable-optimizations  Enable compiler optimizations (defaults to disabled)
+  --enable-tests          Enables unit tests (defaults to disabled)
 
 Optional Packages:
   --with-PACKAGE[=ARG]    use PACKAGE [ARG=yes]
@@ -2295,6 +2297,8 @@ test -z "$INSTALL_DATA" && INSTALL_DATA='${INSTALL} -m 644'
 
 { $as_echo "$as_me:${as_lineno-$LINENO}: checking whether build environment is sane" >&5
 $as_echo_n "checking whether build environment is sane... " >&6; }
+# Just in case
+sleep 1
 echo timestamp > conftest.file
 # Reject unsafe characters in $srcdir or the absolute working directory
 # name.  Accept space and tab only in the latter.
@@ -2701,7 +2705,7 @@ fi
 ac_config_headers="$ac_config_headers config.h"
 
 
-CFLAGS="-std=c99 -O0 -ggdb3 -Wall -Wunused -Wextra -Wno-unused-parameter"
+CFLAGS="-std=c99 -O0 -g3 -Wall -Wunused -Wextra -Wno-unused-parameter"
 
 DEPDIR="${am__leading_dot}deps"
 
@@ -5140,15 +5144,29 @@ fi
 done
 
 
-# Check whether --enable-tests was given.
-if test "${enable_tests+set}" = set; then :
-  enableval=$enable_tests; disable_tests=yes
+# Check whether --enable-optimizations was given.
+if test "${enable_optimizations+set}" = set; then :
+  enableval=$enable_optimizations; optimize=yes
 else
-  disable_tests=no
+  optimize=no
 fi
 
 
-if test "x$disable_tests" != "xyes"; then
+if test "x$optimize" == "xyes"; then
+    CFLAGS="-std=c99 -O3 -Wall -Wunused -Wextra -Wno-unused-parameter"
+else
+    CFLAGS="-std=c99 -O0 -g3 -Wall -Wunused -Wextra -Wno-unused-parameter"
+fi
+
+# Check whether --enable-tests was given.
+if test "${enable_tests+set}" = set; then :
+  enableval=$enable_tests; testing=yes
+else
+  testing=no
+fi
+
+
+if test "x$testing" == "xyes"; then
 
 pkg_failed=no
 { $as_echo "$as_me:${as_lineno-$LINENO}: checking for CHECK" >&5
@@ -5224,16 +5242,15 @@ else
     have_check=no
 fi
 
-if test "x$disable_tests" = "xno" -a "x$have_check" != "xyes"; then
-    as_fn_error $? "Testing dependencies not met.  Check is required." "$LINENO" 5
+if test "x$testing" == "xyes" -a "x$have_check" != "xyes"; then
+    as_fn_error $? "Testing dependencies not met. Check is required." "$LINENO" 5
 fi
-
  if test "x$have_check" = "xyes"; then
-  HAVE_CHECK_TRUE=
-  HAVE_CHECK_FALSE='#'
+  TESTING_TRUE=
+  TESTING_FALSE='#'
 else
-  HAVE_CHECK_TRUE='#'
-  HAVE_CHECK_FALSE=
+  TESTING_TRUE='#'
+  TESTING_FALSE=
 fi
 
 
@@ -5381,8 +5398,8 @@ if test -z "${am__fastdepCC_TRUE}" && test -z "${am__fastdepCC_FALSE}"; then
   as_fn_error $? "conditional \"am__fastdepCC\" was never defined.
 Usually this means the macro was only invoked conditionally." "$LINENO" 5
 fi
-if test -z "${HAVE_CHECK_TRUE}" && test -z "${HAVE_CHECK_FALSE}"; then
-  as_fn_error $? "conditional \"HAVE_CHECK\" was never defined.
+if test -z "${TESTING_TRUE}" && test -z "${TESTING_FALSE}"; then
+  as_fn_error $? "conditional \"TESTING\" was never defined.
 Usually this means the macro was only invoked conditionally." "$LINENO" 5
 fi
 
@@ -6724,3 +6741,12 @@ if test -n "$ac_unrecognized_opts" && test "$enable_option_checking" != no; then
 $as_echo "$as_me: WARNING: unrecognized options: $ac_unrecognized_opts" >&2;}
 fi
 
+
+printf "
+xy build configuration
+----------------------
+version         : ${VERSION}
+cflags          : ${CFLAGS}
+tests           : ${testing}
+optimizations   : ${optimize}
+"

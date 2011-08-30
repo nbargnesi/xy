@@ -8,7 +8,7 @@ AM_MAINTAINER_MODE
 AC_CONFIG_SRCDIR([src])
 AC_CONFIG_HEADERS([config.h])
 
-CFLAGS="-std=c99 -O0 -ggdb3 -Wall -Wunused -Wextra -Wno-unused-parameter"
+CFLAGS="-std=c99 -O0 -g3 -Wall -Wunused -Wextra -Wno-unused-parameter"
 
 AM_PROG_CC_C_O
 AC_PROG_RANLIB
@@ -28,21 +28,32 @@ AC_CHECK_HEADERS(xosd.h)
 AC_CHECK_LIB(log4c, log4c_init)
 AC_CHECK_HEADERS(log4c.h)
 
-AC_ARG_ENABLE(tests,
-    AS_HELP_STRING([--disable-tests], [Disable unit tests]),
-    [disable_tests=yes],[disable_tests=no])
+AC_ARG_ENABLE(optimizations,
+    AS_HELP_STRING([--enable-optimizations],
+                   [Enable compiler optimizations (defaults to disabled)]),
+    [optimize=yes],[optimize=no])
 
-if test "x$disable_tests" != "xyes"; then
+if test "x$optimize" == "xyes"; then
+    CFLAGS="-std=c99 -O3 -Wall -Wunused -Wextra -Wno-unused-parameter"
+else
+    CFLAGS="-std=c99 -O0 -g3 -Wall -Wunused -Wextra -Wno-unused-parameter"
+fi
+
+AC_ARG_ENABLE(tests,
+    AS_HELP_STRING([--enable-tests],
+                   [Enables unit tests (defaults to disabled)]),
+    [testing=yes],[testing=no])
+
+if test "x$testing" == "xyes"; then
     PKG_CHECK_MODULES(CHECK, [check >= 0.9.8], have_check="yes", have_check="no")
 else
     have_check=no
 fi
 
-if test "x$disable_tests" = "xno" -a "x$have_check" != "xyes"; then
-    AC_MSG_ERROR([Testing dependencies not met.  Check is required.])
+if test "x$testing" == "xyes" -a "x$have_check" != "xyes"; then
+    AC_MSG_ERROR([Testing dependencies not met. Check is required.])
 fi
-
-AM_CONDITIONAL(HAVE_CHECK, test "x$have_check" = "xyes")
+AM_CONDITIONAL(TESTING, test "x$have_check" = "xyes")
 
 AC_TYPE_SIZE_T
 
@@ -55,3 +66,12 @@ AC_CONFIG_FILES([
 ])
 
 AC_OUTPUT
+
+printf "
+xy build configuration
+----------------------
+version         : ${VERSION}
+cflags          : ${CFLAGS}
+tests           : ${testing}
+optimizations   : ${optimize}
+"

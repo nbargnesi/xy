@@ -23,11 +23,31 @@
 #include "xyxlib.h"
 #include "util.h"
 
-START_TEST(string_trim) {
+START_TEST(util_streq) {
+    char *s1 = NULL;
+    char *s2 = NULL;
+    if (!streq((char *) s1, (char *) s2)) fail("strings not equal");
+}
+END_TEST
+
+START_TEST(util_trim) {
     char *testconst = "   remove some whitespace   ";
     char *test = strdup(testconst);
-    test = trim(test);
-    if (!streq(test, "remove some whitespace")) fail("strings not equal"); 
+    char *trimmed = trim(test);
+    if (!streq(trimmed, "remove some whitespace")) fail("strings not equal"); 
+    free(test);
+}
+END_TEST
+
+START_TEST(util_parse_command) {
+    char *command = "some string here";
+    char *dup = strdup(command);
+    char *argv[3];
+    parse_command(dup, argv);
+    if (!streq(argv[0], "some")) fail("strings not equal");
+    if (!streq(argv[1], "string")) fail("strings not equal");
+    if (!streq(argv[2], "here")) fail("strings not equal");
+    free(dup);
 }
 END_TEST
 
@@ -90,7 +110,9 @@ static Suite * test_suite() {
     tcase_add_test(tc_xlib, monitor);
     suite_add_tcase(ret, tc_xlib);
     TCase *tc_util = tcase_create("util");
-    tcase_add_test(tc_util, string_trim);
+    tcase_add_test(tc_util, util_trim);
+    tcase_add_test(tc_util, util_streq);
+    tcase_add_test(tc_util, util_parse_command);
     suite_add_tcase(ret, tc_util);
     return ret;
 }

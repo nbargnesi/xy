@@ -12,6 +12,7 @@ tests/.deps
 src/xy
 lib/libxy.a
 tests/test_suite
+docs/build
 
 syntax: glob
 src/*.o

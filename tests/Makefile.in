@@ -32,8 +32,8 @@ POST_INSTALL = :
 NORMAL_UNINSTALL = :
 PRE_UNINSTALL = :
 POST_UNINSTALL = :
-@HAVE_CHECK_TRUE@TESTS = test_suite$(EXEEXT)
-@HAVE_CHECK_TRUE@test_suite_PROGRAMS = test_suite$(EXEEXT)
+@TESTING_TRUE@TESTS = test_suite$(EXEEXT)
+@TESTING_TRUE@test_suite_PROGRAMS = test_suite$(EXEEXT)
 subdir = tests
 DIST_COMMON = $(srcdir)/Makefile.am $(srcdir)/Makefile.in
 ACLOCAL_M4 = $(top_srcdir)/aclocal.m4
@@ -47,12 +47,11 @@ CONFIG_CLEAN_VPATH_FILES =
 am__installdirs = "$(DESTDIR)$(test_suitedir)"
 PROGRAMS = $(test_suite_PROGRAMS)
 am__test_suite_SOURCES_DIST = test_suite.c
-@HAVE_CHECK_TRUE@am_test_suite_OBJECTS =  \
-@HAVE_CHECK_TRUE@	test_suite-test_suite.$(OBJEXT)
+@TESTING_TRUE@am_test_suite_OBJECTS = test_suite-test_suite.$(OBJEXT)
 test_suite_OBJECTS = $(am_test_suite_OBJECTS)
 am__DEPENDENCIES_1 =
-@HAVE_CHECK_TRUE@test_suite_DEPENDENCIES = ../lib/libxy.a \
-@HAVE_CHECK_TRUE@	$(am__DEPENDENCIES_1)
+@TESTING_TRUE@test_suite_DEPENDENCIES = ../lib/libxy.a \
+@TESTING_TRUE@	$(am__DEPENDENCIES_1)
 test_suite_LINK = $(CCLD) $(test_suite_CFLAGS) $(CFLAGS) $(AM_LDFLAGS) \
 	$(LDFLAGS) -o $@
 DEFAULT_INCLUDES = -I.@am__isrc@ -I$(top_builddir)
@@ -172,18 +171,18 @@ target_alias = @target_alias@
 top_build_prefix = @top_build_prefix@
 top_builddir = @top_builddir@
 top_srcdir = @top_srcdir@
-@HAVE_CHECK_TRUE@XYLIBS = @XLIB_LIBS@ \
-@HAVE_CHECK_TRUE@		 @XINERAMA_LIBS@ \
-@HAVE_CHECK_TRUE@		 @XFT_LIBS@ \
-@HAVE_CHECK_TRUE@		 @LIBUSB_LIBS@
+@TESTING_TRUE@XYLIBS = @XLIB_LIBS@ \
+@TESTING_TRUE@		 @XINERAMA_LIBS@ \
+@TESTING_TRUE@		 @XFT_LIBS@ \
+@TESTING_TRUE@		 @LIBUSB_LIBS@
 
-@HAVE_CHECK_TRUE@AM_CFLAGS = -D_GNU_SOURCE -Wno-unused-variable -Werror -I../lib
-@HAVE_CHECK_TRUE@test_suitedir = .
-@HAVE_CHECK_TRUE@test_suite_CFLAGS = @CHECK_CFLAGS@ $(AM_CFLAGS)
-@HAVE_CHECK_TRUE@test_suite_SOURCES = test_suite.c
-@HAVE_CHECK_TRUE@test_suite_LDADD = @CHECK_LIBS@ \
-@HAVE_CHECK_TRUE@				   ../lib/libxy.a \
-@HAVE_CHECK_TRUE@				   $(XYLIBS)
+@TESTING_TRUE@AM_CFLAGS = -D_GNU_SOURCE -Wno-unused-variable -Werror -I../lib
+@TESTING_TRUE@test_suitedir = .
+@TESTING_TRUE@test_suite_CFLAGS = @CHECK_CFLAGS@ $(AM_CFLAGS)
+@TESTING_TRUE@test_suite_SOURCES = test_suite.c
+@TESTING_TRUE@test_suite_LDADD = @CHECK_LIBS@ \
+@TESTING_TRUE@				   ../lib/libxy.a \
+@TESTING_TRUE@				   $(XYLIBS)
 
 all: all-am
 
