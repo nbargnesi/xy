@@ -22,6 +22,7 @@
 
 void main_loop() {
 
+    ssize_t result;
     Display *d = global_display;
     /*
     int s = DefaultScreen(global_display);
@@ -66,7 +67,7 @@ void main_loop() {
         } else if (FD_ISSET(global_ipc_fd, &set)) {
             ipc_buffer = malloc(MSG_LEN);
             memset(ipc_buffer, 0, MSG_LEN);
-            read(global_ipc_fd, ipc_buffer, MSG_LEN);
+            result = read(global_ipc_fd, ipc_buffer, MSG_LEN);
             process_ipc_buffer(ipc_buffer);
             free(ipc_buffer);
         }

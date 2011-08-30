@@ -42,13 +42,14 @@ void meminfo_free(MEMINFO *mi) {
 }
 
 CPUINFO * get_cpu_info() {
+    int rc;
     CPUINFO *ret = ci_init();
     char cpu[3];
     uint buf[10];
 
     FILE *f = fopen(PROC_STAT, "r");
-    fscanf(f, PROC_STAT_FORMAT, cpu, buf, buf + 1, buf + 2, buf + 3, buf + 4,
-                                buf + 5, buf + 6, buf + 7, buf + 8, buf + 9);
+    rc = fscanf(f, PROC_STAT_FORMAT, cpu, buf, buf + 1, buf + 2, buf + 3,
+            buf + 4, buf + 5, buf + 6, buf + 7, buf + 8, buf + 9);
     fclose(f);
 
     ret->actual = buf[0] + buf[1] + buf[2];
@@ -64,13 +65,14 @@ float get_cpu_usage(const CPUINFO *ci1, const CPUINFO *ci2) {
 }
 
 MEMINFO * get_mem_info() {
+    int rc;
     MEMINFO *ret = mi_init();
     char desc[9], kb[2];
     uint buf[2];
 
     FILE *f = fopen(PROC_MEMINFO, "r");
-    fscanf(f, PROC_MEMINFO_MEMTOTAL, desc, buf, kb);
-    fscanf(f, PROC_MEMINFO_MEMFREE, desc, buf + 1, kb);
+    rc = fscanf(f, PROC_MEMINFO_MEMTOTAL, desc, buf, kb);
+    rc = fscanf(f, PROC_MEMINFO_MEMFREE, desc, buf + 1, kb);
     fclose(f);
     ret->total_kb = buf[0];
     ret->free_kb = buf[1];
