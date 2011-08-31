@@ -32,8 +32,9 @@ POST_INSTALL = :
 NORMAL_UNINSTALL = :
 PRE_UNINSTALL = :
 POST_UNINSTALL = :
-@TESTING_TRUE@TESTS = test_suite$(EXEEXT)
-@TESTING_TRUE@test_suite_PROGRAMS = test_suite$(EXEEXT)
+@TESTING_TRUE@TESTS = xlib_tests$(EXEEXT) util_tests$(EXEEXT)
+@TESTING_TRUE@test_suite_PROGRAMS = xlib_tests$(EXEEXT) \
+@TESTING_TRUE@	util_tests$(EXEEXT)
 subdir = tests
 DIST_COMMON = $(srcdir)/Makefile.am $(srcdir)/Makefile.in
 ACLOCAL_M4 = $(top_srcdir)/aclocal.m4
@@ -46,14 +47,17 @@ CONFIG_CLEAN_FILES =
 CONFIG_CLEAN_VPATH_FILES =
 am__installdirs = "$(DESTDIR)$(test_suitedir)"
 PROGRAMS = $(test_suite_PROGRAMS)
-am__test_suite_SOURCES_DIST = test_suite.c
-@TESTING_TRUE@am_test_suite_OBJECTS = test_suite-test_suite.$(OBJEXT)
-test_suite_OBJECTS = $(am_test_suite_OBJECTS)
+am__util_tests_SOURCES_DIST = util_tests.c
+@TESTING_TRUE@am_util_tests_OBJECTS = util_tests.$(OBJEXT)
+util_tests_OBJECTS = $(am_util_tests_OBJECTS)
 am__DEPENDENCIES_1 =
-@TESTING_TRUE@test_suite_DEPENDENCIES = ../lib/libxy.a \
+@TESTING_TRUE@util_tests_DEPENDENCIES = ../lib/libxy.a \
 @TESTING_TRUE@	$(am__DEPENDENCIES_1)
-test_suite_LINK = $(CCLD) $(test_suite_CFLAGS) $(CFLAGS) $(AM_LDFLAGS) \
-	$(LDFLAGS) -o $@
+am__xlib_tests_SOURCES_DIST = xlib_tests.c
+@TESTING_TRUE@am_xlib_tests_OBJECTS = xlib_tests.$(OBJEXT)
+xlib_tests_OBJECTS = $(am_xlib_tests_OBJECTS)
+@TESTING_TRUE@xlib_tests_DEPENDENCIES = ../lib/libxy.a \
+@TESTING_TRUE@	$(am__DEPENDENCIES_1)
 DEFAULT_INCLUDES = -I.@am__isrc@ -I$(top_builddir)
 depcomp = $(SHELL) $(top_srcdir)/depcomp
 am__depfiles_maybe = depfiles
@@ -62,8 +66,9 @@ COMPILE = $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) \
 	$(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS)
 CCLD = $(CC)
 LINK = $(CCLD) $(AM_CFLAGS) $(CFLAGS) $(AM_LDFLAGS) $(LDFLAGS) -o $@
-SOURCES = $(test_suite_SOURCES)
-DIST_SOURCES = $(am__test_suite_SOURCES_DIST)
+SOURCES = $(util_tests_SOURCES) $(xlib_tests_SOURCES)
+DIST_SOURCES = $(am__util_tests_SOURCES_DIST) \
+	$(am__xlib_tests_SOURCES_DIST)
 ETAGS = etags
 CTAGS = ctags
 am__tty_colors = \
@@ -172,17 +177,21 @@ top_build_prefix = @top_build_prefix@
 top_builddir = @top_builddir@
 top_srcdir = @top_srcdir@
 @TESTING_TRUE@XYLIBS = @XLIB_LIBS@ \
-@TESTING_TRUE@		 @XINERAMA_LIBS@ \
-@TESTING_TRUE@		 @XFT_LIBS@ \
-@TESTING_TRUE@		 @LIBUSB_LIBS@
+@TESTING_TRUE@         @XINERAMA_LIBS@ \
+@TESTING_TRUE@         @XFT_LIBS@ \
+@TESTING_TRUE@         @LIBUSB_LIBS@
 
-@TESTING_TRUE@AM_CFLAGS = -D_GNU_SOURCE -Wno-unused-variable -Werror -I../lib
+@TESTING_TRUE@AM_CFLAGS = -D_GNU_SOURCE -Wno-unused-variable -Werror -I../lib @CHECK_CFLAGS@
 @TESTING_TRUE@test_suitedir = .
-@TESTING_TRUE@test_suite_CFLAGS = @CHECK_CFLAGS@ $(AM_CFLAGS)
-@TESTING_TRUE@test_suite_SOURCES = test_suite.c
-@TESTING_TRUE@test_suite_LDADD = @CHECK_LIBS@ \
-@TESTING_TRUE@				   ../lib/libxy.a \
-@TESTING_TRUE@				   $(XYLIBS)
+@TESTING_TRUE@xlib_tests_SOURCES = xlib_tests.c
+@TESTING_TRUE@xlib_tests_LDADD = @CHECK_LIBS@ \
+@TESTING_TRUE@                      ../lib/libxy.a \
+@TESTING_TRUE@                      $(XYLIBS)
+
+@TESTING_TRUE@util_tests_SOURCES = util_tests.c
+@TESTING_TRUE@util_tests_LDADD = @CHECK_LIBS@ \
+@TESTING_TRUE@                      ../lib/libxy.a \
+@TESTING_TRUE@                      $(XYLIBS)
 
 all: all-am
 
@@ -255,9 +264,12 @@ uninstall-test_suitePROGRAMS:
 
 clean-test_suitePROGRAMS:
 	-test -z "$(test_suite_PROGRAMS)" || rm -f $(test_suite_PROGRAMS)
-test_suite$(EXEEXT): $(test_suite_OBJECTS) $(test_suite_DEPENDENCIES) 
-	@rm -f test_suite$(EXEEXT)
-	$(test_suite_LINK) $(test_suite_OBJECTS) $(test_suite_LDADD) $(LIBS)
+util_tests$(EXEEXT): $(util_tests_OBJECTS) $(util_tests_DEPENDENCIES) 
+	@rm -f util_tests$(EXEEXT)
+	$(LINK) $(util_tests_OBJECTS) $(util_tests_LDADD) $(LIBS)
+xlib_tests$(EXEEXT): $(xlib_tests_OBJECTS) $(xlib_tests_DEPENDENCIES) 
+	@rm -f xlib_tests$(EXEEXT)
+	$(LINK) $(xlib_tests_OBJECTS) $(xlib_tests_LDADD) $(LIBS)
 
 mostlyclean-compile:
 	-rm -f *.$(OBJEXT)
@@ -265,7 +277,8 @@ mostlyclean-compile:
 distclean-compile:
 	-rm -f *.tab.c
 
-@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/test_suite-test_suite.Po@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/util_tests.Po@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/xlib_tests.Po@am__quote@
 
 .c.o:
 @am__fastdepCC_TRUE@	$(COMPILE) -MT $@ -MD -MP -MF $(DEPDIR)/$*.Tpo -c -o $@ $<
@@ -280,20 +293,6 @@ distclean-compile:
 @AMDEP_TRUE@@am__fastdepCC_FALSE@	source='$<' object='$@' libtool=no @AMDEPBACKSLASH@
 @AMDEP_TRUE@@am__fastdepCC_FALSE@	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
 @am__fastdepCC_FALSE@	$(COMPILE) -c `$(CYGPATH_W) '$<'`
-
-test_suite-test_suite.o: test_suite.c
-@am__fastdepCC_TRUE@	$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(test_suite_CFLAGS) $(CFLAGS) -MT test_suite-test_suite.o -MD -MP -MF $(DEPDIR)/test_suite-test_suite.Tpo -c -o test_suite-test_suite.o `test -f 'test_suite.c' || echo '$(srcdir)/'`test_suite.c
-@am__fastdepCC_TRUE@	$(am__mv) $(DEPDIR)/test_suite-test_suite.Tpo $(DEPDIR)/test_suite-test_suite.Po
-@AMDEP_TRUE@@am__fastdepCC_FALSE@	source='test_suite.c' object='test_suite-test_suite.o' libtool=no @AMDEPBACKSLASH@
-@AMDEP_TRUE@@am__fastdepCC_FALSE@	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
-@am__fastdepCC_FALSE@	$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(test_suite_CFLAGS) $(CFLAGS) -c -o test_suite-test_suite.o `test -f 'test_suite.c' || echo '$(srcdir)/'`test_suite.c
-
-test_suite-test_suite.obj: test_suite.c
-@am__fastdepCC_TRUE@	$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(test_suite_CFLAGS) $(CFLAGS) -MT test_suite-test_suite.obj -MD -MP -MF $(DEPDIR)/test_suite-test_suite.Tpo -c -o test_suite-test_suite.obj `if test -f 'test_suite.c'; then $(CYGPATH_W) 'test_suite.c'; else $(CYGPATH_W) '$(srcdir)/test_suite.c'; fi`
-@am__fastdepCC_TRUE@	$(am__mv) $(DEPDIR)/test_suite-test_suite.Tpo $(DEPDIR)/test_suite-test_suite.Po
-@AMDEP_TRUE@@am__fastdepCC_FALSE@	source='test_suite.c' object='test_suite-test_suite.obj' libtool=no @AMDEPBACKSLASH@
-@AMDEP_TRUE@@am__fastdepCC_FALSE@	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
-@am__fastdepCC_FALSE@	$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(test_suite_CFLAGS) $(CFLAGS) -c -o test_suite-test_suite.obj `if test -f 'test_suite.c'; then $(CYGPATH_W) 'test_suite.c'; else $(CYGPATH_W) '$(srcdir)/test_suite.c'; fi`
 
 ID: $(HEADERS) $(SOURCES) $(LISP) $(TAGS_FILES)
 	list='$(SOURCES) $(HEADERS) $(LISP) $(TAGS_FILES)'; \
