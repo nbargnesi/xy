@@ -1,0 +1,11 @@
+#!/usr/bin/env bash
+echo "Removing old archives."
+rm -f *tar*
+
+make $@ --silent dist-all >/dev/null
+DISTS=
+for dist in *tar*; do
+    DISTS="${dist} ${DISTS}"
+done
+
+echo -en "The following archives are present: ${DISTS}\n"
