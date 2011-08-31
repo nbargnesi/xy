@@ -18,4 +18,3 @@ syntax: glob
 src/*.o
 lib/*.o
 tests/*.o
-tests/*_tests
