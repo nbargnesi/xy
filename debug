@@ -1,2 +1,2 @@
 #!/usr/bin/env bash
-cgdb src/xy
+cgdb src/xy -- -d src -d lib
