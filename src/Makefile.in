@@ -48,7 +48,7 @@ PROGRAMS = $(bin_PROGRAMS)
 am_xy_OBJECTS = main.$(OBJEXT)
 xy_OBJECTS = $(am_xy_OBJECTS)
 am__DEPENDENCIES_1 =
-xy_DEPENDENCIES = ../lib/libxy.a $(am__DEPENDENCIES_1)
+xy_DEPENDENCIES = $(top_builddir)/lib/libxy.a $(am__DEPENDENCIES_1)
 DEFAULT_INCLUDES = -I.@am__isrc@ -I$(top_builddir)
 depcomp = $(SHELL) $(top_srcdir)/depcomp
 am__depfiles_maybe = depfiles
@@ -164,7 +164,7 @@ target_alias = @target_alias@
 top_build_prefix = @top_build_prefix@
 top_builddir = @top_builddir@
 top_srcdir = @top_srcdir@
-AM_CFLAGS = -D_GNU_SOURCE -Wno-unused-variable -Werror -I../lib
+AM_CFLAGS = -D_GNU_SOURCE -Wno-unused-variable -Werror -I$(top_srcdir)/lib
 AM_LDFLAGS = -Wl,--as-needed
 XYLIBS = @XLIB_LIBS@ \
 		 @XINERAMA_LIBS@ \
@@ -172,7 +172,7 @@ XYLIBS = @XLIB_LIBS@ \
 		 @LIBUSB_LIBS@
 
 xy_SOURCES = main.c
-xy_LDADD = ../lib/libxy.a $(XYLIBS)
+xy_LDADD = $(top_builddir)/lib/libxy.a $(XYLIBS)
 all: all-am
 
 .SUFFIXES:

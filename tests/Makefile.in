@@ -51,12 +51,12 @@ am__util_tests_SOURCES_DIST = util_tests.c
 @TESTING_TRUE@am_util_tests_OBJECTS = util_tests.$(OBJEXT)
 util_tests_OBJECTS = $(am_util_tests_OBJECTS)
 am__DEPENDENCIES_1 =
-@TESTING_TRUE@util_tests_DEPENDENCIES = ../lib/libxy.a \
+@TESTING_TRUE@util_tests_DEPENDENCIES = $(top_builddir)/lib/libxy.a \
 @TESTING_TRUE@	$(am__DEPENDENCIES_1)
 am__xlib_tests_SOURCES_DIST = xlib_tests.c
 @TESTING_TRUE@am_xlib_tests_OBJECTS = xlib_tests.$(OBJEXT)
 xlib_tests_OBJECTS = $(am_xlib_tests_OBJECTS)
-@TESTING_TRUE@xlib_tests_DEPENDENCIES = ../lib/libxy.a \
+@TESTING_TRUE@xlib_tests_DEPENDENCIES = $(top_builddir)/lib/libxy.a \
 @TESTING_TRUE@	$(am__DEPENDENCIES_1)
 DEFAULT_INCLUDES = -I.@am__isrc@ -I$(top_builddir)
 depcomp = $(SHELL) $(top_srcdir)/depcomp
@@ -177,21 +177,26 @@ top_build_prefix = @top_build_prefix@
 top_builddir = @top_builddir@
 top_srcdir = @top_srcdir@
 @TESTING_TRUE@XYLIBS = @XLIB_LIBS@ \
-@TESTING_TRUE@         @XINERAMA_LIBS@ \
-@TESTING_TRUE@         @XFT_LIBS@ \
-@TESTING_TRUE@         @LIBUSB_LIBS@
+@TESTING_TRUE@		 @XINERAMA_LIBS@ \
+@TESTING_TRUE@		 @XFT_LIBS@ \
+@TESTING_TRUE@		 @LIBUSB_LIBS@
 
-@TESTING_TRUE@AM_CFLAGS = -D_GNU_SOURCE -Wno-unused-variable -Werror -I../lib @CHECK_CFLAGS@
+@TESTING_TRUE@AM_CFLAGS = -D_GNU_SOURCE \
+@TESTING_TRUE@			-Wno-unused-variable \
+@TESTING_TRUE@			-Werror \
+@TESTING_TRUE@			-I$(top_srcdir)/lib \
+@TESTING_TRUE@			@CHECK_CFLAGS@
+
 @TESTING_TRUE@test_suitedir = .
 @TESTING_TRUE@xlib_tests_SOURCES = xlib_tests.c
 @TESTING_TRUE@xlib_tests_LDADD = @CHECK_LIBS@ \
-@TESTING_TRUE@                      ../lib/libxy.a \
-@TESTING_TRUE@                      $(XYLIBS)
+@TESTING_TRUE@					  $(top_builddir)/lib/libxy.a \
+@TESTING_TRUE@					  $(XYLIBS)
 
 @TESTING_TRUE@util_tests_SOURCES = util_tests.c
 @TESTING_TRUE@util_tests_LDADD = @CHECK_LIBS@ \
-@TESTING_TRUE@                      ../lib/libxy.a \
-@TESTING_TRUE@                      $(XYLIBS)
+@TESTING_TRUE@					  $(top_builddir)/lib/libxy.a \
+@TESTING_TRUE@					  $(XYLIBS)
 
 all: all-am
 
