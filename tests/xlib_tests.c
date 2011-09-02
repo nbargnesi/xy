@@ -37,7 +37,7 @@ START_TEST(monitor) {
         int numscrn;
         XineramaScreenInfo *screens = get_xinerama_screens(d, &numscrn);
         if (!screens) fail("no Xinerama screens");
-        fprintf(stderr, "Xinerama says %d screens are here\n", numscrn);
+        fprintf(stdout, "Xinerama says %d screens are here\n", numscrn);
 
         MONITOR *monitors = calloc(numscrn, sizeof(MONITOR));
         for (int i = 0; i < numscrn; i++) {
@@ -47,29 +47,29 @@ START_TEST(monitor) {
             monitors[i].width = screens[i].width;
             monitors[i].height = screens[i].height;
 
-            fprintf(stderr, "Monitor #%d\n", monitors[i].ordinal);
-            fprintf(stderr, "\tx-origin: %d\n", monitors[i].xorigin);
-            fprintf(stderr, "\ty-origin: %d\n", monitors[i].yorigin);
-            fprintf(stderr, "\twidth: %d\n", monitors[i].width);
-            fprintf(stderr, "\theight: %d\n", monitors[i].height);
+            fprintf(stdout, "Monitor #%d\n", monitors[i].ordinal);
+            fprintf(stdout, "\tx-origin: %d\n", monitors[i].xorigin);
+            fprintf(stdout, "\ty-origin: %d\n", monitors[i].yorigin);
+            fprintf(stdout, "\twidth: %d\n", monitors[i].width);
+            fprintf(stdout, "\theight: %d\n", monitors[i].height);
         }
         XFree(screens);
         free(monitors);
     }
     Screen *screen = DefaultScreenOfDisplay(d);
     if (!screen) fail("no default screen");
-    fprintf(stderr, "default screen found\n");
+    fprintf(stdout, "default screen found\n");
     MONITOR *monitors = calloc(1, sizeof(MONITOR));
     monitors[0].ordinal = 0;
     monitors[0].xorigin = 0;
     monitors[0].yorigin = 0;
     monitors[0].width = screen->width;
     monitors[0].height = screen->height;
-    fprintf(stderr, "Monitor #%d\n", monitors[0].ordinal);
-    fprintf(stderr, "\tx-origin: %d\n", monitors[0].xorigin);
-    fprintf(stderr, "\ty-origin: %d\n", monitors[0].yorigin);
-    fprintf(stderr, "\twidth: %d\n", monitors[0].width);
-    fprintf(stderr, "\theight: %d\n", monitors[0].height);
+    fprintf(stdout, "Monitor #%d\n", monitors[0].ordinal);
+    fprintf(stdout, "\tx-origin: %d\n", monitors[0].xorigin);
+    fprintf(stdout, "\ty-origin: %d\n", monitors[0].yorigin);
+    fprintf(stdout, "\twidth: %d\n", monitors[0].width);
+    fprintf(stdout, "\theight: %d\n", monitors[0].height);
     free(monitors);
     close_display(d);
 }
