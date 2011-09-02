@@ -7,7 +7,7 @@ ARCHITECTURE
 --
     A module is typically a pair of header and source files that encompass some
     discreet piece of functionality, library abstraction, or set of related
-    functions.  Each module should use no more than the core headers and should
+    functions. Each module should use no more than the core headers and should
     attempt to stand alone to whatever extent is reasonable.
 
     Modules are built as objects and will be linked into the xy executable at the
@@ -23,7 +23,7 @@ STYLE
     DESIGN
         * Modules should attempt to stand on their own
         * Modules should attempt to layer a level of abstraction on top of
-          whatever functionality is being exposed.  For instance, the XLIB
+          whatever functionality is being exposed. For instance, the XLIB
           module makes an attempt to keep X functions, types, etc., out of the
           interface.
 

@@ -1,11 +1,34 @@
 #!/usr/bin/env bash
-echo "Removing old archives."
+#
+# Build distributions and tests the archives.
+#
+echo -en "BUILDING DISTRIBUTIONS.... "
 rm -f *tar*
-
-make $@ --silent dist-all >/dev/null
+./configure --enable-tests >/dev/null || exit 1
+make $@ --silent dist-all >/dev/null || exit 1
 DISTS=
 for dist in *tar*; do
     DISTS="${dist} ${DISTS}"
 done
+echo "OKAY."
 
-echo -en "The following archives are present: ${DISTS}\n"
+echo -en "TESTING ARCHIVES... "
+for x in *tar*; do
+    tar taf $x >/dev/null
+    RC=$?
+    if [[ $RC -ne 0 ]]; then
+        echo -e "\tbad archive: ${x}" >&2
+        exit 1
+    fi
+done
+echo "PASSED."
+
+echo -en "TESTING DISTRIBUTION... "
+RESULT=$(make distcheck --silent 2>&1 >/dev/null)
+RC=$?
+if [[ $RC -ne 0 ]]; then
+    echo "FAILED."
+    echo -e "${RESULT}" >&2
+    exit 1
+fi
+echo "PASSED."
