@@ -56,6 +56,9 @@
 
 void die(const char *, ...);
 
+#define for_each_in_list(item, list) \
+    for (T *item = list->head; item != NULL; item = item->next)
+
 /*
  * Macro: XY_DIR
  *

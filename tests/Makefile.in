@@ -32,9 +32,10 @@ POST_INSTALL = :
 NORMAL_UNINSTALL = :
 PRE_UNINSTALL = :
 POST_UNINSTALL = :
-@TESTING_TRUE@TESTS = xlib_tests$(EXEEXT) util_tests$(EXEEXT)
-@TESTING_TRUE@test_suite_PROGRAMS = xlib_tests$(EXEEXT) \
+@TESTING_TRUE@TESTS = core_tests$(EXEEXT) xlib_tests$(EXEEXT) \
 @TESTING_TRUE@	util_tests$(EXEEXT)
+@TESTING_TRUE@test_suite_PROGRAMS = core_tests$(EXEEXT) \
+@TESTING_TRUE@	xlib_tests$(EXEEXT) util_tests$(EXEEXT)
 subdir = tests
 DIST_COMMON = $(srcdir)/Makefile.am $(srcdir)/Makefile.in
 ACLOCAL_M4 = $(top_srcdir)/aclocal.m4
@@ -47,6 +48,10 @@ CONFIG_CLEAN_FILES =
 CONFIG_CLEAN_VPATH_FILES =
 am__installdirs = "$(DESTDIR)$(test_suitedir)"
 PROGRAMS = $(test_suite_PROGRAMS)
+am__core_tests_SOURCES_DIST = core_tests.c
+@TESTING_TRUE@am_core_tests_OBJECTS = core_tests.$(OBJEXT)
+core_tests_OBJECTS = $(am_core_tests_OBJECTS)
+core_tests_DEPENDENCIES =
 am__util_tests_SOURCES_DIST = util_tests.c
 @TESTING_TRUE@am_util_tests_OBJECTS = util_tests.$(OBJEXT)
 util_tests_OBJECTS = $(am_util_tests_OBJECTS)
@@ -66,9 +71,10 @@ COMPILE = $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) \
 	$(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS)
 CCLD = $(CC)
 LINK = $(CCLD) $(AM_CFLAGS) $(CFLAGS) $(AM_LDFLAGS) $(LDFLAGS) -o $@
-SOURCES = $(util_tests_SOURCES) $(xlib_tests_SOURCES)
-DIST_SOURCES = $(am__util_tests_SOURCES_DIST) \
-	$(am__xlib_tests_SOURCES_DIST)
+SOURCES = $(core_tests_SOURCES) $(util_tests_SOURCES) \
+	$(xlib_tests_SOURCES)
+DIST_SOURCES = $(am__core_tests_SOURCES_DIST) \
+	$(am__util_tests_SOURCES_DIST) $(am__xlib_tests_SOURCES_DIST)
 ETAGS = etags
 CTAGS = ctags
 am__tty_colors = \
@@ -177,26 +183,28 @@ top_build_prefix = @top_build_prefix@
 top_builddir = @top_builddir@
 top_srcdir = @top_srcdir@
 @TESTING_TRUE@XYLIBS = @XLIB_LIBS@ \
-@TESTING_TRUE@		 @XINERAMA_LIBS@ \
-@TESTING_TRUE@		 @XFT_LIBS@ \
-@TESTING_TRUE@		 @LIBUSB_LIBS@
+@TESTING_TRUE@         @XINERAMA_LIBS@ \
+@TESTING_TRUE@         @XFT_LIBS@ \
+@TESTING_TRUE@         @LIBUSB_LIBS@
 
 @TESTING_TRUE@AM_CFLAGS = -D_GNU_SOURCE \
-@TESTING_TRUE@			-Wno-unused-variable \
-@TESTING_TRUE@			-Werror \
-@TESTING_TRUE@			-I$(top_srcdir)/lib \
-@TESTING_TRUE@			@CHECK_CFLAGS@
+@TESTING_TRUE@            -Wno-unused-variable \
+@TESTING_TRUE@            -Werror \
+@TESTING_TRUE@            -I$(top_srcdir)/lib \
+@TESTING_TRUE@            @CHECK_CFLAGS@
 
 @TESTING_TRUE@test_suitedir = .
+@TESTING_TRUE@core_tests_SOURCES = core_tests.c
+@TESTING_TRUE@core_tests_LDADD = @CHECK_LIBS@
 @TESTING_TRUE@xlib_tests_SOURCES = xlib_tests.c
 @TESTING_TRUE@xlib_tests_LDADD = @CHECK_LIBS@ \
-@TESTING_TRUE@					  $(top_builddir)/lib/libxy.a \
-@TESTING_TRUE@					  $(XYLIBS)
+@TESTING_TRUE@                      $(top_builddir)/lib/libxy.a \
+@TESTING_TRUE@                      $(XYLIBS)
 
 @TESTING_TRUE@util_tests_SOURCES = util_tests.c
 @TESTING_TRUE@util_tests_LDADD = @CHECK_LIBS@ \
-@TESTING_TRUE@					  $(top_builddir)/lib/libxy.a \
-@TESTING_TRUE@					  $(XYLIBS)
+@TESTING_TRUE@                      $(top_builddir)/lib/libxy.a \
+@TESTING_TRUE@                      $(XYLIBS)
 
 all: all-am
 
@@ -269,6 +277,9 @@ uninstall-test_suitePROGRAMS:
 
 clean-test_suitePROGRAMS:
 	-test -z "$(test_suite_PROGRAMS)" || rm -f $(test_suite_PROGRAMS)
+core_tests$(EXEEXT): $(core_tests_OBJECTS) $(core_tests_DEPENDENCIES) 
+	@rm -f core_tests$(EXEEXT)
+	$(LINK) $(core_tests_OBJECTS) $(core_tests_LDADD) $(LIBS)
 util_tests$(EXEEXT): $(util_tests_OBJECTS) $(util_tests_DEPENDENCIES) 
 	@rm -f util_tests$(EXEEXT)
 	$(LINK) $(util_tests_OBJECTS) $(util_tests_LDADD) $(LIBS)
@@ -282,6 +293,7 @@ mostlyclean-compile:
 distclean-compile:
 	-rm -f *.tab.c
 
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/core_tests.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/util_tests.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/xlib_tests.Po@am__quote@
 
