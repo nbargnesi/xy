@@ -20,29 +20,38 @@
 #include "xyxlib.h"
 
 MONITORS * init_monitors(Display *d) {
+    int count;
+    MONITOR *monitors;
     if (is_xinerama_active(d)) {
-        int count;
         XineramaScreenInfo *screens = get_xinerama_screens(d, &count);
         if (!screens) return NULL;
-        return NULL;
+        monitors = calloc(count, sizeof(MONITOR));
+        for (int i = 0; i < count; i++) {
+            monitors[i].ordinal = screens[i].screen_number;
+            monitors[i].width = screens[i].width;
+            monitors[i].height = screens[i].height;
+            monitors[i].xorigin = screens[i].x_org;
+            monitors[i].yorigin = screens[i].y_org;
+        }
+        XFree(screens);
     } else {
         Screen *screen = DefaultScreenOfDisplay(d);
         if (!screen) return NULL;
+        count = 1;
+        monitors = calloc(1, sizeof(MONITOR));
 
-        MONITOR *m = malloc(sizeof(MONITOR));
-        memset(m, 0, sizeof(MONITOR));
-        m->ordinal = 0;
-        m->width = screen->width;
-        m->height = screen->height;
-        m->xorigin = 0;
-        m->yorigin = 0;
-
-        MONITORS *ms = malloc(sizeof(MONITORS));
-        memset(ms, 0, sizeof(MONITORS));
-        ms->count = 1;
-        ms->monitors = calloc(1, sizeof(MONITOR));
-        ms->monitors = m;
-        return ms;
+        memset(monitors, 0, sizeof(MONITOR));
+        monitors->ordinal = 0;
+        monitors->width = screen->width;
+        monitors->height = screen->height;
+        monitors->xorigin = 0;
+        monitors->yorigin = 0;
     }
+
+    MONITORS *ret = malloc(sizeof(MONITORS));
+    memset(ret, 0, sizeof(MONITORS));
+    ret->count = count;
+    ret->monitors = monitors;
+    return ret;
 }
 
