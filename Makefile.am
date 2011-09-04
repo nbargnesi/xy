@@ -6,3 +6,6 @@ mc: maintainer-clean
 if TESTING
 all: check
 endif
+
+clean-local:
+	-rm -vf xy-*tar*
