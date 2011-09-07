@@ -1,0 +1,22 @@
+#!/usr/bin/env bash
+VALGRIND=$(which valgrind)
+if [ -z "${VALGRIND}" ]; then
+    echo "missing valgrind"
+    exit 1
+fi
+
+if [ ! -d "tests" ]; then
+    echo "missing tests (tests/)"
+    exit 1
+fi
+
+VG_SUPPRESSIONS="vg_suppressions"
+VG_ARGS="--suppressions=${VG_SUPPRESSIONS} \
+         --tool=memcheck --leak-check=full \
+         --quiet"
+
+cd tests
+for test in *_tests; do
+    echo "--- ${test} --- "
+    ${VALGRIND} ${VG_ARGS} ./${test} >/dev/null
+done
