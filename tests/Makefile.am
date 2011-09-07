@@ -1,6 +1,6 @@
 if TESTING
 
-EXTRA_DIST = leaktest vg_suppressions
+EXTRA_DIST = vg_suppressions
 
 XYLIBS = @XLIB_LIBS@ \
          @XINERAMA_LIBS@ \

@@ -201,7 +201,12 @@ target_alias = @target_alias@
 top_build_prefix = @top_build_prefix@
 top_builddir = @top_builddir@
 top_srcdir = @top_srcdir@
-EXTRA_DIST = COPYING README
+EXTRA_DIST = COPYING \
+			 README \
+			 leaktest \
+			 memcheck \
+			 debug
+
 SUBDIRS = docs lib src tests .
 all: config.h
 	$(MAKE) $(AM_MAKEFLAGS) all-recursive
