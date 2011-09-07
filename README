@@ -6,7 +6,7 @@ HACKING
 CONFIGURING AND BUILDING
 --
     To build, simply:
-        ./configure && make
+        ./configure --enable-tests && make
 
     To clean the build:
         make clean
@@ -28,9 +28,9 @@ CONFIGURING AND BUILDING
 
 ADDING NEW MODULES
 --
-    To add a new module, start with a clean source tree, and append the source
-    file(s) to the end of xy_SOURCES in src/Makefile.am.  From the top of the tree,
-    regenerate the autotools artifacts via autoreconf.  Building the tree will now
-    include the additional module.
+    To add a new module, start with a clean source tree, and make the necessary
+    modifications to lib/Makefile.am, src/Makefile.am, and tests/Makefile.am.
+    From the top of the tree, regenerate the autotools artifacts via autoreconf.
+    Building the tree will now include the additional module.
 
 
