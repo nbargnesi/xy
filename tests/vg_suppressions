@@ -1,0 +1,12 @@
+{
+    xcb_connect_to_display_with_auth_info
+    Memcheck:Leak
+    fun:malloc
+    obj:/usr/lib64/libxcb.so.1.1.0
+    obj:/usr/lib64/libxcb.so.1.1.0
+    fun:xcb_connect_to_display_with_auth_info
+    fun:_XConnectXCB
+    fun:XOpenDisplay
+    fun:open_display
+}
+

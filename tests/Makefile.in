@@ -32,10 +32,11 @@ POST_INSTALL = :
 NORMAL_UNINSTALL = :
 PRE_UNINSTALL = :
 POST_UNINSTALL = :
-@TESTING_TRUE@TESTS = core_tests$(EXEEXT) xlib_tests$(EXEEXT) \
-@TESTING_TRUE@	util_tests$(EXEEXT)
+@TESTING_TRUE@TESTS = core_tests$(EXEEXT) util_tests$(EXEEXT) \
+@TESTING_TRUE@	xlib_tests$(EXEEXT) monitor_tests$(EXEEXT)
 @TESTING_TRUE@test_suite_PROGRAMS = core_tests$(EXEEXT) \
-@TESTING_TRUE@	xlib_tests$(EXEEXT) util_tests$(EXEEXT)
+@TESTING_TRUE@	util_tests$(EXEEXT) xlib_tests$(EXEEXT) \
+@TESTING_TRUE@	monitor_tests$(EXEEXT)
 subdir = tests
 DIST_COMMON = $(srcdir)/Makefile.am $(srcdir)/Makefile.in
 ACLOCAL_M4 = $(top_srcdir)/aclocal.m4
@@ -52,10 +53,16 @@ am__core_tests_SOURCES_DIST = core_tests.c
 @TESTING_TRUE@am_core_tests_OBJECTS = core_tests.$(OBJEXT)
 core_tests_OBJECTS = $(am_core_tests_OBJECTS)
 core_tests_DEPENDENCIES =
+am__monitor_tests_SOURCES_DIST = monitor_tests.c
+@TESTING_TRUE@am_monitor_tests_OBJECTS = monitor_tests.$(OBJEXT)
+monitor_tests_OBJECTS = $(am_monitor_tests_OBJECTS)
+am__DEPENDENCIES_1 =
+@TESTING_TRUE@monitor_tests_DEPENDENCIES =  \
+@TESTING_TRUE@	$(top_builddir)/lib/libxy.a \
+@TESTING_TRUE@	$(am__DEPENDENCIES_1)
 am__util_tests_SOURCES_DIST = util_tests.c
 @TESTING_TRUE@am_util_tests_OBJECTS = util_tests.$(OBJEXT)
 util_tests_OBJECTS = $(am_util_tests_OBJECTS)
-am__DEPENDENCIES_1 =
 @TESTING_TRUE@util_tests_DEPENDENCIES = $(top_builddir)/lib/libxy.a \
 @TESTING_TRUE@	$(am__DEPENDENCIES_1)
 am__xlib_tests_SOURCES_DIST = xlib_tests.c
@@ -71,9 +78,10 @@ COMPILE = $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) \
 	$(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS)
 CCLD = $(CC)
 LINK = $(CCLD) $(AM_CFLAGS) $(CFLAGS) $(AM_LDFLAGS) $(LDFLAGS) -o $@
-SOURCES = $(core_tests_SOURCES) $(util_tests_SOURCES) \
-	$(xlib_tests_SOURCES)
+SOURCES = $(core_tests_SOURCES) $(monitor_tests_SOURCES) \
+	$(util_tests_SOURCES) $(xlib_tests_SOURCES)
 DIST_SOURCES = $(am__core_tests_SOURCES_DIST) \
+	$(am__monitor_tests_SOURCES_DIST) \
 	$(am__util_tests_SOURCES_DIST) $(am__xlib_tests_SOURCES_DIST)
 ETAGS = etags
 CTAGS = ctags
@@ -182,6 +190,7 @@ target_alias = @target_alias@
 top_build_prefix = @top_build_prefix@
 top_builddir = @top_builddir@
 top_srcdir = @top_srcdir@
+@TESTING_TRUE@EXTRA_DIST = leaktest vg_suppressions
 @TESTING_TRUE@XYLIBS = @XLIB_LIBS@ \
 @TESTING_TRUE@         @XINERAMA_LIBS@ \
 @TESTING_TRUE@         @XFT_LIBS@ \
@@ -196,15 +205,20 @@ top_srcdir = @top_srcdir@
 @TESTING_TRUE@test_suitedir = .
 @TESTING_TRUE@core_tests_SOURCES = core_tests.c
 @TESTING_TRUE@core_tests_LDADD = @CHECK_LIBS@
-@TESTING_TRUE@xlib_tests_SOURCES = xlib_tests.c
-@TESTING_TRUE@xlib_tests_LDADD = @CHECK_LIBS@ \
-@TESTING_TRUE@                      $(top_builddir)/lib/libxy.a \
-@TESTING_TRUE@                      $(XYLIBS)
-
 @TESTING_TRUE@util_tests_SOURCES = util_tests.c
 @TESTING_TRUE@util_tests_LDADD = @CHECK_LIBS@ \
-@TESTING_TRUE@                      $(top_builddir)/lib/libxy.a \
-@TESTING_TRUE@                      $(XYLIBS)
+@TESTING_TRUE@                          $(top_builddir)/lib/libxy.a \
+@TESTING_TRUE@                          $(XYLIBS)
+
+@TESTING_TRUE@xlib_tests_SOURCES = xlib_tests.c
+@TESTING_TRUE@xlib_tests_LDADD = @CHECK_LIBS@ \
+@TESTING_TRUE@                          $(top_builddir)/lib/libxy.a \
+@TESTING_TRUE@                          $(XYLIBS)
+
+@TESTING_TRUE@monitor_tests_SOURCES = monitor_tests.c
+@TESTING_TRUE@monitor_tests_LDADD = @CHECK_LIBS@ \
+@TESTING_TRUE@                          $(top_builddir)/lib/libxy.a \
+@TESTING_TRUE@                          $(XYLIBS)
 
 all: all-am
 
@@ -280,6 +294,9 @@ clean-test_suitePROGRAMS:
 core_tests$(EXEEXT): $(core_tests_OBJECTS) $(core_tests_DEPENDENCIES) 
 	@rm -f core_tests$(EXEEXT)
 	$(LINK) $(core_tests_OBJECTS) $(core_tests_LDADD) $(LIBS)
+monitor_tests$(EXEEXT): $(monitor_tests_OBJECTS) $(monitor_tests_DEPENDENCIES) 
+	@rm -f monitor_tests$(EXEEXT)
+	$(LINK) $(monitor_tests_OBJECTS) $(monitor_tests_LDADD) $(LIBS)
 util_tests$(EXEEXT): $(util_tests_OBJECTS) $(util_tests_DEPENDENCIES) 
 	@rm -f util_tests$(EXEEXT)
 	$(LINK) $(util_tests_OBJECTS) $(util_tests_LDADD) $(LIBS)
@@ -294,6 +311,7 @@ distclean-compile:
 	-rm -f *.tab.c
 
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/core_tests.Po@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/monitor_tests.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/util_tests.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/xlib_tests.Po@am__quote@
 
