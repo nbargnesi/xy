@@ -22,7 +22,7 @@
 
 void dump_stack(int);
 void parse_command(char *, char **);
-void exec(const char *);
+pid_t exec(const char *);
 
 /*
  * Function: change_name

@@ -18,6 +18,7 @@
 #include <check.h>
 #include <stdio.h>
 #include <string.h>
+#include <sys/wait.h>
 #include "core.h"
 #include "monitor.h"
 #include "xyxlib.h"
@@ -51,12 +52,32 @@ START_TEST(util_parse_command) {
 }
 END_TEST
 
+START_TEST(util_exec) {
+    char *cmd_false = "false", *cmd_true = "true";
+    pid_t pid, ec;
+    int status;
+
+    pid = exec(cmd_false);
+    ec = waitpid(pid, &status, 0);
+    if (WEXITSTATUS(status) != 1) {
+        fail("expected 'false' to exit with 1");
+    }
+
+    pid = exec(cmd_true);
+    ec = waitpid(pid, &status, 0);
+    if (WEXITSTATUS(status) != 0) {
+        fail("expected 'true' to exit with 0");
+    }
+}
+END_TEST
+
 static Suite * test_suite() {
     Suite *ret = suite_create("util_suite");
     TCase *tc_util = tcase_create("util_testcases");
     tcase_add_test(tc_util, util_trim);
     tcase_add_test(tc_util, util_streq);
     tcase_add_test(tc_util, util_parse_command);
+    tcase_add_test(tc_util, util_exec);
     suite_add_tcase(ret, tc_util);
     return ret;
 }

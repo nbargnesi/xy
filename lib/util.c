@@ -41,7 +41,7 @@ void parse_command(char *cmd, char **argv) {
     *argv = '\0';
 }
 
-void exec(const char *cmd) {
+pid_t exec(const char *cmd) {
     char * cmd_dup = strdup(cmd);
     char *argv[64];
     parse_command(cmd_dup, argv);
@@ -51,9 +51,9 @@ void exec(const char *cmd) {
         DIE;
     } else if (pid == 0) {
         execvp(*argv, argv);
-        exit(0);
     }
     free(cmd_dup);
+    return pid;
 }
 
 void change_name(Display *d, const char *name) {
