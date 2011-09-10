@@ -207,6 +207,16 @@ void fill_config(CONFIG *cfg) {
     if (!get_config_value(global_cfg, name)) {
         set_config_value(global_cfg, name, value);
     }
+
+    for (CONFIG_ENTRY *c = cfg->head; c; c = c->next) {
+        const char *name = c->name;
+        const char *value = c->value;
+        const size_t length = strlen(name) + strlen(value) + 3;
+        char *buffer = malloc(length);
+        sprintf(buffer, "%s: %s", name, value);
+        log_debug(global_log, buffer);
+        free(buffer);
+    }
 }
 
 void configure(CONFIG *cfg) {
