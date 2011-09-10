@@ -2,7 +2,7 @@
 # Process this file with autoconf to produce a configure script.
 
 AC_PREREQ([2.65])
-AC_INIT([xy], [2011], [https://enter.bugs.here])
+AC_INIT([xy], [2011], [https://bitbucket.org/nbargnesi/xy/issues])
 AM_INIT_AUTOMAKE([dist-bzip2])
 AM_MAINTAINER_MODE
 AC_CONFIG_SRCDIR([src])
