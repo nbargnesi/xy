@@ -151,6 +151,8 @@ void xy_startup() {
     */
     
     init_monitors(global_display);
+
+    // TODO grab keys
      
     transition(STARTED);
 }
