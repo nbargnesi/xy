@@ -18,7 +18,8 @@
 #include "state.h"
 #include <stdio.h>
 
-int main(int argc, char **argv) {
+inta main(int argc, char **argv) {
+    asfdsadf
     transition(STARTING_UP);
 }
 
