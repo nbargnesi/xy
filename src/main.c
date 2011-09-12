@@ -19,6 +19,7 @@
 #include <stdio.h>
 
 int main(int argc, char **argv) {
+    asdfasdfas
     transition(STARTING_UP);
 }
 
