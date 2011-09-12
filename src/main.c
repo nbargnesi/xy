@@ -19,7 +19,6 @@
 #include <stdio.h>
 
 inta main(int argc, char **argv) {
-    asfdsadf
     transition(STARTING_UP);
 }
 
