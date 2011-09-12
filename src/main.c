@@ -18,7 +18,7 @@
 #include "state.h"
 #include <stdio.h>
 
-inta main(int argc, char **argv) {
+int main(int argc, char **argv) {
     transition(STARTING_UP);
 }
 
