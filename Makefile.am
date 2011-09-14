@@ -12,4 +12,4 @@ all: check
 endif
 
 clean-local:
-	-rm -vf xy-*tar*
+	@rm -vf xy-*tar*

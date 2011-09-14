@@ -698,7 +698,7 @@ mc: maintainer-clean
 @TESTING_TRUE@all: check
 
 clean-local:
-	-rm -vf xy-*tar*
+	@rm -vf xy-*tar*
 
 # Tell versions [3.59,3.63) of GNU make to not export all variables.
 # Otherwise a system limit (for SysV at least) may be exceeded.

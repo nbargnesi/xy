@@ -11,3 +11,4 @@ bin_PROGRAMS = xy
 xy_SOURCES = main.c
 
 xy_LDADD = $(top_builddir)/lib/libxy.a $(XYLIBS)
+
