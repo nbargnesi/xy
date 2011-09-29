@@ -24,7 +24,7 @@ done
 echo "PASSED."
 
 echo -en "TESTING DISTRIBUTION... "
-RESULT=$(make distcheck --silent 2>&1 >/dev/null)
+RESULT=$(make $@ distcheck --silent 2>&1 >/dev/null)
 RC=$?
 if [[ $RC -ne 0 ]]; then
     echo "FAILED."
