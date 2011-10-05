@@ -23,22 +23,38 @@
 #include "xyxlib.h"
 #include "util.h"
 
+#define TEST_DISPLAY Display *d = open_display(); \
+                     if (!d) { \
+                         fprintf(stderr, \
+                                 "no display - this test will not run\n"); \
+                         return; \
+                     }
+
 START_TEST(display) {
-    Display *d = open_display();
-    if (!d) {
-        fprintf(stderr, "no display - this test will not run\n");
-        return;
-    }
+    TEST_DISPLAY;
     close_display(d);
 }
 END_TEST
 
-START_TEST(monitor) {
-    Display *d = open_display();
-    if (!d) {
-        fprintf(stderr, "no display - this test will not run\n");
-        return;
+START_TEST(list_clients) {
+    TEST_DISPLAY;
+    Window root = root_window(d);
+    CLIENTS_LIST *clients = get_clients(d, root);
+    clients_list_free(clients);
+    close_display(d);
+}
+END_TEST
+
+START_TEST(string_to_keysym) {
+    KeySym sym = convert_to_keysym("p");
+    if (!sym) {
+        fail("couldn't get sym");
     }
+}
+END_TEST
+
+START_TEST(monitor) {
+    TEST_DISPLAY;
     if (is_xinerama_active(d)) {
         int numscrn;
         XineramaScreenInfo *screens = get_xinerama_screens(d, &numscrn);
@@ -72,6 +88,8 @@ static Suite * test_suite() {
     Suite *ret = suite_create("xlib_suite");
     TCase *tc_xlib = tcase_create("xlib_testcases");
     tcase_add_test(tc_xlib, display);
+    tcase_add_test(tc_xlib, list_clients);
+    tcase_add_test(tc_xlib, string_to_keysym);
     tcase_add_test(tc_xlib, monitor);
     suite_add_tcase(ret, tc_xlib);
     return ret;

@@ -62,4 +62,8 @@ XineramaScreenInfo * get_xinerama_screens(Display *, int *);
 
 bool is_window_manager_running(Display *);
 
+KeySym convert_to_keysym(char *);
+
+Window root_window(Display *);
+
 #endif

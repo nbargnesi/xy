@@ -38,7 +38,10 @@ CLIENTS_LIST * get_clients(Display *d, Window w) {
     Window *root = ret->root;
     Window *parent = ret->parent;
 
-    Status s = XQueryTree(d, w, root, parent, &ret->children, &ret->num_children);
+    Status s = XQueryTree(d, w, root, parent,
+                          &ret->children,
+                          &ret->num_children);
+
     if (!s) {
         free(ret);
         return NULL;
@@ -104,5 +107,13 @@ bool is_window_manager_running(Display *d) {
     XSetErrorHandler(currentHandler);
     if (errored) return true;
     return false;
+}
+
+KeySym convert_to_keysym(char *keystr) {
+    return XStringToKeysym(keystr);
+}
+
+Window root_window(Display *d) {
+    return DefaultRootWindow(d);
 }
 
