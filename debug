@@ -1,12 +1,21 @@
 #!/usr/bin/env bash
+GDB_ARGS="-d src -d lib"
 if [ $# -eq 0 ]; then
     if [[ ! -x src/xy ]]; then
         echo "no build available (src/xy missing)"
         exit 1
     fi
-    ARGS="src/xy"
+    TGT="src/xy"
 else
-    ARGS="$@"
+    TGT="$1"
 fi
 
-cgdb src/xy -- -d src -d lib
+if [[ $TGT == tests/* ]]; then
+    echo "Target looks to be a test case, setting CK_FORK to 'no'."
+    export CK_FORK="no"
+    GDB_ARGS="${GDB_ARGS} -d tests"
+fi
+
+echo -en "GDB args: ${GDB_ARGS}\n"
+echo -en "Target: ${TGT}\n"
+cgdb ${TGT} -- ${GDB_ARGS}
