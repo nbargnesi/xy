@@ -23,7 +23,7 @@ CONFIGURING AND BUILDING
         make mc
 
     In the latter target, 'mc' stands for "maintainer clean" and is intended to
-    be used by autotool maintainers.
+    be used by package maintainers.
 
 
 ADDING NEW MODULES
