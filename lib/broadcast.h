@@ -15,8 +15,8 @@
  * along with xy.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#ifndef BROADCAST_H_
-#define BROADCAST_H_
+#ifndef _XY_BROADCAST_H_
+#define _XY_BROADCAST_H_ 1
 
 #include "core.h"
 

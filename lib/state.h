@@ -15,8 +15,8 @@
  * along with xy.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#ifndef STATE_H_
-#define STATE_H_
+#ifndef _XY_STATE_H_
+#define _XY_STATE_H_ 1
 
 enum STATE_ENUM {
     STARTING_UP,

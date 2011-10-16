@@ -15,8 +15,8 @@
  * along with xy.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#ifndef MONITOR_H_
-#define MONITOR_H_
+#ifndef _XY_MONITOR_H_
+#define _XY_MONITOR_H_ 1
 
 #include "core.h"
 

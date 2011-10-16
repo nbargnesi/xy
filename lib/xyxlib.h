@@ -15,8 +15,8 @@
  * along with xy.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#ifndef XYXLIB_H_
-#define XYXLIB_H_
+#ifndef _XY_XYXLIB_H_
+#define _XY_XYXLIB_H_ 1
 
 #include "core.h"
 

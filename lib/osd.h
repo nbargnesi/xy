@@ -15,8 +15,8 @@
  * along with xy.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#ifndef OSD_H_
-#define OSD_H_
+#ifndef _XY_OSD_H_
+#define _XY_OSD_H_ 1
 
 #include "core.h"
 

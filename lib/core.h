@@ -15,8 +15,8 @@
  * along with xy.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#ifndef _CORE_H_
-#define _CORE_H_
+#ifndef _XY_CORE_H_
+#define _XY_CORE_H_ 1
 
 #include <errno.h>
 #include <locale.h>

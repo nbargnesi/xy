@@ -15,8 +15,8 @@
  * along with xy.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#ifndef CONFIGURATION_H_
-#define CONFIGURATION_H_
+#ifndef _XY_CONFIGURATION_H_
+#define _XY_CONFIGURATION_H_ 1
 
 struct ConfigEntry {
     char *name;

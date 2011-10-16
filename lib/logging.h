@@ -15,8 +15,8 @@
  * along with xy.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#ifndef LOGGING_H_
-#define LOGGING_H_
+#ifndef _XY_LOGGING_H_
+#define _XY_LOGGING_H_ 1
 
 #include "core.h"
 #include <log4c.h>

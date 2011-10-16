@@ -15,8 +15,8 @@
  * along with xy.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#ifndef IPC_H_
-#define IPC_H_
+#ifndef _XY_IPC_H_
+#define _XY_IPC_H_ 1
 
 #include "core.h"
 

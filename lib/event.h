@@ -15,8 +15,8 @@
  * along with xy.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#ifndef EVENT_H_
-#define EVENT_H_
+#ifndef _XY_EVENT_H_
+#define _XY_EVENT_H_ 1
 
 #include "core.h"
 

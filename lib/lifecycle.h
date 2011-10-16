@@ -15,8 +15,8 @@
  * along with xy.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#ifndef STARTUP_H_
-#define STARTUP_H_
+#ifndef _XY_STARTUP_H_
+#define _XY_STARTUP_H_ 1
 
 void xy_startup();
 

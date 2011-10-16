@@ -15,8 +15,8 @@
  * along with xy.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#ifndef CONSTANTS_H_
-#define CONSTANTS_H_
+#ifndef _XY_CONSTANTS_H_
+#define _XY_CONSTANTS_H_ 1
 
 /*
  * Define: CFG_SKIP_WINDOW_MGR_CHECK

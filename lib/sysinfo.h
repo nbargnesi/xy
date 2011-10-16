@@ -15,8 +15,8 @@
  * along with xy.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#ifndef SYSINFO_H_
-#define SYSINFO_H_
+#ifndef _XY_SYSINFO_H_
+#define _XY_SYSINFO_H_ 1
 
 #include "core.h"
 

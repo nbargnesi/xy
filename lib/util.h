@@ -15,8 +15,8 @@
  * along with xy.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#ifndef UTIL_H_
-#define UTIL_H_
+#ifndef _XY_UTIL_H_
+#define _XY_UTIL_H_ 1
 
 #include "core.h"
 

@@ -16,7 +16,7 @@
  */
 
 #ifndef _XY_H_
-#define _XY_H_
+#define _XY_H_ 1
 
 #include "core.h"
 #include "constants.h"

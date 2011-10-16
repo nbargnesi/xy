@@ -15,8 +15,8 @@
  * along with xy.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#ifndef _TYPES_H_
-#define _TYPES_H_
+#ifndef _XY_TYPES_H_
+#define _XY_TYPES_H_ 1
 
 typedef unsigned long ulong;
 typedef unsigned int uint;
