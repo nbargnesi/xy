@@ -190,7 +190,6 @@ target_alias = @target_alias@
 top_build_prefix = @top_build_prefix@
 top_builddir = @top_builddir@
 top_srcdir = @top_srcdir@
-@TESTING_TRUE@EXTRA_DIST = vg_suppressions
 @TESTING_TRUE@XYLIBS = @XLIB_LIBS@ \
 @TESTING_TRUE@         @XINERAMA_LIBS@ \
 @TESTING_TRUE@         @XFT_LIBS@ \
