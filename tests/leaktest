@@ -5,17 +5,17 @@ if [ -z "${VALGRIND}" ]; then
     exit 1
 fi
 
-if [ ! -d "tests" ]; then
-    echo "missing tests (tests/)"
-    exit 1
-fi
-
 VG_SUPPRESSIONS="vg_suppressions"
 VG_ARGS="--suppressions=${VG_SUPPRESSIONS} \
          --tool=memcheck --leak-check=full \
          --quiet"
 
-cd tests
+TESTS=$(ls *_tests 2>/dev/null)
+if [ -z "${TESTS}" ]; then
+    echo "no tests build (*_tests)"
+    exit 1
+fi
+
 for test in *_tests; do
     echo "--- ${test} --- "
     ${VALGRIND} ${VG_ARGS} ./${test} >/dev/null

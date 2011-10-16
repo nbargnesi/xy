@@ -1,7 +1,5 @@
 if TESTING
 
-EXTRA_DIST = vg_suppressions
-
 XYLIBS = @XLIB_LIBS@ \
          @XINERAMA_LIBS@ \
          @XFT_LIBS@ \
