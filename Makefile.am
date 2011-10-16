@@ -1,8 +1,7 @@
 EXTRA_DIST = COPYING \
 			 README \
-			 leaktest \
-			 memcheck \
 			 debug
+
 SUBDIRS = docs lib src tests .
 
 mc: maintainer-clean
