@@ -1,0 +1,23 @@
+#!/usr/bin/env bash
+#
+# Helgrind is a Valgrind tool for detecting synchronisation errors in C, C++
+# and Fortran programs that use the POSIX pthreads threading primitives.
+#
+if [ -z $(which valgrind 2>/dev/null) ]; then
+    echo "valgrind doesn't seem to be available"
+    exit 1
+fi
+
+if [ $# -eq 0 ]; then
+    if [[ ! -x src/xy ]]; then
+        echo "no build available (src/xy missing)"
+        exit 1
+    fi
+    ARGS="src/xy"
+else
+    ARGS="$@"
+fi
+
+valgrind --tool=helgrind \
+         --trace-children=yes \
+         ${ARGS}

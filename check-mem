@@ -1,0 +1,39 @@
+#!/usr/bin/env bash
+#
+# Memcheck is a memory error detector. It can detect the following problems
+# that are common in C and C++ programs.
+#
+# * Accessing memory you shouldn't, e.g. overrunning and underrunning heap
+#   blocks, overrunning the top of the stack, and accessing memory after it
+#   has been freed.
+#
+# * Using undefined values, i.e. values that have not been initialised, or that
+#   have been derived from other undefined values.
+#
+# * Incorrect freeing of heap memory, such as double-freeing heap blocks, or
+#   mismatched use of malloc/new/new[] versus free/delete/delete[]
+#
+# * Overlapping src and dst pointers in memcpy and related functions.
+#
+# * Memory leaks.
+#
+if [ -z $(which valgrind 2>/dev/null) ]; then
+    echo "valgrind doesn't seem to be available"
+    exit 1
+fi
+
+if [ $# -eq 0 ]; then
+    if [[ ! -x src/xy ]]; then
+        echo "no build available (src/xy missing)"
+        exit 1
+    fi
+    ARGS="src/xy"
+else
+    ARGS="$@"
+fi
+
+valgrind --tool=memcheck \
+         --leak-check=full \
+         --trace-children=yes \
+         --track-fds=yes \
+         ${ARGS}

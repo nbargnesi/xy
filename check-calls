@@ -1,0 +1,44 @@
+#!/usr/bin/env bash
+#
+# Callgrind is a profiling tool that records the call history among functions
+# in a program's run as a call-graph. By default, the collected data consists
+# of the number of instructions executed, their relationship to source lines,
+# the caller/callee relationship between functions, and the numbers of such
+# calls.
+# 
+# Optionally, cache simulation and/or branch prediction (similar to Cachegrind)
+# can produce further information about the runtime behavior of an application.
+# 
+# The profile data is written out to a file at program termination. For
+# presentation of the data, and interactive control of the profiling, two
+# command line tools are provided:
+#
+# callgrind_annotate
+#     This command reads in the profile data, and prints a sorted lists of
+#     functions, optionally with source annotation.
+#
+# callgrind_control
+#     This command enables you to interactively observe and control the status
+#     of a program currently running under Callgrind's control, without stopping
+#     the program. You can get statistics information as well as the current
+#     stack trace, and you can request zeroing of counters or dumping of profile
+#     data.
+#
+if [ -z $(which valgrind 2>/dev/null) ]; then
+    echo "valgrind doesn't seem to be available"
+    exit 1
+fi
+
+if [ $# -eq 0 ]; then
+    if [[ ! -x src/xy ]]; then
+        echo "no build available (src/xy missing)"
+        exit 1
+    fi
+    ARGS="src/xy"
+else
+    ARGS="$@"
+fi
+
+valgrind --tool=callgrind \
+         --trace-children=yes \
+         ${ARGS}
