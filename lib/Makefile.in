@@ -193,7 +193,6 @@ XYLIBS = @XLIB_LIBS@ \
              @LIBUSB_LIBS@
 
 noinst_LIBRARIES = libxy.a
-#libxy_a_LIBADD     = $(XYLIBS)
 libxy_a_SOURCES = broadcast.c \
                       configuration.c \
                       die.c \
