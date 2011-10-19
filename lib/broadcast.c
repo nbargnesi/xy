@@ -41,7 +41,6 @@ typedef struct message_list MESSAGES;
 
 static BCAST_ENDPT *endpt;
 static pthread_cond_t cond = PTHREAD_COND_INITIALIZER;
-static pthread_mutex_t cond_mutex = PTHREAD_MUTEX_INITIALIZER;
 static pthread_mutex_t mutex = PTHREAD_MUTEX_INITIALIZER;
 static MESSAGES *messages;
 
@@ -50,8 +49,8 @@ static void * pthread_broadcast_send() {
     char *buffer, *padded_buffer;
     ssize_t rc;
     for (;;) {
-        pthread_cond_wait(&cond, &cond_mutex);
         pthread_mutex_lock(&mutex);
+        pthread_cond_wait(&cond, &mutex);
 
         if (messages == NULL) {
             pthread_mutex_unlock(&mutex);
@@ -107,8 +106,9 @@ bool broadcast_init(const char *address, const uint port) {
     endpt->size = sizeof(endpt->group_sckt);
     endpt->dest = (struct sockaddr *) &endpt->group_sckt;
 
-    pthread_mutex_init(&cond_mutex, NULL);
     pthread_mutex_init(&mutex, NULL);
+    pthread_cond_init(&cond, NULL);
+
     pthread_t thread;
     pthread_create(&thread, NULL, &pthread_broadcast_send, NULL);
 
