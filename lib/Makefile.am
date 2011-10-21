@@ -20,8 +20,7 @@ EXTRA_DIST = broadcast.h \
 
 XYLIBS     = @XLIB_LIBS@ \
              @XINERAMA_LIBS@ \
-             @XFT_LIBS@ \
-             @LIBUSB_LIBS@
+             @XFT_LIBS@
 
 noinst_LIBRARIES    = libxy.a
 libxy_a_SOURCES     = broadcast.c \
