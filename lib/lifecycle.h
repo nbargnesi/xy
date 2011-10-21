@@ -15,15 +15,14 @@
  * along with xy.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#ifndef _XY_STARTUP_H_
-#define _XY_STARTUP_H_ 1
+#ifndef _XY_LIFECYCLE_H_
+#define _XY_LIFECYCLE_H_ 1
 
+void xy_init(char *);
 void xy_startup();
-
 void xy_started();
-
+void xy_restart();
 void xy_shutting_down();
-
 void xy_shutdown();
 
 #endif

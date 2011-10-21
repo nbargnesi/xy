@@ -16,9 +16,28 @@
  */
 
 #include "state.h"
+#include "lifecycle.h"
 #include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
 
 int main(int argc, char **argv) {
-    transition(STARTING_UP);
+    size_t length = 0; 
+    for (int i = 0; i < argc; i++) {
+        length += strlen(argv[i]);
+    }
+
+    uint bytes = length + (argc - 1) + 1;
+    char *cmd = malloc(bytes);
+    memset(cmd, 0, bytes);
+
+    for (int i = 0; i < argc; i++) {
+        if (i != 0) {
+            strcat(cmd, " ");
+        }
+        strcat(cmd, argv[i]);
+    }
+
+    xy_init(cmd);
 }
 

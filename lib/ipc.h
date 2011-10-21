@@ -19,14 +19,16 @@
 #define _XY_IPC_H_ 1
 
 #include "core.h"
+#include "lifecycle.h"
 
 /*
  * Enum: IPC_COMMAND
  */
 enum IPC_COMMAND {
-    QUIT,
+    NO_OP,
     PING,
-    NO_OP
+    QUIT,
+    RESTART
 };
 
 /*

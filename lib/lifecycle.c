@@ -29,6 +29,8 @@
 #include <stdio.h>
 #include <fcntl.h>
 
+static char *xy_cmd;
+
 /*
  * Function: xy_dir_init
  *
@@ -86,6 +88,11 @@ static CONFIG * xy_rc_init() {
     free(st);
     free(rcpath);
     return ret;
+}
+
+void xy_init(char *cmd) {
+    xy_cmd = cmd;
+    transition(STARTING_UP);
 }
 
 void xy_startup() {
@@ -161,6 +168,10 @@ void xy_started() {
     main_loop();
 }
 
+void xy_restart() {
+    restart(xy_cmd);
+}
+
 void xy_shutting_down() {
     broadcast_send(SHUTTING_DOWN_MSG);
     log_info(global_log, SHUTTING_DOWN_MSG);
@@ -170,6 +181,8 @@ void xy_shutting_down() {
     close(global_x_fd);
     broadcast_terminate();
     ipc_terminate();
+
+    free(xy_cmd);
 
     transition(SHUTDOWN);
 }
