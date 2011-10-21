@@ -18,8 +18,7 @@ AC_PATH_X
 PKG_CHECK_MODULES([XLIB], [x11])
 PKG_CHECK_MODULES([XINERAMA], [xinerama])
 PKG_CHECK_MODULES([XFT], [xft])
-
-PKG_CHECK_MODULES([LIBUSB], [libusb])
+PKG_CHECK_MODULES([JANSSON], [jansson])
 
 AC_CHECK_LIB(xosd, xosd_create)
 AC_CHECK_LIB(pthread, pthread_create)

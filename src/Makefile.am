@@ -3,8 +3,7 @@ AM_LDFLAGS = -Wl,--as-needed
 
 XYLIBS = @XLIB_LIBS@ \
 		 @XINERAMA_LIBS@ \
-		 @XFT_LIBS@ \
-		 @LIBUSB_LIBS@
+		 @XFT_LIBS@
 
 bin_PROGRAMS = xy
 

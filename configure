@@ -612,8 +612,8 @@ CHECK_LIBS
 CHECK_CFLAGS
 EGREP
 GREP
-LIBUSB_LIBS
-LIBUSB_CFLAGS
+JANSSON_LIBS
+JANSSON_CFLAGS
 XFT_LIBS
 XFT_CFLAGS
 XINERAMA_LIBS
@@ -735,8 +735,8 @@ XINERAMA_CFLAGS
 XINERAMA_LIBS
 XFT_CFLAGS
 XFT_LIBS
-LIBUSB_CFLAGS
-LIBUSB_LIBS
+JANSSON_CFLAGS
+JANSSON_LIBS
 CHECK_CFLAGS
 CHECK_LIBS'
 
@@ -1394,9 +1394,10 @@ Some influential environment variables:
               linker flags for XINERAMA, overriding pkg-config
   XFT_CFLAGS  C compiler flags for XFT, overriding pkg-config
   XFT_LIBS    linker flags for XFT, overriding pkg-config
-  LIBUSB_CFLAGS
-              C compiler flags for LIBUSB, overriding pkg-config
-  LIBUSB_LIBS linker flags for LIBUSB, overriding pkg-config
+  JANSSON_CFLAGS
+              C compiler flags for JANSSON, overriding pkg-config
+  JANSSON_LIBS
+              linker flags for JANSSON, overriding pkg-config
   CHECK_CFLAGS
               C compiler flags for CHECK, overriding pkg-config
   CHECK_LIBS  linker flags for CHECK, overriding pkg-config
@@ -4630,21 +4631,20 @@ $as_echo "yes" >&6; }
 
 fi
 
-
 pkg_failed=no
-{ $as_echo "$as_me:${as_lineno-$LINENO}: checking for LIBUSB" >&5
-$as_echo_n "checking for LIBUSB... " >&6; }
+{ $as_echo "$as_me:${as_lineno-$LINENO}: checking for JANSSON" >&5
+$as_echo_n "checking for JANSSON... " >&6; }
 
-if test -n "$LIBUSB_CFLAGS"; then
-    pkg_cv_LIBUSB_CFLAGS="$LIBUSB_CFLAGS"
+if test -n "$JANSSON_CFLAGS"; then
+    pkg_cv_JANSSON_CFLAGS="$JANSSON_CFLAGS"
  elif test -n "$PKG_CONFIG"; then
     if test -n "$PKG_CONFIG" && \
-    { { $as_echo "$as_me:${as_lineno-$LINENO}: \$PKG_CONFIG --exists --print-errors \"libusb\""; } >&5
-  ($PKG_CONFIG --exists --print-errors "libusb") 2>&5
+    { { $as_echo "$as_me:${as_lineno-$LINENO}: \$PKG_CONFIG --exists --print-errors \"jansson\""; } >&5
+  ($PKG_CONFIG --exists --print-errors "jansson") 2>&5
   ac_status=$?
   $as_echo "$as_me:${as_lineno-$LINENO}: \$? = $ac_status" >&5
   test $ac_status = 0; }; then
-  pkg_cv_LIBUSB_CFLAGS=`$PKG_CONFIG --cflags "libusb" 2>/dev/null`
+  pkg_cv_JANSSON_CFLAGS=`$PKG_CONFIG --cflags "jansson" 2>/dev/null`
 		      test "x$?" != "x0" && pkg_failed=yes
 else
   pkg_failed=yes
@@ -4652,16 +4652,16 @@ fi
  else
     pkg_failed=untried
 fi
-if test -n "$LIBUSB_LIBS"; then
-    pkg_cv_LIBUSB_LIBS="$LIBUSB_LIBS"
+if test -n "$JANSSON_LIBS"; then
+    pkg_cv_JANSSON_LIBS="$JANSSON_LIBS"
  elif test -n "$PKG_CONFIG"; then
     if test -n "$PKG_CONFIG" && \
-    { { $as_echo "$as_me:${as_lineno-$LINENO}: \$PKG_CONFIG --exists --print-errors \"libusb\""; } >&5
-  ($PKG_CONFIG --exists --print-errors "libusb") 2>&5
+    { { $as_echo "$as_me:${as_lineno-$LINENO}: \$PKG_CONFIG --exists --print-errors \"jansson\""; } >&5
+  ($PKG_CONFIG --exists --print-errors "jansson") 2>&5
   ac_status=$?
   $as_echo "$as_me:${as_lineno-$LINENO}: \$? = $ac_status" >&5
   test $ac_status = 0; }; then
-  pkg_cv_LIBUSB_LIBS=`$PKG_CONFIG --libs "libusb" 2>/dev/null`
+  pkg_cv_JANSSON_LIBS=`$PKG_CONFIG --libs "jansson" 2>/dev/null`
 		      test "x$?" != "x0" && pkg_failed=yes
 else
   pkg_failed=yes
@@ -4682,22 +4682,22 @@ else
         _pkg_short_errors_supported=no
 fi
         if test $_pkg_short_errors_supported = yes; then
-	        LIBUSB_PKG_ERRORS=`$PKG_CONFIG --short-errors --print-errors --cflags --libs "libusb" 2>&1`
+	        JANSSON_PKG_ERRORS=`$PKG_CONFIG --short-errors --print-errors --cflags --libs "jansson" 2>&1`
         else
-	        LIBUSB_PKG_ERRORS=`$PKG_CONFIG --print-errors --cflags --libs "libusb" 2>&1`
+	        JANSSON_PKG_ERRORS=`$PKG_CONFIG --print-errors --cflags --libs "jansson" 2>&1`
         fi
 	# Put the nasty error message in config.log where it belongs
-	echo "$LIBUSB_PKG_ERRORS" >&5
+	echo "$JANSSON_PKG_ERRORS" >&5
 
-	as_fn_error $? "Package requirements (libusb) were not met:
+	as_fn_error $? "Package requirements (jansson) were not met:
 
-$LIBUSB_PKG_ERRORS
+$JANSSON_PKG_ERRORS
 
 Consider adjusting the PKG_CONFIG_PATH environment variable if you
 installed software in a non-standard prefix.
 
-Alternatively, you may set the environment variables LIBUSB_CFLAGS
-and LIBUSB_LIBS to avoid the need to call pkg-config.
+Alternatively, you may set the environment variables JANSSON_CFLAGS
+and JANSSON_LIBS to avoid the need to call pkg-config.
 See the pkg-config man page for more details." "$LINENO" 5
 elif test $pkg_failed = untried; then
      	{ $as_echo "$as_me:${as_lineno-$LINENO}: result: no" >&5
@@ -4708,15 +4708,15 @@ as_fn_error $? "The pkg-config script could not be found or is too old.  Make su
 is in your PATH or set the PKG_CONFIG environment variable to the full
 path to pkg-config.
 
-Alternatively, you may set the environment variables LIBUSB_CFLAGS
-and LIBUSB_LIBS to avoid the need to call pkg-config.
+Alternatively, you may set the environment variables JANSSON_CFLAGS
+and JANSSON_LIBS to avoid the need to call pkg-config.
 See the pkg-config man page for more details.
 
 To get pkg-config, see <http://pkg-config.freedesktop.org/>.
 See \`config.log' for more details" "$LINENO" 5; }
 else
-	LIBUSB_CFLAGS=$pkg_cv_LIBUSB_CFLAGS
-	LIBUSB_LIBS=$pkg_cv_LIBUSB_LIBS
+	JANSSON_CFLAGS=$pkg_cv_JANSSON_CFLAGS
+	JANSSON_LIBS=$pkg_cv_JANSSON_LIBS
         { $as_echo "$as_me:${as_lineno-$LINENO}: result: yes" >&5
 $as_echo "yes" >&6; }
 

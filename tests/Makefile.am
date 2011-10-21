@@ -2,8 +2,7 @@ if TESTING
 
 XYLIBS = @XLIB_LIBS@ \
          @XINERAMA_LIBS@ \
-         @XFT_LIBS@ \
-         @LIBUSB_LIBS@
+         @XFT_LIBS@
 
 AM_CFLAGS = -D_GNU_SOURCE \
             -Wno-unused-variable \
