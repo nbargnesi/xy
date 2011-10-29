@@ -15,9 +15,9 @@
  * along with xy.  If not, see <http://www.gnu.org/licenses/>.
  */
 
+#include <sys/prctl.h>
 #include "lifecycle.h"
 #include "xy.h"
-#include "osd.h"
 #include "logging.h"
 #include "constants.h"
 #include "broadcast.h"
@@ -161,6 +161,7 @@ void xy_startup() {
 
     // TODO grab keys
      
+    set_process_name("xy: main");
     transition(STARTED);
 }
 

@@ -16,8 +16,10 @@
  */
 
 #include "broadcast.h"
+#include "util.h"
 
 #include <pthread.h>
+#include <sys/prctl.h>
 
 struct BroadcastEndpoint {
     int sd;
@@ -45,6 +47,7 @@ static pthread_mutex_t mutex = PTHREAD_MUTEX_INITIALIZER;
 static MESSAGES *messages;
 
 static void * pthread_broadcast_send() {
+    set_process_name("xy: broadcast");
     int len;
     char *buffer, *padded_buffer;
     ssize_t rc;
