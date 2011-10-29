@@ -13,8 +13,6 @@ CFLAGS="-std=c99 -O0 -g3 -Wall -Wunused -Wextra -Wno-unused-parameter"
 AM_PROG_CC_C_O
 AC_PROG_RANLIB
 
-AC_PATH_X
-
 PKG_CHECK_MODULES([XLIB], [x11])
 PKG_CHECK_MODULES([XINERAMA], [xinerama])
 PKG_CHECK_MODULES([XFT], [xft])

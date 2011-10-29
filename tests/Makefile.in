@@ -147,7 +147,6 @@ XINERAMA_CFLAGS = @XINERAMA_CFLAGS@
 XINERAMA_LIBS = @XINERAMA_LIBS@
 XLIB_CFLAGS = @XLIB_CFLAGS@
 XLIB_LIBS = @XLIB_LIBS@
-XMKMF = @XMKMF@
 abs_builddir = @abs_builddir@
 abs_srcdir = @abs_srcdir@
 abs_top_builddir = @abs_top_builddir@
