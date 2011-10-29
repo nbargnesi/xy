@@ -9,9 +9,6 @@
 /* Define to 1 if you have the `pthread' library (-lpthread). */
 #undef HAVE_LIBPTHREAD
 
-/* Define to 1 if you have the `xosd' library (-lxosd). */
-#undef HAVE_LIBXOSD
-
 /* Define to 1 if you have the <log4c.h> header file. */
 #undef HAVE_LOG4C_H
 
@@ -38,9 +35,6 @@
 
 /* Define to 1 if you have the <unistd.h> header file. */
 #undef HAVE_UNISTD_H
-
-/* Define to 1 if you have the <xosd.h> header file. */
-#undef HAVE_XOSD_H
 
 /* Define to 1 if your C compiler doesn't accept -c and -o together. */
 #undef NO_MINUS_C_MINUS_O
