@@ -19,6 +19,7 @@
 #include <stdio.h>
 #include <string.h>
 #include <sys/wait.h>
+#include <sys/prctl.h>
 #include "core.h"
 #include "monitor.h"
 #include "xyxlib.h"
@@ -71,6 +72,15 @@ START_TEST(util_exec) {
 }
 END_TEST
 
+START_TEST(util_set_process_name) {
+    char *name = "my process name";
+    set_process_name(name);
+    char buffer[MAX_PROC_NAME_LEN];
+    prctl(PR_GET_NAME, buffer);
+    if (!streq(name, buffer)) fail("process names are not the same");
+}
+END_TEST
+
 static Suite * test_suite() {
     Suite *ret = suite_create("util_suite");
     TCase *tc_util = tcase_create("util_testcases");
@@ -78,6 +88,7 @@ static Suite * test_suite() {
     tcase_add_test(tc_util, util_streq);
     tcase_add_test(tc_util, util_parse_command);
     tcase_add_test(tc_util, util_exec);
+    tcase_add_test(tc_util, util_set_process_name);
     suite_add_tcase(ret, tc_util);
     return ret;
 }

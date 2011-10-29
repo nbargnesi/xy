@@ -22,6 +22,7 @@
 
 #include <ctype.h>
 #include <execinfo.h>
+#include <sys/prctl.h>
 
 void dump_stack(int num_frames) {
     void *ptrs[num_frames];
@@ -68,6 +69,17 @@ void change_name(Display *d, const char *name) {
     data = (uchar *) name;
     int len = strlen(name);
     XChangeProperty(d, root, wmname, utfstring, 8, PropModeReplace, data, len);
+}
+
+void set_process_name(const char *name) {
+    if (!name) return;
+    char buffer[MAX_PROC_NAME_LEN + 1];
+    strncpy(buffer, name, MAX_PROC_NAME_LEN);
+    // Must be null terminated
+    buffer[MAX_PROC_NAME_LEN] = 0;
+    if (prctl(PR_SET_NAME, (unsigned long) &buffer) == -1) {
+        perror(__func__);
+    }
 }
 
 static char * left_trim(char *str) {

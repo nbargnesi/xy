@@ -20,6 +20,8 @@
 
 #include "core.h"
 
+#define MAX_PROC_NAME_LEN 16
+
 void dump_stack(int);
 void parse_command(char *, char **);
 pid_t exec(const char *);
@@ -49,6 +51,8 @@ char * trim(char *str);
  *  char * - command to pass to execlp
  */
 void restart(const char *);
+
+void set_process_name(const char *);
 
 #endif
 
