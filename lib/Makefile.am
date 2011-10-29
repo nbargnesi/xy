@@ -10,6 +10,7 @@ EXTRA_DIST = broadcast.h \
              lifecycle.h \
              logging.h \
              monitor.h \
+             osd.h \
              state.h \
              sysinfo.h \
              types.h \
@@ -30,6 +31,7 @@ libxy_a_SOURCES     = broadcast.c \
                       lifecycle.c \
                       logging.c \
                       monitor.c \
+                      osd.c \
                       state.c \
                       sysinfo.c \
                       util.c \

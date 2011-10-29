@@ -50,8 +50,8 @@ libxy_a_LIBADD =
 am_libxy_a_OBJECTS = broadcast.$(OBJEXT) configuration.$(OBJEXT) \
 	die.$(OBJEXT) event.$(OBJEXT) ipc.$(OBJEXT) \
 	lifecycle.$(OBJEXT) logging.$(OBJEXT) monitor.$(OBJEXT) \
-	state.$(OBJEXT) sysinfo.$(OBJEXT) util.$(OBJEXT) xy.$(OBJEXT) \
-	xyxlib.$(OBJEXT)
+	osd.$(OBJEXT) state.$(OBJEXT) sysinfo.$(OBJEXT) util.$(OBJEXT) \
+	xy.$(OBJEXT) xyxlib.$(OBJEXT)
 libxy_a_OBJECTS = $(am_libxy_a_OBJECTS)
 DEFAULT_INCLUDES = -I.@am__isrc@ -I$(top_builddir)
 depcomp = $(SHELL) $(top_srcdir)/depcomp
@@ -125,6 +125,7 @@ XINERAMA_CFLAGS = @XINERAMA_CFLAGS@
 XINERAMA_LIBS = @XINERAMA_LIBS@
 XLIB_CFLAGS = @XLIB_CFLAGS@
 XLIB_LIBS = @XLIB_LIBS@
+XMKMF = @XMKMF@
 abs_builddir = @abs_builddir@
 abs_srcdir = @abs_srcdir@
 abs_top_builddir = @abs_top_builddir@
@@ -178,6 +179,7 @@ EXTRA_DIST = broadcast.h \
              lifecycle.h \
              logging.h \
              monitor.h \
+             osd.h \
              state.h \
              sysinfo.h \
              types.h \
@@ -198,6 +200,7 @@ libxy_a_SOURCES = broadcast.c \
                       lifecycle.c \
                       logging.c \
                       monitor.c \
+                      osd.c \
                       state.c \
                       sysinfo.c \
                       util.c \
@@ -260,6 +263,7 @@ distclean-compile:
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/lifecycle.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/logging.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/monitor.Po@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/osd.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/state.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/sysinfo.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/util.Po@am__quote@
