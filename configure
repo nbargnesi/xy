@@ -733,7 +733,6 @@ XFT_LIBS
 JANSSON_CFLAGS
 JANSSON_LIBS
 CPP
-CPPFLAGS
 CHECK_CFLAGS
 CHECK_LIBS'
 
@@ -1357,7 +1356,7 @@ Optional Features:
   --disable-dependency-tracking  speeds up one-time build
   --enable-dependency-tracking   do not reject slow dependency extractors
   --enable-optimizations  Enable compiler optimizations (defaults to disabled)
-  --enable-tests          Enables unit tests (defaults to disabled)
+  --disable-tests         Disables unit tests (defaults to enabled)
 
 Some influential environment variables:
   CC          C compiler command
@@ -4893,9 +4892,9 @@ fi
 
 # Check whether --enable-tests was given.
 if test "${enable_tests+set}" = set; then :
-  enableval=$enable_tests; testing=yes
+  enableval=$enable_tests; testing=no
 else
-  testing=no
+  testing=yes
 fi
 
 

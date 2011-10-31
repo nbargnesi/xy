@@ -34,9 +34,9 @@ else
 fi
 
 AC_ARG_ENABLE(tests,
-    AS_HELP_STRING([--enable-tests],
-                   [Enables unit tests (defaults to disabled)]),
-    [testing=yes],[testing=no])
+    AS_HELP_STRING([--disable-tests],
+                   [Disables unit tests (defaults to enabled)]),
+    [testing=no],[testing=yes])
 
 if test "x$testing" == "xyes"; then
     PKG_CHECK_MODULES(CHECK, [check >= 0.9.8], have_check="yes", have_check="no")
