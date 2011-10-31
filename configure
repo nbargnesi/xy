@@ -2690,8 +2690,6 @@ fi
 ac_config_headers="$ac_config_headers config.h"
 
 
-CFLAGS="-std=c99 -O0 -g3 -Wall -Wunused -Wextra -Wno-unused-parameter"
-
 DEPDIR="${am__leading_dot}deps"
 
 ac_config_commands="$ac_config_commands depfiles"
@@ -4884,12 +4882,6 @@ else
 fi
 
 
-if test "x$optimize" == "xyes"; then
-    CFLAGS="-std=c99 -O3 -Wall -Wunused -Wextra -Wno-unused-parameter"
-else
-    CFLAGS="-std=c99 -O0 -g3 -Wall -Wunused -Wextra -Wno-unused-parameter"
-fi
-
 # Check whether --enable-tests was given.
 if test "${enable_tests+set}" = set; then :
   enableval=$enable_tests; testing=no
@@ -4897,6 +4889,13 @@ else
   testing=yes
 fi
 
+
+DEFAULT_CFLAGS="-pipe -std=c99 -Wall -Wunused -Wextra -Wno-unused-parameter"
+if test "x$optimize" == "xyes"; then
+    CFLAGS="${DEFAULT_CFLAGS} -O3"
+else
+    CFLAGS="${DEFAULT_CFLAGS} -O0 -g3"
+fi
 
 if test "x$testing" == "xyes"; then
 
