@@ -4,7 +4,7 @@
 #
 echo -en "BUILDING DISTRIBUTIONS.... "
 rm -f *tar*
-./configure --enable-tests >/dev/null || exit 1
+./configure >/dev/null || exit 1
 make $@ --silent dist-all >/dev/null || exit 1
 DISTS=
 for dist in *tar*; do

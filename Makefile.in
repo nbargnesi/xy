@@ -95,8 +95,7 @@ am__relativize = \
     dir1=`echo "$$dir1" | sed -e "$$sed_rest"`; \
   done; \
   reldir="$$dir2"
-DIST_ARCHIVES = $(distdir).tar.gz $(distdir).tar.bz2 \
-	$(distdir).tar.lzma $(distdir).tar.xz
+DIST_ARCHIVES = $(distdir).tar.gz $(distdir).tar.bz2 $(distdir).tar.xz
 GZIP_ENV = --best
 distuninstallcheck_listfiles = find . -type f -print
 distcleancheck_listfiles = find . -type f -print
@@ -206,6 +205,7 @@ EXTRA_DIST = COPYING \
 			 debug
 
 SUBDIRS = docs lib src tests .
+DISTCHECK_CONFIGURE_FLAGS = "--disable-tests"
 all: config.h
 	$(MAKE) $(AM_MAKEFLAGS) all-recursive
 
@@ -470,6 +470,7 @@ dist-gzip: distdir
 dist-bzip2: distdir
 	tardir=$(distdir) && $(am__tar) | bzip2 -9 -c >$(distdir).tar.bz2
 	$(am__remove_distdir)
+
 dist-lzma: distdir
 	tardir=$(distdir) && $(am__tar) | lzma -9 -c >$(distdir).tar.lzma
 	$(am__remove_distdir)
@@ -493,7 +494,6 @@ dist-zip: distdir
 dist dist-all: distdir
 	tardir=$(distdir) && $(am__tar) | GZIP=$(GZIP_ENV) gzip -c >$(distdir).tar.gz
 	tardir=$(distdir) && $(am__tar) | bzip2 -9 -c >$(distdir).tar.bz2
-	tardir=$(distdir) && $(am__tar) | lzma -9 -c >$(distdir).tar.lzma
 	tardir=$(distdir) && $(am__tar) | xz -c >$(distdir).tar.xz
 	$(am__remove_distdir)
 

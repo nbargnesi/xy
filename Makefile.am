@@ -3,6 +3,7 @@ EXTRA_DIST = COPYING \
 			 debug
 
 SUBDIRS = docs lib src tests .
+DISTCHECK_CONFIGURE_FLAGS = "--disable-tests"
 
 mc: maintainer-clean
 
