@@ -7,6 +7,7 @@ EXTRA_DIST = broadcast.h \
              core.h \
              event.h \
              ipc.h \
+			 layout.h \
              lifecycle.h \
              logging.h \
              monitor.h \
@@ -27,6 +28,7 @@ libxy_a_SOURCES     = broadcast.c \
                       die.c \
                       event.c \
                       ipc.c \
+					  layout.c \
                       lifecycle.c \
                       logging.c \
                       monitor.c \

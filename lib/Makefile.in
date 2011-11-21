@@ -48,7 +48,7 @@ ARFLAGS = cru
 libxy_a_AR = $(AR) $(ARFLAGS)
 libxy_a_LIBADD =
 am_libxy_a_OBJECTS = broadcast.$(OBJEXT) configuration.$(OBJEXT) \
-	die.$(OBJEXT) event.$(OBJEXT) ipc.$(OBJEXT) \
+	die.$(OBJEXT) event.$(OBJEXT) ipc.$(OBJEXT) layout.$(OBJEXT) \
 	lifecycle.$(OBJEXT) logging.$(OBJEXT) monitor.$(OBJEXT) \
 	state.$(OBJEXT) sysinfo.$(OBJEXT) util.$(OBJEXT) xy.$(OBJEXT) \
 	xyxlib.$(OBJEXT)
@@ -175,6 +175,7 @@ EXTRA_DIST = broadcast.h \
              core.h \
              event.h \
              ipc.h \
+			 layout.h \
              lifecycle.h \
              logging.h \
              monitor.h \
@@ -195,6 +196,7 @@ libxy_a_SOURCES = broadcast.c \
                       die.c \
                       event.c \
                       ipc.c \
+					  layout.c \
                       lifecycle.c \
                       logging.c \
                       monitor.c \
@@ -257,6 +259,7 @@ distclean-compile:
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/die.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/event.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/ipc.Po@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/layout.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/lifecycle.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/logging.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/monitor.Po@am__quote@
