@@ -18,17 +18,17 @@
 #ifndef _XY_STATE_H_
 #define _XY_STATE_H_ 1
 
-enum STATE_ENUM {
+enum StateEnum {
     STARTING_UP,
     STARTED,
     SHUTTING_DOWN,
     SHUTDOWN
 };
-typedef enum STATE_ENUM State;
+typedef enum StateEnum STATE;
 
 /*
  * Transitions to a state.
  */
-void transition(const State);
+void transition(const STATE);
 
 #endif

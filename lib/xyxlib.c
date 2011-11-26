@@ -117,3 +117,13 @@ Window root_window(Display *d) {
     return DefaultRootWindow(d);
 }
 
+XSizeHints * size_hints(Display *d, Window w) {
+    XSizeHints *ret = XAllocSizeHints();
+    if (!ret) return NULL;
+    long user_hints;
+    if (!XGetWMNormalHints(d, w, ret, &user_hints)) {
+        return NULL;
+    }
+    return ret;
+}
+

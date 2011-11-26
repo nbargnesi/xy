@@ -18,7 +18,7 @@
 #include "state.h"
 #include "lifecycle.h"
 
-void transition(const State state) {
+void transition(const STATE state) {
     switch (state) {
         case STARTING_UP:
             xy_startup();

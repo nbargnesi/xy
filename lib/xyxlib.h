@@ -66,4 +66,7 @@ KeySym convert_to_keysym(char *);
 
 Window root_window(Display *);
 
+XSizeHints * size_hints(Display *, Window);
+
 #endif
+

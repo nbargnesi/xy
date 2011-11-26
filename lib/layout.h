@@ -23,7 +23,7 @@
 /*
  * Layout modes.
  */
-enum LAYOUT {
+enum Layout {
 
     /*
      * Three rows. The middle row is the master client.
@@ -76,5 +76,16 @@ enum LAYOUT {
      */
     WEST
 };
+typedef enum Layout LAYOUT;
+
+typedef struct {
+    uint x;
+    uint y;
+    uint width;
+    uint height;
+} LOCATION;
+
+LOCATION * layout(LAYOUT, XSizeHints *);
+
 #endif
 

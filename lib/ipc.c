@@ -56,7 +56,7 @@ bool ipc_init() {
 }
 
 void process_ipc_buffer(const char *buffer) {
-    Command cmd = convert_command_str(buffer);
+    COMMAND cmd = convert_command_str(buffer);
     switch (cmd) {
         case PING:
             ipc_ping();
@@ -72,7 +72,7 @@ void process_ipc_buffer(const char *buffer) {
     }
 }
 
-Command convert_command_str(const char *cmd) {
+COMMAND convert_command_str(const char *cmd) {
     if (streq("QUIT", cmd) || streq("QUIT", cmd))
         return QUIT;
     else if (streq("PING", cmd) || streq("ping", cmd))

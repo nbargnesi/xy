@@ -24,7 +24,7 @@
 /*
  * Enum: IPC_COMMAND
  */
-enum IPC_COMMAND {
+enum IPC_Command {
     NO_OP,
     PING,
     QUIT,
@@ -32,9 +32,9 @@ enum IPC_COMMAND {
 };
 
 /*
- * Typedef: Command
+ * Typedef: COMMAND
  */
-typedef enum IPC_COMMAND Command;
+typedef enum IPC_Command COMMAND;
 
 /*
  * Function: ipc_init
@@ -58,7 +58,7 @@ void process_ipc_buffer(const char *);
 /*
  * Function: convert_command_str
  */
-Command convert_command_str(const char *);
+COMMAND convert_command_str(const char *);
 
 #endif
 
