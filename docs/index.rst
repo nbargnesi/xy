@@ -6,7 +6,7 @@
 xy Documentation
 ================
 
-This is the documentation for xy |release|, last updated |today|.
+This is the documentation for xy_ |release|, last updated |today|.
 
 Contents:
 
@@ -21,4 +21,6 @@ Indices and tables
 * :ref:`genindex`
 * :ref:`modindex`
 * :ref:`search`
+
+.. _xy: https://bitbucket.org/nbargnesi/xy
 
