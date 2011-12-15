@@ -1,4 +1,6 @@
 #!/usr/bin/env bash
+. ../resources/common.sh
+
 VALGRIND=$(which valgrind)
 if [ -z "${VALGRIND}" ]; then
     echo "missing valgrind"
@@ -12,11 +14,17 @@ VG_ARGS="--suppressions=${VG_SUPPRESSIONS} \
 
 TESTS=$(ls *_tests 2>/dev/null)
 if [ -z "${TESTS}" ]; then
-    echo "no tests build (*_tests)"
+    echo "no tests built (*_tests)"
     exit 1
 fi
+
+start_display
 
 for test in *_tests; do
     echo "--- ${test} --- "
     ${VALGRIND} ${VG_ARGS} ./${test} >/dev/null
 done
+
+stop_display
+
+exit 0

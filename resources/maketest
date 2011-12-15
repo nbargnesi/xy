@@ -1,0 +1,5 @@
+#!/usr/bin/env bash
+. resources/common.sh
+start_display
+./configure --quiet && make --silent --no-print-directory
+stop_display
