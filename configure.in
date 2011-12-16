@@ -61,8 +61,11 @@ AC_CONFIG_FILES([
 
 AC_OUTPUT
 
-printf "
-xy build configuration
+if test "x$silent" != "xyes"; then
+    printf "\n"
+fi
+
+printf "xy build configuration
 ----------------------
 version         : ${VERSION}
 cflags          : ${CFLAGS}

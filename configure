@@ -6572,8 +6572,11 @@ $as_echo "$as_me: WARNING: unrecognized options: $ac_unrecognized_opts" >&2;}
 fi
 
 
-printf "
-xy build configuration
+if test "x$silent" != "xyes"; then
+    printf "\n"
+fi
+
+printf "xy build configuration
 ----------------------
 version         : ${VERSION}
 cflags          : ${CFLAGS}
