@@ -35,7 +35,7 @@ DEFAULT_CFLAGS="-pipe -std=c99 -Wall -Wunused -Wextra -Wno-unused-parameter"
 if test "x$optimize" == "xyes"; then
     CFLAGS="${DEFAULT_CFLAGS} -O3"
 else
-    CFLAGS="${DEFAULT_CFLAGS} -O0 -g3"
+    CFLAGS="${DEFAULT_CFLAGS} -O2 -g"
 fi
 
 if test "x$testing" == "xyes"; then
