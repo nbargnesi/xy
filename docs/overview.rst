@@ -11,7 +11,7 @@ Directories
 docs
 ^^^^
 
-The documentation for xy resides in the *docs* directory.
+The documentation for XY resides in the *docs* directory.
 
 XY's documentation is managed by Sphinx_; the latest version is always
 available online_.
@@ -69,9 +69,9 @@ configure-and-build approach.
 .. code-block:: bash
 
     # ./configure --quiet
-    xy build configuration
+    XY build configuration
     ----------------------
-    version         : 2011
+    version         : 2012
     cflags          : -pipe -std=c99 -Wall -Wunused -Wextra -Wno-unused-parameter -O0 -g3
     tests           : yes
     optimizations   : no
@@ -82,9 +82,9 @@ use:
 .. code-block:: bash
 
     # ./configure --enable-optimizations --disable-tests --quiet
-    xy build configuration
+    XY build configuration
     ----------------------
-    version         : 2011
+    version         : 2012
     cflags          : -pipe -std=c99 -Wall -Wunused -Wextra -Wno-unused-parameter -O3
     tests           : no
     optimizations   : yes
@@ -93,6 +93,10 @@ use:
 
 Running
 -------
+
+XY can be launched using *ck-launch-session* and a ``Xclients`` or ``xsession``
+file in your home directory. Your login manager can also be configured to start
+XY for you. Refer to your distribution's documentation for more information.
 
 Documenting
 -----------

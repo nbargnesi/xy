@@ -1,4 +1,6 @@
 /*
+ * Copyright 2011-2012 Nick Bargnesi <nick@den-4.com>. All rights reserved.
+ *
  * This file is part of xy.
  *
  * XY is free software: you can redistribute it and/or modify
@@ -36,7 +38,7 @@ void close_display(Display *);
 /*
  * Function: get_color
  */
-ulong get_color(const char *, Display *, Colormap);
+ulong get_color(const char *, Display *, Colormap *);
 
 /*
  * Function: is_xinerama_active

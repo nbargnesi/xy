@@ -9,7 +9,7 @@ API Reference
 util.h
 ======
 
-A collection of utility functions meant to stand alone from other xy modules.
+A collection of utility functions meant to stand alone from other XY modules.
 
 .. function:: bool streq(const char *, const char *)
 
@@ -51,3 +51,31 @@ A collection of utility functions meant to stand alone from other xy modules.
 
     Executes the supplied command by calling *execvp*. The command will be
     parsed before the call is made (see `parse_command`).
+
+inotify.h
+=========
+
+The inotify module. XY uses the inotify module to react to changes occurring on
+the filesystem.
+
+types
+-----
+
+.. type:: xy_in_fd
+
+   The inotify file descriptor made available after a call to
+   :func:`xy_inotify_init`. This file descriptor is suitable for system calls
+   like *select* and *epoll*.
+
+functions
+---------
+
+.. function:: void xy_inotify_init
+
+   Initializes xy's inotify module. Returns the inotify file descriptor or -1
+   on failure. This function makes :type:`xy_in_fd` available for use.
+
+.. function:: void xy_inotify_read
+
+   Drains the inotify event queue of all events.
+

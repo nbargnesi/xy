@@ -1,4 +1,6 @@
 /*
+ * Copyright 2011-2012 Nick Bargnesi <nick@den-4.com>. All rights reserved.
+ *
  * This file is part of xy.
  *
  * XY is free software: you can redistribute it and/or modify
@@ -18,12 +20,11 @@
 #include "constants.h"
 #include "xy.h"
 #include "configuration.h"
+#include "util.h"
 
 #include <stdlib.h>
 #include <stdio.h>
 #include <string.h>
-
-#include "util.h"
 
 CONFIG * get_config(const char *pathname) {
 

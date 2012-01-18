@@ -1,4 +1,6 @@
 /*
+ * Copyright 2011-2012 Nick Bargnesi <nick@den-4.com>. All rights reserved.
+ *
  * This file is part of xy.
  *
  * XY is free software: you can redistribute it and/or modify

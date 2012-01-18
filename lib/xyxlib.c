@@ -1,4 +1,6 @@
 /*
+ * Copyright 2011-2012 Nick Bargnesi <nick@den-4.com>. All rights reserved.
+ *
  * This file is part of xy.
  *
  * XY is free software: you can redistribute it and/or modify
@@ -74,10 +76,16 @@ void close_display(Display *d) {
     XCloseDisplay(d);
 }
 
-ulong get_color(const char *color, Display *d, Colormap colormap) {
+ulong get_color(const char *color, Display *d, Colormap *cmap) {
+    Colormap c;
+    if (!cmap) {
+        int screen = DefaultScreen(d);
+        c = DefaultColormap(d, screen);
+    } else {
+        c = *cmap;
+    }
     XColor xc;
-    if (!XAllocNamedColor(d, colormap, color, &xc, &xc))
-        return 0L;
+    if (!XAllocNamedColor(d, c, color, &xc, &xc)) return 0L;
     return xc.pixel;
 }
 
