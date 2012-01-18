@@ -43,7 +43,7 @@ master_doc = 'index'
 
 # General information about the project.
 project = u'xy'
-copyright = u'2011, Nick Bargnesi'
+copyright = u'2011-2012, Nick Bargnesi'
 
 # The version info for the project you're documenting, acts as replacement for
 # |version| and |release|, also used in various other places throughout the
@@ -224,7 +224,7 @@ man_pages = [
 epub_title = u'xy'
 epub_author = u'Nick Bargnesi'
 epub_publisher = u'Nick Bargnesi'
-epub_copyright = u'2011, Nick Bargnesi'
+epub_copyright = u'2011-2012, Nick Bargnesi'
 
 # The language of the text. It defaults to the language option
 # or en if the language is not set.

@@ -1,4 +1,6 @@
 /*
+ * Copyright 2011-2012 Nick Bargnesi <nick@den-4.com>. All rights reserved.
+ *
  * This file is part of xy.
  *
  * XY is free software: you can redistribute it and/or modify
@@ -31,6 +33,7 @@
 #include "ipc.h"
 #include "event.h"
 #include "monitor.h"
+#include "inotify.h"
 
 /*
  * Function: main
@@ -110,7 +113,7 @@ void ipc_ping();
 /*
  * Function: key_pressed
  */
-void key_pressed(XKeyEvent *);
+bool key_pressed(XKeyEvent *);
 
 /*
  * Function: key_released
@@ -166,6 +169,8 @@ void property_notify(XPropertyEvent *);
  * Function: unmap_notify
  */
 void unmap_notify(XUnmapEvent *);
+
+void cleanup();
 
 #endif
 

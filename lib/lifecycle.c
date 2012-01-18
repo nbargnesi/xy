@@ -1,4 +1,6 @@
 /*
+ * Copyright 2011-2012 Nick Bargnesi <nick@den-4.com>. All rights reserved.
+ *
  * This file is part of xy.
  *
  * XY is free software: you can redistribute it and/or modify
@@ -24,6 +26,7 @@
 #include "ipc.h"
 #include "xyxlib.h"
 #include "monitor.h"
+#include "inotify.h"
 
 #include <dirent.h>
 #include <stdio.h>
@@ -104,6 +107,12 @@ void xy_startup() {
     log_info(global_log, STARTUP_MSG);
     xy_dir_init();
     global_cfg = xy_rc_init();
+
+    xy_in_fd = xy_inotify_init();
+    if (xy_in_fd == -1) {
+        DIE_MSG("xy_inotify_init failed");
+    }
+
     global_display = open_display();
     if (!global_display) {
         DIE_MSG("failed to open display");
@@ -174,6 +183,7 @@ void xy_restart() {
 }
 
 void xy_shutting_down() {
+    cleanup();
     broadcast_send(SHUTTING_DOWN_MSG);
     log_info(global_log, SHUTTING_DOWN_MSG);
 

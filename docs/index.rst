@@ -3,10 +3,10 @@
    You can adapt this file completely to your liking, but it should at least
    contain the root `toctree` directive.
 
-xy Documentation
+XY Documentation
 ================
 
-This is the documentation for xy_ |release|, last updated |today|.
+This is the documentation for XY_ |release|, last updated |today|.
 
 Introduction
 ------------
@@ -23,7 +23,7 @@ interfacing that aims to integrate the latest technology and hardware.
 XY is licensed under version 3 of the `GNU General Public License`_; see LICENSE
 in the source distribution for details.
 
-.. _xy: https://bitbucket.org/nbargnesi/xy
+.. _XY: https://bitbucket.org/nbargnesi/xy
 .. _GNU General Public License: http://www.gnu.org/licenses/gpl-3.0.html
 
 Contents

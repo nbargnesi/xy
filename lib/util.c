@@ -1,4 +1,6 @@
 /*
+ * Copyright 2011-2012 Nick Bargnesi <nick@den-4.com>. All rights reserved.
+ *
  * This file is part of xy.
  *
  * XY is free software: you can redistribute it and/or modify
@@ -51,6 +53,8 @@ pid_t exec(const char *cmd) {
         perror("fork failed");
         DIE;
     } else if (pid == 0) {
+        if (global_x_fd) close(global_x_fd);
+        if (global_ipc_fd) close(global_ipc_fd);
         execvp(*argv, argv);
     }
     free(cmd_dup);
@@ -108,3 +112,17 @@ bool streq(const char *s1, const char *s2) {
 void restart(const char *cmd) {
     execlp(cmd, cmd, NULL, NULL, NULL);
 }
+
+char * rc_path() {
+    char *home = getenv("HOME");
+    if (!home) DIE;
+
+    const int bufsize = strlen(home) + strlen(XY_CONFIG) + 2;
+    char *rcpath = malloc(bufsize);
+    memset(rcpath, 0, bufsize);
+    strcat(rcpath, home);
+    strcat(rcpath, "/");
+    strcat(rcpath, XY_CONFIG);
+    return rcpath;
+}
+

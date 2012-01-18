@@ -1,5 +1,5 @@
 /*
- * Copyright 2011-2012 Nick Bargnesi <nick@den-4.com>. All rights reserved.
+ * Copyright 2012 Nick Bargnesi <nick@den-4.com>. All rights reserved.
  *
  * This file is part of xy.
  *
@@ -17,23 +17,16 @@
  * along with xy.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#include "state.h"
-#include "lifecycle.h"
+#ifndef _XY_INOTIFY_H_
+#define _XY_INOTIFY_H_ 1
 
-void transition(const STATE state) {
-    switch (state) {
-        case STARTING_UP:
-            xy_startup();
-            break;
-        case STARTED:
-            xy_started();
-            break;
-        case SHUTTING_DOWN:
-            xy_shutting_down();
-            break;
-        case SHUTDOWN:
-            xy_shutdown();
-            break;
-    }
-}
+#include "core.h"
+#include <sys/inotify.h>
+
+int xy_in_fd;
+
+int xy_inotify_init();
+void xy_inotify_read();
+
+#endif
 
