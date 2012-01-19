@@ -193,6 +193,9 @@ void xy_shutting_down() {
     broadcast_terminate();
     ipc_terminate();
 
+    // TODO free monitors
+    // monitors_terminate();
+
     free(xy_cmd);
 
     transition(SHUTDOWN);
