@@ -30,6 +30,7 @@ int xy_inotify_init() {
 
     char *rcpath = rc_path();
     int wd = inotify_add_watch(xy_in_fd, rcpath, IN_CLOSE_WRITE | IN_MODIFY);
+    free(rcpath);
     if (wd == -1) {
         perror("inotify_add_watch()");
         close(xy_in_fd);
