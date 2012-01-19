@@ -57,3 +57,7 @@ MONITORS * init_monitors(Display *d) {
     return ret;
 }
 
+void monitors_terminate(MONITORS *m) {
+    if (m) free(m);
+}
+
