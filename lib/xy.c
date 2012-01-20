@@ -56,7 +56,6 @@
  */
 
 #include "xy.h"
-#include <sys/epoll.h>
 
 #define log log4c_category_log
 #define FUNCTION_TRACE log_trace(global_log, __FUNCTION__);
@@ -114,7 +113,7 @@ static void (*handler[LASTEvent]) (XEvent *) = {
 };
 
 void main_loop() {
-    register_cleanup(&xy_cleanup);
+    register_shutdown_hook(xy_cleanup);
     signal(SIGCHLD, SIG_IGN);
     ssize_t rslt;
     Display *d = global_display;
@@ -128,8 +127,11 @@ void main_loop() {
         DIE;
     }
 
-    struct epoll_event epev_x, epev_ipc, epev_in;
-    struct epoll_event epev;
+    EPOLL_EVENT epev_x, epev_ipc, epev_in, epev;
+    memset(&epev_x, 0, sizeof(EPOLL_EVENT));
+    memset(&epev_ipc, 0, sizeof(EPOLL_EVENT));
+    memset(&epev_in, 0, sizeof(EPOLL_EVENT));
+    memset(&epev, 0, sizeof(EPOLL_EVENT));
 
     epev_x.events = EPOLLIN;
     epev_x.data.fd = global_x_fd;
@@ -167,8 +169,10 @@ void main_loop() {
         nfds = epoll_wait(epfd, &epev, 1, -1);
 
         if (nfds == -1) {
+            // Interrupted system call - continue
+            if (errno == EINTR) continue;
             perror("epoll_wait()");
-            fprintf(stderr, "(epoll_wait returned %s)\n", strerror(errno));
+            fprintf(stderr, "(epoll_wait returned %d)\n", errno);
             DIE;
         }
 
@@ -186,7 +190,6 @@ void main_loop() {
             memset(ipc_buffer, 0, MSG_LEN);
             rslt = read(global_ipc_fd, ipc_buffer, MSG_LEN);
             process_ipc_buffer(ipc_buffer);
-            free(ipc_buffer);
         } else if (epev.data.fd == xy_in_fd) {
             // inotify needs servicing.
             log_debug(global_log, "servicing filesystem event");
@@ -738,8 +741,7 @@ xy_cleanup() {
     view(&a);
     selmon->lt[selmon->sellt] = &foo;
     for (m = mons; m; m = m->next)
-        while (m->stack)
-            unmanage(m->stack, False);
+        while (m->stack) unmanage(m->stack, False);
     if (dc.font.set)
         XFreeFontSet(global_display, dc.font.set);
     else
@@ -750,8 +752,7 @@ xy_cleanup() {
     XFreeCursor(global_display, cursor[CurNormal]);
     XFreeCursor(global_display, cursor[CurResize]);
     XFreeCursor(global_display, cursor[CurMove]);
-    while (mons)
-        cleanupmon(mons);
+    while (mons) cleanupmon(mons);
     XSync(global_display, False);
     XSetInputFocus(global_display, PointerRoot, RevertToPointerRoot, CurrentTime);
 }
@@ -1286,7 +1287,6 @@ initfont(const char *fontstr) {
 
     dc.font.set = XCreateFontSet(global_display, fontstr, &missing, &n, &def);
     if (missing) {
-        while (n--) fprintf(stderr, "missing font set: %s\n", missing[n]);
         XFreeStringList(missing);
     }
     if (dc.font.set) {
