@@ -1,0 +1,1452 @@
+2012-01-18  Nick Bargnesi  <nick@den-4.com>
+
+	* lib/lifecycle.c:
+	Add TODO.
+	[fd305b24fdfb] [tip]
+
+	* lib/monitor.c, lib/monitor.h:
+	Add terminate function to monitor module.
+	[0f5cf3530598]
+
+	* lib/inotify.c:
+	Leak fix.
+	[b00016c87025]
+
+	* configure:
+	Default CFLAGS use O2 now.
+	[836b060bbd4c]
+
+	* README, configure.in:
+	merge
+	[a694c5d1355f]
+
+	* configure, configure.in, docs/apiref.rst, docs/conf.py,
+	docs/index.rst, docs/overview.rst, lib/Makefile.am, lib/Makefile.in,
+	lib/broadcast.c, lib/broadcast.h, lib/configuration.c,
+	lib/configuration.h, lib/constants.h, lib/core.h, lib/die.c,
+	lib/event.c, lib/event.h, lib/inotify.c, lib/inotify.h, lib/ipc.c,
+	lib/ipc.h, lib/layout.c, lib/layout.h, lib/lifecycle.c,
+	lib/lifecycle.h, lib/logging.c, lib/logging.h, lib/monitor.c,
+	lib/monitor.h, lib/state.c, lib/state.h, lib/sysinfo.c,
+	lib/sysinfo.h, lib/types.h, lib/util.c, lib/util.h, lib/xy.c,
+	lib/xy.h, lib/xyxlib.c, lib/xyxlib.h, src/main.c,
+	tests/core_tests.c, tests/monitor_tests.c, tests/util_tests.c,
+	tests/xlib_tests.c:
+	Update version (2012), copyright headers, bump documentation, and
+	make it functional.
+	[142e28361484]
+
+	* README:
+	Explicitly state use of copyright year ranges.
+	[0bb1c0dab29e]
+
+2012-01-15  Nick Bargnesi  <nick@den-4.com>
+
+	* README:
+	Remove build server link.
+	[fdbe06ec0d02]
+
+	* configure.in:
+	Default CFLAGS to -O2 instead of -O0.
+	[da7264c5b715]
+
+2011-12-19  Nick Bargnesi  <nick@den-4.com>
+
+	* Makefile.in, configure, configure.in, docs/Makefile.in,
+	lib/Makefile.am, lib/Makefile.in, lib/util.c, lib/util.h,
+	lib/xyxcb.c, lib/xyxcb.h, src/Makefile.am, src/Makefile.in,
+	tests/Makefile.am, tests/Makefile.in, tests/xcb_tests.c:
+	Remove linking and code to xlib and friends.
+	[81dbc9f66bc4] <xcb>
+
+2011-12-18  Nick Bargnesi  <nick@den-4.com>
+
+	* docs/apiref.rst, lib/lifecycle.c, lib/xyxcb.c, lib/xyxcb.h,
+	tests/xcb_tests.c:
+	Defer configuration of X-related globals to the lifecycle's
+	processing of xy state vice the xcb interface.
+	[c7aad05a2939] <xcb>
+
+2011-12-17  Nick Bargnesi  <nick@den-4.com>
+
+	* configure, docs/apiref.rst, lib/configuration.c, lib/event.c,
+	lib/ipc.c, lib/lifecycle.c, lib/xy.c, lib/xy.h, lib/xyxcb.c,
+	lib/xyxcb.h, tests/Makefile.am, tests/Makefile.in,
+	tests/xcb_tests.c, tests/xlib_tests.c:
+	Make x_connect/x_disconnect setup all the X-related settings. Added
+	xyxlib.h section to apiref.
+	[f83c73eeb4db] <xcb>
+
+	* configure, lib/Makefile.am, lib/Makefile.in, lib/configuration.c,
+	lib/core.h, lib/event.c, lib/lifecycle.c, lib/monitor.c,
+	lib/monitor.h, lib/xy.c, lib/xy.h, lib/xyxcb.c, lib/xyxcb.h,
+	lib/xyxlib.c, lib/xyxlib.h, tests/core_tests.c,
+	tests/monitor_tests.c, tests/util_tests.c, tests/xlib_tests.c:
+	Comment out old xlib code and annotate with 'XXX xcb'. Make tree
+	build successfully.
+	[e6e3a9e1a902] <xcb>
+
+2011-12-16  Nick Bargnesi  <nick@den-4.com>
+
+	* configure, configure.in, docs/index.rst, docs/overview.rst,
+	resources/leaktest, tests/leaktest:
+	Bump documentation and relocate leaktest.
+	[e784e97c9614]
+
+2011-12-15  Nick Bargnesi  <nick@den-4.com>
+
+	* docs/conf.py:
+	Try path mangling a la Pylons.
+	[3dcd90679223]
+
+2011-12-14  Nick Bargnesi  <nick@den-4.com>
+
+	* docs/conf.py:
+	Documentation again.
+	[629cf56ab0b9]
+
+	* docs/_themes/bootstrap/theme.conf:
+	Adjust theme.conf.
+	[9d45592bdeca]
+
+	* docs/conf.py:
+	Fix sys.path.
+	[05ac5ef002f3]
+
+	* docs/bootstrap.zip, docs/conf.py:
+	Backed out changeset cbfbfb761759
+	[2834fa920c6d]
+
+	* docs/bootstrap.zip, docs/conf.py:
+	Documentation bump.
+	[cbfbfb761759]
+
+	* docs/conf.py, makedist:
+	Merge.
+	[6d6bfb375993]
+
+2011-12-12  Nick Bargnesi  <nick@den-4.com>
+
+	* docs/conf.py:
+	Update pygments style for sphinx documentation.
+	[80225addc625]
+
+2011-12-14  Nick Bargnesi  <nick@den-4.com>
+
+	* makedist, resources/makedist, resources/maketest, tests/leaktest:
+	Relocate makedist. Use start/stop display in leaktest and maketest.
+	[f113e52d3a2e]
+
+	* resources/common.sh:
+	Add bash functions to launch a Xvfb server for DISPLAY-based testing
+	and an equivalent function for terminating it.
+	[d83e538c7ee0]
+
+	* docs/_themes/bootstrap/globaltoc.html,
+	docs/_themes/bootstrap/layout.html,
+	docs/_themes/bootstrap/localtoc.html,
+	docs/_themes/bootstrap/relations.html,
+	docs/_themes/bootstrap/searchbox.html,
+	docs/_themes/bootstrap/sourcelink.html,
+	docs/_themes/bootstrap/static/bootstrap-dropdown.js,
+	docs/_themes/bootstrap/static/bootstrap-scrollspy.js,
+	docs/_themes/bootstrap/static/bootstrap-sphinx.css_t,
+	docs/_themes/bootstrap/static/bootstrap.css,
+	docs/_themes/bootstrap/theme.conf, docs/conf.py, docs/index.rst:
+	Documentation bump.
+	[07555c43772c]
+
+2011-12-12  Nick Bargnesi  <nick@den-4.com>
+
+	* README, docs/conf.py, docs/index.rst:
+	Documentation update.
+
+	Update README with documentation URL and bump API documentation.
+	[f82ad0fed3a8]
+
+2011-12-11  Nick Bargnesi  <nick@den-4.com>
+
+	* README:
+	Correct port number.
+	[a5728bb1a616]
+
+	* README:
+	Update README w/ links to web site, bug tracker, and builds.
+	[4ea0470d8843]
+
+2011-12-07  Nick Bargnesi  <nick@den-4.com>
+
+	* Makefile.in, configure, configure.in, docs/Makefile.in,
+	lib/Makefile.in, src/Makefile.in, tests/Makefile.in:
+	Check for xdamage.
+	[46f2417b386e]
+
+2011-11-27  Nick Bargnesi  <nick@den-4.com>
+
+	* Makefile.in, configure, configure.in, docs/Makefile.in,
+	lib/Makefile.in, src/Makefile.in, tests/Makefile.in:
+	Create 'xcb' feature branch, check for xcb during configuration.
+	[0ff9aeda2518] <xcb>
+
+2011-11-25  Nick Bargnesi  <nick@den-4.com>
+
+	* lib/ipc.c, lib/ipc.h, lib/layout.h, lib/state.c, lib/state.h,
+	lib/xyxlib.c, lib/xyxlib.h:
+	Add size_hints and update enums/structs to match conventions.
+	[02e986809dc1]
+
+2011-11-22  Nick Bargnesi  <nick@den-4.com>
+
+	* configure:
+	Remove sleep.
+	[7dd65a0acb03]
+
+2011-11-20  Nick Bargnesi  <nick@den-4.com>
+
+	* configure, lib/Makefile.am, lib/Makefile.in, lib/layout.c,
+	lib/layout.h:
+	Initial layout module.
+	[cfca4ecda6c6]
+
+2011-10-30  Nick Bargnesi  <nick@den-4.com>
+
+	* Makefile.am, Makefile.in, makedist:
+	Make 'distcheck' default to '--disable-tests'.
+	[47ebad372b17]
+
+	* Makefile.in, configure.in:
+	Add 'dist-xz' to AM_INIT_AUTOMAKE options.
+	[bda7855cb9b1]
+
+	* configure, configure.in:
+	Standardize CFLAGS, and include '-pipe'. Optimizations/debugging
+	only switches
+	-O3 / -O0 -g3.
+	[6afb09a971c2]
+
+	* configure, configure.in:
+	Switch configure's --enable-tests to --disable-tests. Defaults to
+	disabled.
+	[23ca36ac68b5]
+
+2011-10-28  Nick Bargnesi  <nick@den-4.com>
+
+	* config.h.in, configure, configure.in, lib/Makefile.am,
+	lib/Makefile.in, lib/osd.c, lib/osd.h:
+	Removing xosd support until it's used.
+	[6ff82c33ea4a]
+
+	* Makefile.in, configure, configure.in, docs/Makefile.in,
+	lib/Makefile.in, src/Makefile.in, tests/Makefile.in:
+	Remove AC_PATH_X macro in favor of PKG_CHECK for libraries only.
+	[54de40ec76de]
+
+	* Makefile.in, config.h.in, configure, configure.in, docs/Makefile.in,
+	lib/Makefile.am, lib/Makefile.in, lib/osd.c, lib/osd.h,
+	src/Makefile.in, tests/Makefile.in:
+	Backed out changeset a6ab6e06930e
+	[394d32cbe3fc]
+
+	* Makefile.in, config.h.in, configure, configure.in, docs/Makefile.in,
+	lib/Makefile.am, lib/Makefile.in, lib/osd.c, lib/osd.h,
+	src/Makefile.in, tests/Makefile.in:
+	Remove AC_PATH_X
+	[a6ab6e06930e]
+
+	* lib/broadcast.c, lib/lifecycle.c:
+	Invoke set_process_name. Main thread is 'xy: main', broadcast thread
+	is 'xy: broadcast'.
+	[c90537caef95]
+
+	* lib/util.c, lib/util.h, tests/util_tests.c:
+	Add set_process_name and unit test.
+	[5dee0ab37dc2]
+
+2011-10-21  Nick Bargnesi  <nick@den-4.com>
+
+	* lib/ipc.c, lib/ipc.h, lib/lifecycle.c, lib/lifecycle.h, src/main.c:
+	Support for restarting when RESTART is received via ipc.
+	[cc562ebacd4e]
+
+	* lib/Makefile.am, lib/Makefile.in:
+	Here, too. Remove libusb, add jansson.
+	[c4e180f72382]
+
+2011-10-20  Nick Bargnesi  <nick@den-4.com>
+
+	* Makefile.in, configure, configure.in, docs/Makefile.in,
+	src/Makefile.am, src/Makefile.in, tests/Makefile.am,
+	tests/Makefile.in:
+	Remove libusb, add jansson.
+	[75e53edeaa67]
+
+2011-10-19  Nick Bargnesi  <nick@den-4.com>
+
+	* lib/broadcast.c:
+	Fix pthread_cond_wait call with un-held mutex (reported via check-
+	threads).
+	[8c652d8229b7]
+
+2011-10-16  Nick Bargnesi  <nick@den-4.com>
+
+	* .hgtags:
+	Added tag generic_tree_tag for changeset 56869fd5f4e6
+	[7111f2ff0f14] <generic_tree>
+
+	* .hgtags:
+	Added tag generic_tree for changeset e7fc9813c392
+	[56869fd5f4e6] [generic_tree_tag] <generic_tree>
+
+	* Merge.
+	[12855d83c473]
+
+	* lib/Makefile.am, lib/Makefile.in:
+	Remove LIBADD - no longer needed.
+	[0c8d5a83bdfa]
+
+	* COPYING:
+	Add COPYING.
+	[e7fc9813c392] [generic_tree] <generic_tree>
+
+	* AUTHORS, CONVENTIONS, COPYING, INSTALL, Makefile.am, Makefile.in,
+	check-calls, check-mem, check-threads, config.h.in, configure,
+	configure.in, debug, docs/Makefile.am, docs/Makefile.in,
+	docs/apiref.rst, docs/conf.py, docs/index.rst, examples/broadcast
+	/print-broadcasts.py, examples/broadcast/print-broadcasts.rb,
+	examples/broadcast/speak-broadcasts.py, examples/broadcast/speak-
+	broadcasts.rb, examples/ipc/afunix_send.c, examples/ipc/in-
+	python.py, lib/Makefile.am, lib/Makefile.in, lib/broadcast.c,
+	lib/broadcast.h, lib/configuration.c, lib/configuration.h,
+	lib/constants.h, lib/core.h, lib/die.c, lib/event.c, lib/event.h,
+	lib/ipc.c, lib/ipc.h, lib/lifecycle.c, lib/lifecycle.h,
+	lib/logging.c, lib/logging.h, lib/monitor.c, lib/monitor.h,
+	lib/osd.c, lib/osd.h, lib/project.c, lib/project.h, lib/state.c,
+	lib/state.h, lib/sysinfo.c, lib/sysinfo.h, lib/types.h, lib/util.c,
+	lib/util.h, lib/xy.c, lib/xy.h, lib/xyxlib.c, lib/xyxlib.h,
+	resources/log4crc, resources/xy-brand.png, src/Makefile.am,
+	src/Makefile.in, src/main.c, tests/Makefile.am, tests/Makefile.in,
+	tests/core_tests.c, tests/leaktest, tests/monitor_tests.c,
+	tests/project_tests.c, tests/util_tests.c, tests/vg_suppressions,
+	tests/xlib_tests.c:
+	Remove all xy references. This tree should be suitable for any
+	C-based project needing support for unit tests, valgrind, and split
+	lib/src directories.
+	[0d00f081accf] <generic_tree>
+
+	* Create generic_tree branch. This branch will house a generic C-based
+	source tree with support for unit tests, valgrind, and split lib/src
+	directories.
+	[2488a50fa4cd] <generic_tree>
+
+	* lib/broadcast.h, lib/configuration.h, lib/constants.h, lib/core.h,
+	lib/event.h, lib/ipc.h, lib/lifecycle.h, lib/logging.h,
+	lib/monitor.h, lib/osd.h, lib/state.h, lib/sysinfo.h, lib/types.h,
+	lib/util.h, lib/xy.h, lib/xyxlib.h:
+	Fix ifndef/define to include _XY_ prefix.
+	[db9f61a8734d]
+
+	* Merge.
+	[6bfd40b363f6]
+
+	* check-calls, check-mem, check-threads, leaktest, memcheck,
+	tests/leaktest:
+	Add callgrind and helgrind support. Use check- script convention.
+	[18e21c4fe497]
+
+2011-10-15  Nick Bargnesi  <nick@den-4.com>
+
+	* tests/Makefile.am, tests/Makefile.in:
+	Remove vg_suppressions from EXTRA_DIST. Support for running valgrind
+	leak tests is only available in the source tree, not the
+	distributable package.
+	[dbf27f20797e]
+
+	* Makefile.in:
+	Remove leaktest and memcheck from EXTRA_DIST. These files should not
+	be in the distributed package.
+	[5c37cb2018d3]
+
+	* Makefile.am:
+	Remove leaktest and memcheck from EXTRA_DIST. These files should not
+	be in the distributed package.
+	[275785ccdd03]
+
+2011-10-09  Nick Bargnesi  <nick@den-4.com>
+
+	* README:
+	"autotool maintainers" -> "package maintainers"
+	[2ee69f0ba9f2]
+
+2011-10-04  Nick Bargnesi  <nick@den-4.com>
+
+	* lib/xyxlib.c, lib/xyxlib.h, tests/xlib_tests.c:
+	Test cases, add root_window(Display *).
+	[ee0aee4d48a7]
+
+	* debug:
+	Add support for check CK_FORK="no" when debugging anything in
+	tests/. See
+	http://check.sourceforge.net/doc/check_html/check_4.html.
+	[416ba1b0da92]
+
+2011-04-05  Nick Bargnesi  <nick@den-4.com>
+
+	* Closing branch. Switching module approach.
+	[0312cedc5515] <ocz-nia>
+
+2011-04-03  Nick Bargnesi  <nick@den-4.com>
+
+	* src/Makefile.am, src/Makefile.in, src/lifecycle.c, src/ocznia.c,
+	src/ocznia.h:
+	Initial integration of OCZ NIA module.
+	[60d58c5437fa] <ocz-nia>
+
+	* Start OCZ NIA feature branch.
+	[1e67ba1a03db] <ocz-nia>
+
+2011-09-29  Nick Bargnesi  <nick@den-4.com>
+
+	* ChangeLog:
+	Backed out changeset 86c7cf5a2ba3
+	[7d6100a687ad]
+
+	* ChangeLog:
+	test
+	[86c7cf5a2ba3]
+
+	* makedist:
+	Carry $@ to make dist.
+	[b85fb79179d9]
+
+2011-09-13  Nick Bargnesi  <nick@den-4.com>
+
+	* tests/monitor_tests.c, tests/xlib_tests.c:
+	Don't run display-based tests if no display is available.
+	[32d3377219f1]
+
+	* Makefile.am, Makefile.in, src/Makefile.am:
+	Suppress printing of clean-local statements.
+	[3f5b60fd9cb5]
+
+2011-09-12  Nick Bargnesi  <nick@den-4.com>
+
+	* src/main.c:
+	Fix build.
+	[fdd2c0f11436]
+
+	* src/main.c:
+	Test fixing build.
+	[9f83839905ef]
+
+	* src/main.c:
+	Test breaking build.
+	[f5519a91184c]
+
+	* src/main.c:
+	Test fixing build.
+	[e48e4edeeb7a]
+
+	* src/main.c:
+	Test breaking build.
+	[61c9fa67da05]
+
+	* src/main.c:
+	Test fixing build.
+	[e402bc2f6f7e]
+
+2011-09-11  Nick Bargnesi  <nick@den-4.com>
+
+	* src/main.c:
+	Test breaking build.
+	[121f458e9ae6]
+
+2011-09-10  Nick Bargnesi  <nick@den-4.com>
+
+	* lib/lifecycle.c:
+	Add TODO.
+	[d1f2c97c23fe]
+
+	* src/main.c:
+	Test fixing build.
+	[c1c06db2fa4b]
+
+	* src/main.c:
+	Test breaking build.
+	[4e3135611daf]
+
+	* src/main.c:
+	Test fixing build.
+	[5ab02c1c84a7]
+
+	* src/main.c:
+	Test breaking build.
+	[4a1611c15324]
+
+	* lib/configuration.c:
+	Kick all configuration name-value pairs out to the debug log on
+	startup.
+	[e889efe2bc4c]
+
+	* lib/util.c, lib/util.h, tests/util_tests.c:
+	Exec returns pid_t, instead of void.
+	[a95d108c987f]
+
+	* configure, configure.in:
+	Update bug report address.
+	[b6fa256d1b87]
+
+2011-09-06  Nick Bargnesi  <nick@den-4.com>
+
+	* Makefile.am, Makefile.in, tests/Makefile.am, tests/Makefile.in:
+	Fix EXTRA_DIST.
+	[b4a9e03275ad]
+
+	* tests/Makefile.am, tests/Makefile.in, tests/monitor_tests.c,
+	tests/vg_suppressions, tests/xlib_tests.c:
+	Add monitor_tests and valgrind suppression file.
+	[a7c4b2336bef]
+
+	* debug, leaktest, memcheck:
+	Debug and memcheck support overriding the target binary with $@.
+	Added leaktest to perform leak checks against all tests/*_tests
+	using valgrind.
+	[6aba7d000176]
+
+	* README:
+	Bump.
+	[8a0938744f4d]
+
+2011-09-05  Nick Bargnesi  <nick@den-4.com>
+
+	* .hgignore:
+	Ignore tests/*_tests.
+	[09d3a9469e1b]
+
+2011-09-04  Nick Bargnesi  <nick@den-4.com>
+
+	* configure, lib/core.h, tests/Makefile.am, tests/Makefile.in,
+	tests/core_tests.c:
+	Bring in initial support for generic lists.
+	[897b22112c30]
+
+	* Makefile.am, Makefile.in:
+	Make clean-local remove xy-*tar* build files on 'make clean'.
+	[dfe3f62b775a]
+
+	* lib/monitor.c:
+	Fill out Xinerama-based monitor initialization.
+	[4d9da31f5e4b]
+
+2011-09-02  Nick Bargnesi  <nick@den-4.com>
+
+	* CONVENTIONS, makedist:
+	Include testing the produced archive, and then running distcheck to
+	check the build.
+	[6474c39269dd]
+
+	* src/Makefile.am, src/Makefile.in, tests/Makefile.am,
+	tests/Makefile.in:
+	Fix out-of-tree builds, using top_srcdir and top_builddir.
+	[4a0c870b0179]
+
+	* debug:
+	Add -d arguments to gdb to specify source directories.
+	[db9502e29578]
+
+	* tests/xlib_tests.c:
+	Print to stdout.
+	[23ee19d2ebba]
+
+	* gendoc:
+	Removed gendoc, no longer needed with sphinx.
+	[51e1cfd6a622]
+
+2011-08-31  Nick Bargnesi  <nick@den-4.com>
+
+	* .hgignore:
+	Ignore tests/*_tests.
+	[423823828786]
+
+	* .hgignore, makedist:
+	Ignore _tests and update hgignore.
+	[e4d37ecbead1]
+
+2011-08-30  Nick Bargnesi  <nick@den-4.com>
+
+	* configure, tests/Makefile.am, tests/Makefile.in, tests/test_suite.c,
+	tests/util_tests.c, tests/xlib_tests.c:
+	Break test_suite into xlib_tests and util_tests.
+	[97e464e8b85b]
+
+	* lib/Makefile.am, lib/Makefile.in:
+	Add lib headers to EXTRA_DIST. This includes them in the dist-all
+	packages.
+	[119e589d3157]
+
+2011-08-29  Nick Bargnesi  <nick@den-4.com>
+
+	* configure, docs/source/conf.py, docs/source/index.rst,
+	lib/sysinfo.c, lib/xy.c:
+	Merge sphinx.
+	[9ed2b39349c0]
+
+	* .hgignore, configure, docs/Makefile.am, docs/Makefile.in,
+	docs/apiref.rst, docs/conf.py, docs/index.rst, docs/source/conf.py,
+	docs/source/index.rst, lib/util.h:
+	Migrate util documentation to sphinx.
+	[475621bae367] <sphinx>
+
+2011-08-28  Nick Bargnesi  <nick@den-4.com>
+
+	* Start sphinx documentation branch.
+	[d45544d023aa] <sphinx>
+
+2011-08-29  Nick Bargnesi  <nick@den-4.com>
+
+	* .hgignore, Makefile.am, Makefile.in, compile, configure,
+	configure.in, tests/Makefile.am, tests/Makefile.in,
+	tests/test_suite.c:
+	Update test support and build configuration. The configure argument
+	--enable-tests and --enable-optimizations enable test and compiler
+	optimizations.
+	[bd07dd4ee3e0]
+
+2011-08-28  Nick Bargnesi  <nick@den-4.com>
+
+	* .hgignore:
+	Update hgignore.
+	[0eb13a1fcdd4]
+
+	* tests/Makefile.am, tests/Makefile.in, tests/test_suite:
+	Add Makefile.in/am and remove test_suite binary.
+	[3594c103af30]
+
+	* .hgignore, Makefile.am, Makefile.in, configure, configure.in,
+	lib/Makefile.am, lib/Makefile.in, lib/test_suite.c,
+	tests/test_suite, tests/test_suite.c:
+	Put tests in tests/, update hgignore.
+	[dc8b46a1e84a]
+
+	* check-tree:
+	Print an error if the AM_SANITY_CHECK "sleep 1" is inside configure.
+	[a62fcffe3c51]
+
+2011-08-27  Nick Bargnesi  <nick@den-4.com>
+
+	* lib/Makefile.am, lib/Makefile.in:
+	Add missing lib/Makefiles.
+	[5d7e4703b3e5]
+
+2011-08-26  Nick Bargnesi  <nick@den-4.com>
+
+	* Makefile.am, Makefile.in, check-tree, configure, configure.in,
+	docs/Makefile.in, lib/broadcast.c, lib/broadcast.h,
+	lib/configuration.c, lib/configuration.h, lib/constants.h,
+	lib/core.h, lib/die.c, lib/event.c, lib/event.h, lib/ipc.c,
+	lib/ipc.h, lib/lifecycle.c, lib/lifecycle.h, lib/logging.c,
+	lib/logging.h, lib/monitor.c, lib/monitor.h, lib/osd.c, lib/osd.h,
+	lib/state.c, lib/state.h, lib/sysinfo.c, lib/sysinfo.h,
+	lib/test_suite.c, lib/types.h, lib/util.c, lib/util.h, lib/xy.c,
+	lib/xy.h, lib/xyxlib.c, lib/xyxlib.h, src/Makefile.am,
+	src/Makefile.in, src/broadcast.c, src/broadcast.h,
+	src/configuration.c, src/configuration.h, src/constants.h,
+	src/core.h, src/die.c, src/event.c, src/event.h, src/ipc.c,
+	src/ipc.h, src/lifecycle.c, src/lifecycle.h, src/logging.c,
+	src/logging.h, src/monitor.c, src/monitor.h, src/osd.c, src/osd.h,
+	src/state.c, src/state.h, src/sysinfo.c, src/sysinfo.h,
+	src/test_suite.c, src/types.h, src/util.c, src/util.h, src/xy.c,
+	src/xy.h, src/xyxlib.c, src/xyxlib.h,
+	tools/NaturalDocs-1.52/Config/Languages.txt,
+	tools/NaturalDocs-1.52/Config/Topics.txt,
+	tools/NaturalDocs-1.52/Help/customizinglanguages.html,
+	tools/NaturalDocs-1.52/Help/customizingtopics.html,
+	tools/NaturalDocs-1.52/Help/documenting.html,
+	tools/NaturalDocs-1.52/Help/documenting/reference.html,
+	tools/NaturalDocs-1.52/Help/documenting/walkthrough.html,
+	tools/NaturalDocs-1.52/Help/example/Default.css,
+	tools/NaturalDocs-1.52/Help/example/NaturalDocs.js,
+	tools/NaturalDocs-1.52/Help/example/Roman.css,
+	tools/NaturalDocs-1.52/Help/example/Small.css,
+	tools/NaturalDocs-1.52/Help/example/showstyle.html,
+	tools/NaturalDocs-1.52/Help/examples.css,
+	tools/NaturalDocs-1.52/Help/images/header/background.png,
+	tools/NaturalDocs-1.52/Help/images/header/leftside.png,
+	tools/NaturalDocs-1.52/Help/images/header/logo.png,
+	tools/NaturalDocs-1.52/Help/images/header/overbody.png,
+	tools/NaturalDocs-1.52/Help/images/header/overbodybg.png,
+	tools/NaturalDocs-1.52/Help/images/header/overleftmargin.png,
+	tools/NaturalDocs-1.52/Help/images/header/overmenu.png,
+	tools/NaturalDocs-1.52/Help/images/header/overmenubg.png,
+	tools/NaturalDocs-1.52/Help/images/header/rightside.png,
+	tools/NaturalDocs-1.52/Help/images/menu/about.png,
+	tools/NaturalDocs-1.52/Help/images/menu/background.png,
+	tools/NaturalDocs-1.52/Help/images/menu/bottomleft.png,
+	tools/NaturalDocs-1.52/Help/images/menu/bottomright.png,
+	tools/NaturalDocs-1.52/Help/images/menu/community.png,
+	tools/NaturalDocs-1.52/Help/images/menu/customizing.png,
+	tools/NaturalDocs-1.52/Help/images/menu/using.png,
+	tools/NaturalDocs-1.52/Help/index.html,
+	tools/NaturalDocs-1.52/Help/javascript/BrowserStyles.js,
+	tools/NaturalDocs-1.52/Help/javascript/PNGHandling.js,
+	tools/NaturalDocs-1.52/Help/keywords.html,
+	tools/NaturalDocs-1.52/Help/languages.html,
+	tools/NaturalDocs-1.52/Help/menu.html,
+	tools/NaturalDocs-1.52/Help/output.html,
+	tools/NaturalDocs-1.52/Help/running.html,
+	tools/NaturalDocs-1.52/Help/styles.css,
+	tools/NaturalDocs-1.52/Help/styles.html,
+	tools/NaturalDocs-1.52/Help/troubleshooting.html,
+	tools/NaturalDocs-1.52/Info/CSSGuide.txt,
+	tools/NaturalDocs-1.52/Info/File Parsing.txt,
+	tools/NaturalDocs-1.52/Info/HTMLTestCases.pm,
+	tools/NaturalDocs-1.52/Info/Languages.txt,
+	tools/NaturalDocs-1.52/Info/NDMarkup.txt,
+	tools/NaturalDocs-1.52/Info/Symbol Management.txt,
+	tools/NaturalDocs-1.52/Info/images/Logo.png,
+	tools/NaturalDocs-1.52/JavaScript/GooglePrettify.js,
+	tools/NaturalDocs-1.52/JavaScript/NaturalDocs.js,
+	tools/NaturalDocs-1.52/License.txt,
+	tools/NaturalDocs-1.52/Modules/NaturalDocs/BinaryFile.pm,
+	tools/NaturalDocs-1.52/Modules/NaturalDocs/Builder.pm,
+	tools/NaturalDocs-1.52/Modules/NaturalDocs/Builder/Base.pm,
+	tools/NaturalDocs-1.52/Modules/NaturalDocs/Builder/FramedHTML.pm,
+	tools/NaturalDocs-1.52/Modules/NaturalDocs/Builder/HTML.pm,
+	tools/NaturalDocs-1.52/Modules/NaturalDocs/Builder/HTMLBase.pm,
+	tools/NaturalDocs-1.52/Modules/NaturalDocs/ClassHierarchy.pm,
+	tools/NaturalDocs-1.52/Modules/NaturalDocs/ClassHierarchy/Class.pm,
+	tools/NaturalDocs-1.52/Modules/NaturalDocs/ClassHierarchy/File.pm,
+	tools/NaturalDocs-1.52/Modules/NaturalDocs/ConfigFile.pm,
+	tools/NaturalDocs-1.52/Modules/NaturalDocs/Constants.pm,
+	tools/NaturalDocs-1.52/Modules/NaturalDocs/DefineMembers.pm,
+	tools/NaturalDocs-1.52/Modules/NaturalDocs/Error.pm,
+	tools/NaturalDocs-1.52/Modules/NaturalDocs/File.pm,
+	tools/NaturalDocs-1.52/Modules/NaturalDocs/ImageReferenceTable.pm, t
+	ools/NaturalDocs-1.52/Modules/NaturalDocs/ImageReferenceTable/Refere
+	nce.pm, tools/NaturalDocs-1.52/Modules/NaturalDocs/ImageReferenceTab
+	le/String.pm,
+	tools/NaturalDocs-1.52/Modules/NaturalDocs/Languages.pm, tools/Natur
+	alDocs-1.52/Modules/NaturalDocs/Languages/ActionScript.pm,
+	tools/NaturalDocs-1.52/Modules/NaturalDocs/Languages/Ada.pm,
+	tools/NaturalDocs-1.52/Modules/NaturalDocs/Languages/Advanced.pm, to
+	ols/NaturalDocs-1.52/Modules/NaturalDocs/Languages/Advanced/Scope.pm
+	, tools/NaturalDocs-1.52/Modules/NaturalDocs/Languages/Advanced/Scop
+	eChange.pm,
+	tools/NaturalDocs-1.52/Modules/NaturalDocs/Languages/Base.pm,
+	tools/NaturalDocs-1.52/Modules/NaturalDocs/Languages/CSharp.pm,
+	tools/NaturalDocs-1.52/Modules/NaturalDocs/Languages/PLSQL.pm,
+	tools/NaturalDocs-1.52/Modules/NaturalDocs/Languages/Pascal.pm,
+	tools/NaturalDocs-1.52/Modules/NaturalDocs/Languages/Perl.pm,
+	tools/NaturalDocs-1.52/Modules/NaturalDocs/Languages/Prototype.pm, t
+	ools/NaturalDocs-1.52/Modules/NaturalDocs/Languages/Prototype/Parame
+	ter.pm,
+	tools/NaturalDocs-1.52/Modules/NaturalDocs/Languages/Simple.pm,
+	tools/NaturalDocs-1.52/Modules/NaturalDocs/Languages/Tcl.pm,
+	tools/NaturalDocs-1.52/Modules/NaturalDocs/LineReader.pm,
+	tools/NaturalDocs-1.52/Modules/NaturalDocs/Menu.pm,
+	tools/NaturalDocs-1.52/Modules/NaturalDocs/Menu/Entry.pm,
+	tools/NaturalDocs-1.52/Modules/NaturalDocs/NDMarkup.pm,
+	tools/NaturalDocs-1.52/Modules/NaturalDocs/Parser.pm,
+	tools/NaturalDocs-1.52/Modules/NaturalDocs/Parser/JavaDoc.pm,
+	tools/NaturalDocs-1.52/Modules/NaturalDocs/Parser/Native.pm,
+	tools/NaturalDocs-1.52/Modules/NaturalDocs/Parser/ParsedTopic.pm,
+	tools/NaturalDocs-1.52/Modules/NaturalDocs/Project.pm,
+	tools/NaturalDocs-1.52/Modules/NaturalDocs/Project/ImageFile.pm,
+	tools/NaturalDocs-1.52/Modules/NaturalDocs/Project/SourceFile.pm,
+	tools/NaturalDocs-1.52/Modules/NaturalDocs/ReferenceString.pm,
+	tools/NaturalDocs-1.52/Modules/NaturalDocs/Settings.pm,
+	tools/NaturalDocs-1.52/Modules/NaturalDocs/Settings/BuildTarget.pm,
+	tools/NaturalDocs-1.52/Modules/NaturalDocs/SourceDB.pm,
+	tools/NaturalDocs-1.52/Modules/NaturalDocs/SourceDB/Extension.pm,
+	tools/NaturalDocs-1.52/Modules/NaturalDocs/SourceDB/File.pm,
+	tools/NaturalDocs-1.52/Modules/NaturalDocs/SourceDB/Item.pm, tools/N
+	aturalDocs-1.52/Modules/NaturalDocs/SourceDB/ItemDefinition.pm, tool
+	s/NaturalDocs-1.52/Modules/NaturalDocs/SourceDB/WatchedFileDefinitio
+	ns.pm, tools/NaturalDocs-1.52/Modules/NaturalDocs/StatusMessage.pm,
+	tools/NaturalDocs-1.52/Modules/NaturalDocs/SymbolString.pm,
+	tools/NaturalDocs-1.52/Modules/NaturalDocs/SymbolTable.pm,
+	tools/NaturalDocs-1.52/Modules/NaturalDocs/SymbolTable/File.pm, tool
+	s/NaturalDocs-1.52/Modules/NaturalDocs/SymbolTable/IndexElement.pm,
+	tools/NaturalDocs-1.52/Modules/NaturalDocs/SymbolTable/Reference.pm,
+	tools/NaturalDocs-1.52/Modules/NaturalDocs/SymbolTable/ReferenceTarg
+	et.pm,
+	tools/NaturalDocs-1.52/Modules/NaturalDocs/SymbolTable/Symbol.pm, to
+	ols/NaturalDocs-1.52/Modules/NaturalDocs/SymbolTable/SymbolDefinitio
+	n.pm, tools/NaturalDocs-1.52/Modules/NaturalDocs/Topics.pm,
+	tools/NaturalDocs-1.52/Modules/NaturalDocs/Topics/Type.pm,
+	tools/NaturalDocs-1.52/Modules/NaturalDocs/Version.pm,
+	tools/NaturalDocs-1.52/NaturalDocs,
+	tools/NaturalDocs-1.52/NaturalDocs.bat,
+	tools/NaturalDocs-1.52/Styles/Default.css,
+	tools/NaturalDocs-1.52/Styles/Roman.css,
+	tools/NaturalDocs-1.52/Styles/Small.css:
+	Split src into lib and src, to keep test separate from main.
+	[0dcb8d7cc22e]
+
+2011-08-24  Nick Bargnesi  <nick@den-4.com>
+
+	* Makefile.in, aclocal.m4, configure, docs/Makefile.am,
+	docs/Makefile.in, docs/source/conf.py, docs/source/index.rst:
+	Remove CHANGES, add docs/Makefile*.
+	[5371ce9a26e6]
+
+2011-07-10  Nick Bargnesi  <nick@den-4.com>
+
+	* examples/broadcast/print-broadcasts.py, examples/broadcast/print-
+	broadcasts.rb, examples/broadcast/speak-broadcasts.py,
+	examples/broadcast/speak-broadcasts.rb:
+	Make each broadcast example program as close to the other language
+	equivalent. I.e., print-broadcasts looks similar in both Python and
+	Ruby.
+	[a69fde1addd3]
+
+2011-07-08  Nick Bargnesi  <nick@den-4.com>
+
+	* examples/broadcast/print-broadcasts.py, examples/broadcast/print-
+	broadcasts.rb, examples/broadcast/speak-broadcasts.py:
+	Add Python print/speak variants to complement the Ruby examples.
+	The Python-based speak implementation will use festival's text2wave
+	and pyaudio for audio output (see AUDIO_DEVICE_INDEX and AUDIO_CHUNK
+	if nothing is heard.
+	[455747f953e6]
+
+2011-07-07  Nick Bargnesi  <nick@den-4.com>
+
+	* .hgignore, Makefile.am, Makefile.in, aclocal.m4, configure,
+	configure.in:
+	Add sphinx-based documentation output to docs/.
+	[50f146abb6c3]
+
+2011-07-05  Nick Bargnesi  <nick@den-4.com>
+
+	* examples/broadcast/in-ruby.rb, examples/broadcast/print-
+	broadcasts.rb, examples/broadcast/speak-broadcasts.rb:
+	Break the Ruby-based broadcast listener into a printer and a speaker
+	via festival.
+	[d755034a3153]
+
+	* src/lifecycle.c, src/xy.c:
+	Don't send the startup message until we hit the main loop.
+	[199ec597cfa4]
+
+2011-06-23  Nick Bargnesi  <nick@den-4.com>
+
+	* src/event.h:
+	Documentation.
+	[ed9d9030f56b]
+
+2011-06-22  Nick Bargnesi  <nick@den-4.com>
+
+	* src/constants.h:
+	Documentation.
+	[3a7e39f32294]
+
+2011-06-21  Nick Bargnesi  <nick@den-4.com>
+
+	* src/configuration.h:
+	Documentation.
+	[0ad2c36ba6b2]
+
+2011-06-08  Nick Bargnesi  <nick@den-4.com>
+
+	* aclocal.m4, configure, src/Makefile.am, src/Makefile.in,
+	src/test_suite.c, src/util.h:
+	Finish documenting util, add test cases for same.
+	[58f6315f32dd]
+
+2011-06-07  Nick Bargnesi  <nick@den-4.com>
+
+	* src/util.h:
+	Documentation updates.
+	[5e35f055da6f]
+
+2011-05-31  Nick Bargnesi  <nick@den-4.com>
+
+	* .hgignore:
+	Glob the src/*.o files in hgignore.
+	[b6e31f344584]
+
+2011-05-25  Nick Bargnesi  <nick@den-4.com>
+
+	* Makefile.in, src/lifecycle.c, src/monitor.c, src/monitor.h:
+	Initial support for monitor initialization.
+	[74cdce4911f3]
+
+2011-05-24  Nick Bargnesi  <nick@den-4.com>
+
+	* src/Makefile.am, src/Makefile.in, src/color.c, src/color.h,
+	src/configuration.c, src/lifecycle.c, src/test_suite.c,
+	src/wmcheck.c, src/wmcheck.h, src/xinerama.c, src/xinerama.h,
+	src/xy.h, src/xyxlib.c, src/xyxlib.h:
+	Collapse color, wmcheck, and xinerama into xyxlib and util.
+	[06106bae8b86]
+
+2011-05-23  Nick Bargnesi  <nick@den-4.com>
+
+	* src/Makefile.am, src/Makefile.in, src/configuration.h, src/core.h,
+	src/event.c, src/event.h, src/monitor.h, src/restart.c,
+	src/restart.h, src/screen.c, src/screen.h, src/util.c, src/util.h,
+	src/xy.h, src/xyxlib.c, src/xyxlib.h:
+	Collapse modules. Restart into util, screen into xyxlib.
+	[e1897b711e3c]
+
+2011-05-19  Nick Bargnesi  <nick@den-4.com>
+
+	* src/lifecycle.c:
+	Use get_xinerama_screens.
+	[0ff939a12c84]
+
+	* .hgignore, Makefile.am, Makefile.in, configure, configure.in,
+	src/Makefile.am, src/Makefile.in, src/lifecycle.c, src/test_suite.c,
+	src/xinerama.c, tests/test_suite.c:
+	Monitor-based test cases.
+	[7d0408fa7729]
+
+2011-05-18  Nick Bargnesi  <nick@den-4.com>
+
+	* Makefile.am, Makefile.in, aclocal.m4, compile, config.h.in,
+	configure, configure.in, src/Makefile.am, src/Makefile.in,
+	src/display.c, src/display.h, src/monitor.c, src/monitor.h,
+	src/tests.c, src/xy.h, src/xyxlib.c, src/xyxlib.h,
+	tests/test_suite.c:
+	Integrate unit testing via check into tests subdirectory. Add
+	monitor module and collapse display into xyxlib.
+	[6539999d5da5]
+
+2011-05-17  Nick Bargnesi  <nick@den-4.com>
+
+	* Makefile.in, configure, configure.in, src/Makefile.am,
+	src/Makefile.in, src/core.h, src/lifecycle.c, src/tests.c,
+	src/util.c, src/xy.c:
+	Add unit test support via check, and DIE_MSG to print a message
+	before dying. A suicide note, if you will.
+	[a889a239a081]
+
+2011-05-15  Nick Bargnesi  <nick@den-4.com>
+
+	* src/xinerama.h:
+	Correct documentation.
+	[2900283b0ccc]
+
+	* src/constants.h, src/lifecycle.c, src/util.h, src/xinerama.c,
+	src/xinerama.h, src/xy.h:
+	Establish global access to all Xinerama screens on startup.
+	Broadcast the number of screens and each screen's set of properties.
+	[64ef4d94d876]
+
+	* memcheck:
+	Add memcheck, memory checking via valgrind.
+	[337b8ec23dce]
+
+	* .hgignore, gendoc, tools/NaturalDocs-1.52/Config/Languages.txt,
+	tools/NaturalDocs-1.52/Config/Topics.txt,
+	tools/NaturalDocs-1.52/Help/customizinglanguages.html,
+	tools/NaturalDocs-1.52/Help/customizingtopics.html,
+	tools/NaturalDocs-1.52/Help/documenting.html,
+	tools/NaturalDocs-1.52/Help/documenting/reference.html,
+	tools/NaturalDocs-1.52/Help/documenting/walkthrough.html,
+	tools/NaturalDocs-1.52/Help/example/Default.css,
+	tools/NaturalDocs-1.52/Help/example/NaturalDocs.js,
+	tools/NaturalDocs-1.52/Help/example/Roman.css,
+	tools/NaturalDocs-1.52/Help/example/Small.css,
+	tools/NaturalDocs-1.52/Help/example/showstyle.html,
+	tools/NaturalDocs-1.52/Help/examples.css,
+	tools/NaturalDocs-1.52/Help/images/header/background.png,
+	tools/NaturalDocs-1.52/Help/images/header/leftside.png,
+	tools/NaturalDocs-1.52/Help/images/header/logo.png,
+	tools/NaturalDocs-1.52/Help/images/header/overbody.png,
+	tools/NaturalDocs-1.52/Help/images/header/overbodybg.png,
+	tools/NaturalDocs-1.52/Help/images/header/overleftmargin.png,
+	tools/NaturalDocs-1.52/Help/images/header/overmenu.png,
+	tools/NaturalDocs-1.52/Help/images/header/overmenubg.png,
+	tools/NaturalDocs-1.52/Help/images/header/rightside.png,
+	tools/NaturalDocs-1.52/Help/images/menu/about.png,
+	tools/NaturalDocs-1.52/Help/images/menu/background.png,
+	tools/NaturalDocs-1.52/Help/images/menu/bottomleft.png,
+	tools/NaturalDocs-1.52/Help/images/menu/bottomright.png,
+	tools/NaturalDocs-1.52/Help/images/menu/community.png,
+	tools/NaturalDocs-1.52/Help/images/menu/customizing.png,
+	tools/NaturalDocs-1.52/Help/images/menu/using.png,
+	tools/NaturalDocs-1.52/Help/index.html,
+	tools/NaturalDocs-1.52/Help/javascript/BrowserStyles.js,
+	tools/NaturalDocs-1.52/Help/javascript/PNGHandling.js,
+	tools/NaturalDocs-1.52/Help/keywords.html,
+	tools/NaturalDocs-1.52/Help/languages.html,
+	tools/NaturalDocs-1.52/Help/menu.html,
+	tools/NaturalDocs-1.52/Help/output.html,
+	tools/NaturalDocs-1.52/Help/running.html,
+	tools/NaturalDocs-1.52/Help/styles.css,
+	tools/NaturalDocs-1.52/Help/styles.html,
+	tools/NaturalDocs-1.52/Help/troubleshooting.html,
+	tools/NaturalDocs-1.52/Info/CSSGuide.txt,
+	tools/NaturalDocs-1.52/Info/File Parsing.txt,
+	tools/NaturalDocs-1.52/Info/HTMLTestCases.pm,
+	tools/NaturalDocs-1.52/Info/Languages.txt,
+	tools/NaturalDocs-1.52/Info/NDMarkup.txt,
+	tools/NaturalDocs-1.52/Info/Symbol Management.txt,
+	tools/NaturalDocs-1.52/Info/images/Logo.png,
+	tools/NaturalDocs-1.52/JavaScript/GooglePrettify.js,
+	tools/NaturalDocs-1.52/JavaScript/NaturalDocs.js,
+	tools/NaturalDocs-1.52/License.txt,
+	tools/NaturalDocs-1.52/Modules/NaturalDocs/BinaryFile.pm,
+	tools/NaturalDocs-1.52/Modules/NaturalDocs/Builder.pm,
+	tools/NaturalDocs-1.52/Modules/NaturalDocs/Builder/Base.pm,
+	tools/NaturalDocs-1.52/Modules/NaturalDocs/Builder/FramedHTML.pm,
+	tools/NaturalDocs-1.52/Modules/NaturalDocs/Builder/HTML.pm,
+	tools/NaturalDocs-1.52/Modules/NaturalDocs/Builder/HTMLBase.pm,
+	tools/NaturalDocs-1.52/Modules/NaturalDocs/ClassHierarchy.pm,
+	tools/NaturalDocs-1.52/Modules/NaturalDocs/ClassHierarchy/Class.pm,
+	tools/NaturalDocs-1.52/Modules/NaturalDocs/ClassHierarchy/File.pm,
+	tools/NaturalDocs-1.52/Modules/NaturalDocs/ConfigFile.pm,
+	tools/NaturalDocs-1.52/Modules/NaturalDocs/Constants.pm,
+	tools/NaturalDocs-1.52/Modules/NaturalDocs/DefineMembers.pm,
+	tools/NaturalDocs-1.52/Modules/NaturalDocs/Error.pm,
+	tools/NaturalDocs-1.52/Modules/NaturalDocs/File.pm,
+	tools/NaturalDocs-1.52/Modules/NaturalDocs/ImageReferenceTable.pm, t
+	ools/NaturalDocs-1.52/Modules/NaturalDocs/ImageReferenceTable/Refere
+	nce.pm, tools/NaturalDocs-1.52/Modules/NaturalDocs/ImageReferenceTab
+	le/String.pm,
+	tools/NaturalDocs-1.52/Modules/NaturalDocs/Languages.pm, tools/Natur
+	alDocs-1.52/Modules/NaturalDocs/Languages/ActionScript.pm,
+	tools/NaturalDocs-1.52/Modules/NaturalDocs/Languages/Ada.pm,
+	tools/NaturalDocs-1.52/Modules/NaturalDocs/Languages/Advanced.pm, to
+	ols/NaturalDocs-1.52/Modules/NaturalDocs/Languages/Advanced/Scope.pm
+	, tools/NaturalDocs-1.52/Modules/NaturalDocs/Languages/Advanced/Scop
+	eChange.pm,
+	tools/NaturalDocs-1.52/Modules/NaturalDocs/Languages/Base.pm,
+	tools/NaturalDocs-1.52/Modules/NaturalDocs/Languages/CSharp.pm,
+	tools/NaturalDocs-1.52/Modules/NaturalDocs/Languages/PLSQL.pm,
+	tools/NaturalDocs-1.52/Modules/NaturalDocs/Languages/Pascal.pm,
+	tools/NaturalDocs-1.52/Modules/NaturalDocs/Languages/Perl.pm,
+	tools/NaturalDocs-1.52/Modules/NaturalDocs/Languages/Prototype.pm, t
+	ools/NaturalDocs-1.52/Modules/NaturalDocs/Languages/Prototype/Parame
+	ter.pm,
+	tools/NaturalDocs-1.52/Modules/NaturalDocs/Languages/Simple.pm,
+	tools/NaturalDocs-1.52/Modules/NaturalDocs/Languages/Tcl.pm,
+	tools/NaturalDocs-1.52/Modules/NaturalDocs/LineReader.pm,
+	tools/NaturalDocs-1.52/Modules/NaturalDocs/Menu.pm,
+	tools/NaturalDocs-1.52/Modules/NaturalDocs/Menu/Entry.pm,
+	tools/NaturalDocs-1.52/Modules/NaturalDocs/NDMarkup.pm,
+	tools/NaturalDocs-1.52/Modules/NaturalDocs/Parser.pm,
+	tools/NaturalDocs-1.52/Modules/NaturalDocs/Parser/JavaDoc.pm,
+	tools/NaturalDocs-1.52/Modules/NaturalDocs/Parser/Native.pm,
+	tools/NaturalDocs-1.52/Modules/NaturalDocs/Parser/ParsedTopic.pm,
+	tools/NaturalDocs-1.52/Modules/NaturalDocs/Project.pm,
+	tools/NaturalDocs-1.52/Modules/NaturalDocs/Project/ImageFile.pm,
+	tools/NaturalDocs-1.52/Modules/NaturalDocs/Project/SourceFile.pm,
+	tools/NaturalDocs-1.52/Modules/NaturalDocs/ReferenceString.pm,
+	tools/NaturalDocs-1.52/Modules/NaturalDocs/Settings.pm,
+	tools/NaturalDocs-1.52/Modules/NaturalDocs/Settings/BuildTarget.pm,
+	tools/NaturalDocs-1.52/Modules/NaturalDocs/SourceDB.pm,
+	tools/NaturalDocs-1.52/Modules/NaturalDocs/SourceDB/Extension.pm,
+	tools/NaturalDocs-1.52/Modules/NaturalDocs/SourceDB/File.pm,
+	tools/NaturalDocs-1.52/Modules/NaturalDocs/SourceDB/Item.pm, tools/N
+	aturalDocs-1.52/Modules/NaturalDocs/SourceDB/ItemDefinition.pm, tool
+	s/NaturalDocs-1.52/Modules/NaturalDocs/SourceDB/WatchedFileDefinitio
+	ns.pm, tools/NaturalDocs-1.52/Modules/NaturalDocs/StatusMessage.pm,
+	tools/NaturalDocs-1.52/Modules/NaturalDocs/SymbolString.pm,
+	tools/NaturalDocs-1.52/Modules/NaturalDocs/SymbolTable.pm,
+	tools/NaturalDocs-1.52/Modules/NaturalDocs/SymbolTable/File.pm, tool
+	s/NaturalDocs-1.52/Modules/NaturalDocs/SymbolTable/IndexElement.pm,
+	tools/NaturalDocs-1.52/Modules/NaturalDocs/SymbolTable/Reference.pm,
+	tools/NaturalDocs-1.52/Modules/NaturalDocs/SymbolTable/ReferenceTarg
+	et.pm,
+	tools/NaturalDocs-1.52/Modules/NaturalDocs/SymbolTable/Symbol.pm, to
+	ols/NaturalDocs-1.52/Modules/NaturalDocs/SymbolTable/SymbolDefinitio
+	n.pm, tools/NaturalDocs-1.52/Modules/NaturalDocs/Topics.pm,
+	tools/NaturalDocs-1.52/Modules/NaturalDocs/Topics/Type.pm,
+	tools/NaturalDocs-1.52/Modules/NaturalDocs/Version.pm,
+	tools/NaturalDocs-1.52/NaturalDocs,
+	tools/NaturalDocs-1.52/NaturalDocs.bat,
+	tools/NaturalDocs-1.52/Styles/Default.css,
+	tools/NaturalDocs-1.52/Styles/Roman.css,
+	tools/NaturalDocs-1.52/Styles/Small.css:
+	Add doc generation support, via Natural Docs.
+	(http://www.naturaldocs.org/)
+	[3d4e88eff4e1]
+
+2011-05-14  Nick Bargnesi  <nick@den-4.com>
+
+	* src/Makefile.am, src/Makefile.in, src/main.c, src/xy.c:
+	Push main() into main.c.
+	[2f2acb6f252d]
+
+2011-05-13  Nick Bargnesi  <nick@den-4.com>
+
+	* src/event.c, src/xy.c, src/xy.h:
+	Fill out a handful of XEvent functions.
+	[c914f8193028]
+
+2011-05-12  Nick Bargnesi  <nick@den-4.com>
+
+	* src/configuration.c, src/configuration.h, src/constants.h,
+	src/lifecycle.c, src/util.c, src/util.h, src/xy.c:
+	Initial support for spawning a terminal.
+	[b7f0bafd27ed]
+
+2011-05-11  Nick Bargnesi  <nick@den-4.com>
+
+	* src/configuration.c, src/configuration.h, src/constants.h,
+	src/lifecycle.c, src/xy.c:
+	Add shortcut for shutting down xy.
+	[693861c7f22c]
+
+	* src/configuration.c, src/configuration.h, src/constants.h, src/xy.c:
+	Add a shortcut for launching a terminal.
+	[8dd4c54d2c80]
+
+2011-05-10  Nick Bargnesi  <nick@den-4.com>
+
+	* src/util.c, src/util.h, src/xy.c:
+	Finish key event parsing, considering keystr. Add dump_stack.
+	[cbcf73b3e5c6]
+
+2011-05-07  Nick Bargnesi  <nick@den-4.com>
+
+	* src/configuration.c, src/configuration.h, src/constants.h,
+	src/ipc.c, src/lifecycle.c, src/util.c, src/util.h, src/xy.c:
+	Address TODO, implementing fill_config. Start processing key
+	shortcuts.
+	[318c921ba916]
+
+2011-05-02  Nick Bargnesi  <nick@den-4.com>
+
+	* README:
+	Test.
+	[42fbd2b29dd5]
+
+2011-04-29  Nick Bargnesi  <nick@den-4.com>
+
+	* src/xy.c:
+	Remove debug loggings for "servicing..." messages.
+	[05911e5528de]
+
+	* src/Makefile.am, src/Makefile.in, src/event.c, src/xy.c, src/xy.h:
+	Add no-unused-variable to AM_CFLAGS.
+	[631f0d25ed21]
+
+	* src/util.c, src/util.h:
+	Add key state utility functions for key events.
+	[c3fda3e0404e]
+
+2011-04-25  Nick Bargnesi  <nick@den-4.com>
+
+	* .hgignore, Makefile.in, src/Makefile.am, src/Makefile.in,
+	src/configuration.c, src/configuration.h, src/event.c, src/event.h,
+	src/xy.c, src/xy.h:
+	Add event and push configuration items into configuration.c.
+	[c6253ed8f746]
+
+2011-04-24  Nick Bargnesi  <nick@den-4.com>
+
+	* src/configuration.c, src/xy.c:
+	TODOs.
+	[a8ca3a4cc5bd]
+
+2011-04-23  Nick Bargnesi  <nick@den-4.com>
+
+	* TODO:
+	Remove TODO.
+	[840a494e6e88]
+
+	* src/xy.c:
+	Beginning XEvent hooks.
+	[71c47cc813b5]
+
+2011-04-22  Nick Bargnesi  <nick@den-4.com>
+
+	* src/xy.c:
+	Send SHUTDOWN message in correct location.
+	[4fc4858008d0]
+
+	* src/configuration.c, src/constants.h, src/core.h, src/ipc.c,
+	src/ipc.h, src/lifecycle.c, src/util.c, src/util.h, src/xy.c,
+	src/xy.h:
+	Service the IPC socket. Currently supports QUIT and PING.
+	[abf1eae43356]
+
+	* .hgignore:
+	Update.
+	[fe0a7ff7949e]
+
+	* src/color.h:
+	Remove accidental inclusion of broadcast.h.
+	[9b522637a6f3]
+
+	* examples/ipc/in-python.py:
+	Send sys.argv[1] as IPC message.
+	[4c7fc985b7f7]
+
+2011-04-21  Nick Bargnesi  <nick@den-4.com>
+
+	* src/broadcast.c, src/broadcast.h, src/color.c, src/color.h,
+	src/configuration.c, src/configuration.h, src/constants.h,
+	src/core.h, src/die.c, src/display.c, src/display.h, src/ipc.c,
+	src/ipc.h, src/lifecycle.c, src/lifecycle.h, src/logging.c,
+	src/logging.h, src/osd.c, src/osd.h, src/restart.c, src/restart.h,
+	src/screen.c, src/screen.h, src/state.c, src/state.h, src/sysinfo.c,
+	src/sysinfo.h, src/types.h, src/util.c, src/util.h, src/wmcheck.c,
+	src/wmcheck.h, src/xinerama.c, src/xinerama.h, src/xy.c, src/xy.h,
+	src/xyxlib.c, src/xyxlib.h:
+	Apply GPLv3 header.
+	[6051ab9464c7]
+
+	* .hgignore, src/Makefile.am, src/Makefile.in, src/core.h, src/die.c,
+	src/xy.c:
+	Fix DIE, add die(), add likely/unlikely.
+	[1fac5dd78e7b]
+
+	* src/ipc.c, src/lifecycle.c, src/xy.c, src/xy.h:
+	Initial select() loop inside main_loop.
+	[521613852d93]
+
+	* resources/xy-doxygen.png:
+	Remove old doxygen logo.
+	[86e34d826eeb]
+
+	* .hgignore:
+	Update hgignore.
+	[07b8404dfcd6]
+
+2011-04-20  Nick Bargnesi  <nick@den-4.com>
+
+	* src/ipc.c, src/ipc.h, src/lifecycle.c, src/xy.c, src/xy.h:
+	ipc_close -> ipc_terminate, and initialize display and configuration
+	in lifecycle startup.
+	[49ae417bd730]
+
+	* src/Makefile.in:
+	AM_CFLAGS - include Werror.
+	[8dbbc4b24fee]
+
+	* src/Makefile.am:
+	Add -Werror to AM_CFLAGS.
+	[16d90d654a75]
+
+2011-04-18  Nick Bargnesi  <nick@den-4.com>
+
+	* examples/ipc/in-python.py:
+	Add Python-based IPC example.
+	[970780a8b97d]
+
+	* examples/ipc/afunix_send.c:
+	Add example IPC connector.
+	[2f097e8b4aea]
+
+	* src/core.h, src/lifecycle.c, src/xy.c, src/xy.h:
+	Add main_loop function to xy, to execute select against IPC and X
+	descriptors.
+	[267d7ad6d281]
+
+2011-04-16  Nick Bargnesi  <nick@den-4.com>
+
+	* src/Makefile.am, src/Makefile.in, src/core.h, src/ipc.c, src/ipc.h,
+	src/lifecycle.c, src/xy.h:
+	Add ipc module.
+	[03157a5bcacb]
+
+2011-04-15  Nick Bargnesi  <nick@den-4.com>
+
+	* examples/broadcast/in-ruby.rb:
+	Add broadcast receiver example, in Ruby.
+	[f8147e23feb5]
+
+	* src/broadcast.c, src/broadcast.h, src/constants.h, src/core.h,
+	src/lifecycle.c, src/xy.c, src/xy.h:
+	Better broadcast support, allowing for broadcasting lots of messages
+	at a time without loss beyond what is provided by UDP.
+	[da664016bfb6]
+
+	* Doxyfile:
+	Ditch doxygen in favor of natural docs.
+	[38e654b940cb]
+
+2011-04-14  Nick Bargnesi  <nick@den-4.com>
+
+	* config.h.in, configure, configure.in, src/Makefile.am,
+	src/Makefile.in, src/broadcast.c, src/broadcast.h, src/constants.h,
+	src/core.h, src/lifecycle.c, src/lifecycle.h, src/state.c, src/xy.c:
+	Integrate communication from xy out to receivers via unreliable UDP
+	and multicast.
+	[2073290db801]
+
+2011-04-13  Nick Bargnesi  <nick@den-4.com>
+
+	* .hgignore, Doxyfile, resources/xy-brand.png, resources/xy-
+	doxygen.png, src/color.h, src/xy.h:
+	Integrate doxygen.
+	[d113774680b0]
+
+2011-04-12  Nick Bargnesi  <nick@den-4.com>
+
+	* src/lifecycle.c:
+	Zero rcpath, append '/'.
+	[c66a174b0c63]
+
+	* src/constants.h, src/core.h, src/lifecycle.c, src/lifecycle.h,
+	src/state.c, src/state.h:
+	Lifecycle updates.
+	[cd46a143d317]
+
+2011-04-07  Nick Bargnesi  <nick@den-4.com>
+
+	* src/core.h, src/lifecycle.c, src/lifecycle.h, src/state.c:
+	Directory init logic.
+	[39c02f7bef45]
+
+	* src/constants.h:
+	Bump.
+	[6b0a066ed836]
+
+2011-04-03  Nick Bargnesi  <nick@den-4.com>
+
+	* src/Makefile.am, src/Makefile.in, src/constants.h, src/lifecycle.c,
+	src/lifecycle.h, src/startup.c, src/startup.h, src/state.c,
+	src/state.h, src/xy.c, src/xy.h:
+	Migrate startup to lifecycle, push more startup/shutdown logic in.
+	[f3554937449c]
+
+	* src/constants.h, src/xy.c, src/xy.h:
+	Push strings into constants.h.
+	[0e6c4b1058f3]
+
+2011-04-01  Nick Bargnesi  <nick@den-4.com>
+
+	* src/logging.c, src/logging.h, src/startup.c, src/startup.h,
+	src/state.c, src/state.h, src/xy.c, src/xy.h:
+	Begin making modules conform to _init and _terminate function names.
+	Push startup logic into startup.c.
+	[f8db562c36e0]
+
+2011-03-30  Nick Bargnesi  <nick@den-4.com>
+
+	* src/Makefile.am, src/Makefile.in, src/constants.h, src/startup.c,
+	src/startup.h, src/state.c, src/state.h, src/xy.c:
+	Start to pull out constants. Add startup code and state machine
+	placeholder.
+	[967b592271e4]
+
+2011-03-24  Nick Bargnesi  <nick@den-4.com>
+
+	* AUTHORS, CONVENTIONS, COPYING, ChangeLog, INSTALL, Makefile.am,
+	Makefile.in, NEWS, README, TODO, aclocal.m4, config.h.in, configure,
+	configure.in, debug, depcomp, install-sh, missing,
+	resources/log4crc, src/Makefile.am, src/Makefile.in, src/color.c,
+	src/color.h, src/configuration.c, src/configuration.h, src/core.h,
+	src/display.c, src/display.h, src/logging.c, src/logging.h,
+	src/osd.c, src/osd.h, src/restart.c, src/restart.h, src/screen.c,
+	src/screen.h, src/sysinfo.c, src/sysinfo.h, src/types.h, src/util.c,
+	src/util.h, src/wmcheck.c, src/wmcheck.h, src/xinerama.c,
+	src/xinerama.h, src/xy.c, src/xy.h, src/xyxlib.c, src/xyxlib.h:
+	Initial import.
+	[1014dffdd662]
+
+	* xy-trunk/AUTHORS, xy-trunk/CONVENTIONS, xy-trunk/COPYING, xy-
+	trunk/ChangeLog, xy-trunk/INSTALL, xy-trunk/Makefile.am, xy-
+	trunk/Makefile.in, xy-trunk/NEWS, xy-trunk/README, xy-trunk/TODO,
+	xy-trunk/aclocal.m4, xy-trunk/config.h.in, xy-trunk/configure, xy-
+	trunk/configure.in, xy-trunk/debug, xy-trunk/depcomp, xy-trunk
+	/install-sh, xy-trunk/missing, xy-trunk/resources/log4crc, xy-
+	trunk/src/Makefile.am, xy-trunk/src/Makefile.in, xy-
+	trunk/src/color.c, xy-trunk/src/color.h, xy-
+	trunk/src/configuration.c, xy-trunk/src/configuration.h, xy-
+	trunk/src/core.h, xy-trunk/src/display.c, xy-trunk/src/display.h,
+	xy-trunk/src/logging.c, xy-trunk/src/logging.h, xy-trunk/src/osd.c,
+	xy-trunk/src/osd.h, xy-trunk/src/restart.c, xy-trunk/src/restart.h,
+	xy-trunk/src/screen.c, xy-trunk/src/screen.h, xy-
+	trunk/src/sysinfo.c, xy-trunk/src/sysinfo.h, xy-trunk/src/types.h,
+	xy-trunk/src/util.c, xy-trunk/src/util.h, xy-trunk/src/wmcheck.c,
+	xy-trunk/src/wmcheck.h, xy-trunk/src/xinerama.c, xy-
+	trunk/src/xinerama.h, xy-trunk/src/xy.c, xy-trunk/src/xy.h, xy-
+	trunk/src/xyxlib.c, xy-trunk/src/xyxlib.h:
+	Removing.
+	[af229e764af1]
+
+	* xy-trunk/AUTHORS, xy-trunk/CONVENTIONS, xy-trunk/COPYING, xy-
+	trunk/ChangeLog, xy-trunk/INSTALL, xy-trunk/Makefile.am, xy-
+	trunk/Makefile.in, xy-trunk/NEWS, xy-trunk/README, xy-trunk/TODO,
+	xy-trunk/aclocal.m4, xy-trunk/config.h.in, xy-trunk/configure, xy-
+	trunk/configure.in, xy-trunk/debug, xy-trunk/depcomp, xy-trunk
+	/install-sh, xy-trunk/missing, xy-trunk/resources/log4crc, xy-
+	trunk/src/Makefile.am, xy-trunk/src/Makefile.in, xy-
+	trunk/src/color.c, xy-trunk/src/color.h, xy-
+	trunk/src/configuration.c, xy-trunk/src/configuration.h, xy-
+	trunk/src/core.h, xy-trunk/src/display.c, xy-trunk/src/display.h,
+	xy-trunk/src/logging.c, xy-trunk/src/logging.h, xy-trunk/src/osd.c,
+	xy-trunk/src/osd.h, xy-trunk/src/restart.c, xy-trunk/src/restart.h,
+	xy-trunk/src/screen.c, xy-trunk/src/screen.h, xy-
+	trunk/src/sysinfo.c, xy-trunk/src/sysinfo.h, xy-trunk/src/types.h,
+	xy-trunk/src/util.c, xy-trunk/src/util.h, xy-trunk/src/wmcheck.c,
+	xy-trunk/src/wmcheck.h, xy-trunk/src/xinerama.c, xy-
+	trunk/src/xinerama.h, xy-trunk/src/xy.c, xy-trunk/src/xy.h, xy-
+	trunk/src/xyxlib.c, xy-trunk/src/xyxlib.h:
+	Initial import of trunk.
+	[d967fbf3db18]
+
+	* xy/trunk/AUTHORS, xy/trunk/CONVENTIONS, xy/trunk/COPYING,
+	xy/trunk/ChangeLog, xy/trunk/INSTALL, xy/trunk/Makefile.am,
+	xy/trunk/Makefile.in, xy/trunk/NEWS, xy/trunk/README, xy/trunk/TODO,
+	xy/trunk/aclocal.m4, xy/trunk/config.h.in, xy/trunk/configure,
+	xy/trunk/configure.in, xy/trunk/debug, xy/trunk/depcomp, xy/trunk
+	/install-sh, xy/trunk/missing, xy/trunk/resources/log4crc,
+	xy/trunk/src/Makefile.am, xy/trunk/src/Makefile.in,
+	xy/trunk/src/color.c, xy/trunk/src/color.h,
+	xy/trunk/src/configuration.c, xy/trunk/src/configuration.h,
+	xy/trunk/src/core.h, xy/trunk/src/display.c, xy/trunk/src/display.h,
+	xy/trunk/src/logging.c, xy/trunk/src/logging.h, xy/trunk/src/osd.c,
+	xy/trunk/src/osd.h, xy/trunk/src/restart.c, xy/trunk/src/restart.h,
+	xy/trunk/src/screen.c, xy/trunk/src/screen.h,
+	xy/trunk/src/sysinfo.c, xy/trunk/src/sysinfo.h,
+	xy/trunk/src/types.h, xy/trunk/src/util.c, xy/trunk/src/util.h,
+	xy/trunk/src/wmcheck.c, xy/trunk/src/wmcheck.h,
+	xy/trunk/src/xinerama.c, xy/trunk/src/xinerama.h, xy/trunk/src/xy.c,
+	xy/trunk/src/xy.h, xy/trunk/src/xyxlib.c, xy/trunk/src/xyxlib.h:
+	Remove.
+	[a414798ce6ae]
+
+	* xy/trunk/AUTHORS, xy/trunk/CONVENTIONS, xy/trunk/COPYING,
+	xy/trunk/ChangeLog, xy/trunk/INSTALL, xy/trunk/Makefile.am,
+	xy/trunk/Makefile.in, xy/trunk/NEWS, xy/trunk/README, xy/trunk/TODO,
+	xy/trunk/aclocal.m4, xy/trunk/config.h.in, xy/trunk/configure,
+	xy/trunk/configure.in, xy/trunk/debug, xy/trunk/depcomp, xy/trunk
+	/install-sh, xy/trunk/missing, xy/trunk/resources/log4crc,
+	xy/trunk/src/Makefile.am, xy/trunk/src/Makefile.in,
+	xy/trunk/src/color.c, xy/trunk/src/color.h,
+	xy/trunk/src/configuration.c, xy/trunk/src/configuration.h,
+	xy/trunk/src/core.h, xy/trunk/src/display.c, xy/trunk/src/display.h,
+	xy/trunk/src/logging.c, xy/trunk/src/logging.h, xy/trunk/src/osd.c,
+	xy/trunk/src/osd.h, xy/trunk/src/restart.c, xy/trunk/src/restart.h,
+	xy/trunk/src/screen.c, xy/trunk/src/screen.h,
+	xy/trunk/src/sysinfo.c, xy/trunk/src/sysinfo.h,
+	xy/trunk/src/types.h, xy/trunk/src/util.c, xy/trunk/src/util.h,
+	xy/trunk/src/wmcheck.c, xy/trunk/src/wmcheck.h,
+	xy/trunk/src/xinerama.c, xy/trunk/src/xinerama.h, xy/trunk/src/xy.c,
+	xy/trunk/src/xy.h, xy/trunk/src/xyxlib.c, xy/trunk/src/xyxlib.h:
+	Initial import.
+	[063653b880e2]
+
+	* AUTHORS, CONVENTIONS, COPYING, ChangeLog, INSTALL, Makefile.am,
+	Makefile.in, NEWS, README, TODO, aclocal.m4, config.h.in, configure,
+	configure.in, debug, depcomp, install-sh, missing,
+	resources/log4crc, src/Makefile.am, src/Makefile.in, src/color.c,
+	src/color.h, src/configuration.c, src/configuration.h, src/core.h,
+	src/display.c, src/display.h, src/logging.c, src/logging.h,
+	src/osd.c, src/osd.h, src/restart.c, src/restart.h, src/screen.c,
+	src/screen.h, src/sysinfo.c, src/sysinfo.h, src/types.h, src/util.c,
+	src/util.h, src/wmcheck.c, src/wmcheck.h, src/xinerama.c,
+	src/xinerama.h, src/xy.c, src/xy.h, src/xyxlib.c, src/xyxlib.h:
+	Removing.
+	[05b2cd016ef2]
+
+	* AUTHORS, CONVENTIONS, COPYING, ChangeLog, INSTALL, Makefile.am,
+	Makefile.in, NEWS, README, TODO, aclocal.m4, config.h.in, configure,
+	configure.in, debug, depcomp, install-sh, missing,
+	resources/log4crc, src/Makefile.am, src/Makefile.in, src/color.c,
+	src/color.h, src/configuration.c, src/configuration.h, src/core.h,
+	src/display.c, src/display.h, src/logging.c, src/logging.h,
+	src/osd.c, src/osd.h, src/restart.c, src/restart.h, src/screen.c,
+	src/screen.h, src/sysinfo.c, src/sysinfo.h, src/types.h, src/util.c,
+	src/util.h, src/wmcheck.c, src/wmcheck.h, src/xinerama.c,
+	src/xinerama.h, src/xy.c, src/xy.h, src/xyxlib.c, src/xyxlib.h:
+	Initial commit.
+	[7997790d419c]
+
