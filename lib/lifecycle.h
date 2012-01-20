@@ -28,7 +28,7 @@ void xy_started();
 void xy_restart();
 void xy_shutting_down();
 void xy_shutdown();
-void register_cleanup(CLEANUP);
+void register_shutdown_hook(SHUTDOWN_HOOK);
 
 #endif
 
