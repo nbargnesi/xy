@@ -34,8 +34,8 @@
 
 static char *xy_cmd;
 
-CLEANUP *cleanup_funcs = NULL;
-uint func_ct = 0;
+SHUTDOWN_HOOK *hooks = NULL;
+uint hook_ct = 0;
 
 /*
  * Function: xy_dir_init
@@ -161,8 +161,6 @@ void xy_startup() {
     }
     */
     
-    init_monitors(global_display);
-
     // TODO grab keys
      
     set_process_name("xy: main");
@@ -178,15 +176,17 @@ void xy_restart() {
 }
 
 void xy_shutting_down() {
-    xy_cleanup();
+
+    // Invoke cleanup functions in reverse.
+    for (uint i = (hook_ct - 1); i >= hook_ct; i--) {
+        hooks[i]();
+    }
+
     broadcast_send(SHUTTING_DOWN_MSG);
     log_info(global_log, SHUTTING_DOWN_MSG);
 
     if (global_cfg) free_config(global_cfg);
     close_display(global_display);
-    close(global_x_fd);
-    broadcast_terminate();
-    ipc_terminate();
 
     // TODO free monitors
     // monitors_terminate();
@@ -202,15 +202,9 @@ void xy_shutdown() {
     exit(EXIT_SUCCESS);
 }
 
-void register_cleanup(CLEANUP fx) {
-    if (!cleanup_funcs) {
-        cleanup_funcs = malloc(sizeof(CLEANUP *));
-        cleanup_funcs[0] = *fx;
-        func_ct++;
-        return;
-    }
-    cleanup_funcs = realloc(cleanup_funcs, sizeof(CLEANUP *) * func_ct + 1);
-    cleanup_funcs[func_ct] = *fx;
-    func_ct++;
+void register_shutdown_hook(SHUTDOWN_HOOK sh) {
+    hooks = realloc(hooks, (sizeof(SHUTDOWN_HOOK) * (hook_ct + 1)));
+    hooks[hook_ct] = sh;
+    hook_ct++;
 }
 
