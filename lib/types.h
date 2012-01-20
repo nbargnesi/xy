@@ -23,6 +23,8 @@
 typedef unsigned long ulong;
 typedef unsigned int uint;
 typedef unsigned char uchar;
+typedef void (*cleanup)();
+typedef cleanup CLEANUP;
 
 #endif
 

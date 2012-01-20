@@ -42,6 +42,8 @@
  */
 int main(int, char **);
 
+void xy_init();
+
 /*
  * Function: main_loop
  *
@@ -170,7 +172,7 @@ void property_notify(XPropertyEvent *);
  */
 void unmap_notify(XUnmapEvent *);
 
-void cleanup();
+void xy_cleanup();
 
 #endif
 

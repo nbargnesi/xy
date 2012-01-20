@@ -21,12 +21,12 @@
 #include "xy.h"
 #include "xyxlib.h"
 
-MONITORS * init_monitors(Display *d) {
+void init_monitors(Display *d) {
     int count;
     MONITOR *monitors;
     if (is_xinerama_active(d)) {
         XineramaScreenInfo *screens = get_xinerama_screens(d, &count);
-        if (!screens) return NULL;
+        if (!screens) return;
         monitors = calloc(count, sizeof(MONITOR));
         for (int i = 0; i < count; i++) {
             monitors[i].ordinal = screens[i].screen_number;
@@ -38,7 +38,7 @@ MONITORS * init_monitors(Display *d) {
         XFree(screens);
     } else {
         Screen *screen = DefaultScreenOfDisplay(d);
-        if (!screen) return NULL;
+        if (!screen) return;
         count = 1;
         monitors = calloc(1, sizeof(MONITOR));
 
@@ -50,11 +50,13 @@ MONITORS * init_monitors(Display *d) {
         monitors->yorigin = 0;
     }
 
+    /*
     MONITORS *ret = malloc(sizeof(MONITORS));
     memset(ret, 0, sizeof(MONITORS));
     ret->count = count;
     ret->monitors = monitors;
     return ret;
+    */
 }
 
 void monitors_terminate(MONITORS *m) {

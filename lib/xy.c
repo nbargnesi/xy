@@ -77,7 +77,6 @@ static void propertynotify(XEvent *e);
 static void unmapnotify(XEvent *e);
 static void eventsink(XEvent *e);
 static void _init();
-static void sigchld(int unused);
 static void (*handler[LASTEvent]) (XEvent *) = {
     [ButtonPress] = buttonpress,
     [ClientMessage] = clientmessage,
@@ -115,6 +114,7 @@ static void (*handler[LASTEvent]) (XEvent *) = {
 };
 
 void main_loop() {
+    register_cleanup(&xy_cleanup);
     signal(SIGCHLD, SIG_IGN);
     ssize_t rslt;
     Display *d = global_display;
@@ -131,7 +131,7 @@ void main_loop() {
     struct epoll_event epev_x, epev_ipc, epev_in;
     struct epoll_event epev;
 
-    epev_x.events = EPOLLIN | EPOLLOUT | EPOLLPRI;
+    epev_x.events = EPOLLIN;
     epev_x.data.fd = global_x_fd;
     if (epoll_ctl(epfd, EPOLL_CTL_ADD, global_x_fd, &epev_x) == -1) {
         perror("epoll_ctl() global_x_fd");
@@ -730,7 +730,7 @@ buttonpress(XEvent *e) {
 }
 
 void
-cleanup(void) {
+xy_cleanup() {
     Arg a = {.ui = ~0};
     Layout foo = { "", NULL };
     _Monitor *m;
@@ -1835,11 +1835,10 @@ void
 setup(void) {
     XSetWindowAttributes wa;
 
-    /* clean up any zombies immediately */
-    sigchld(0);
+    signal(SIGCHLD, SIG_IGN);
     struct sigaction sa;
     memset(&sa, 0, sizeof(sa));
-    sa.sa_flags = SA_RESTART;
+    sa.sa_flags = SA_RESTART | SA_NOCLDWAIT;
     sigaction(SIGCHLD, &sa, NULL);
 
     /* init screen */
@@ -1907,13 +1906,6 @@ showhide(Client *c) {
         showhide(c->snext);
         XMoveWindow(global_display, c->win, WIDTH(c) * -2, c->y);
     }
-}
-
-void
-sigchld(int unused) {
-    if (signal(SIGCHLD, sigchld) == SIG_ERR)
-        die("Can't install SIGCHLD handler");
-    while (0 < waitpid(-1, NULL, WNOHANG));
 }
 
 void

@@ -34,6 +34,9 @@
 
 static char *xy_cmd;
 
+CLEANUP *cleanup_funcs = NULL;
+uint func_ct = 0;
+
 /*
  * Function: xy_dir_init
  *
@@ -68,17 +71,9 @@ static void xy_dir_init() {
  * Initializes the configuration.
  */
 static CONFIG * xy_rc_init() {
-    char *home = getenv("HOME");
-    if (!home) DIE;
-
     CONFIG *ret = NULL;
 
-    const int bufsize = strlen(home) + strlen(XY_CONFIG) + 2;
-    char *rcpath = malloc(bufsize);
-    memset(rcpath, 0, bufsize);
-    strcat(rcpath, home);
-    strcat(rcpath, "/");
-    strcat(rcpath, XY_CONFIG);
+    char *rcpath = rc_path();
 
     struct stat *st = malloc(sizeof(struct stat));;
 
@@ -183,7 +178,7 @@ void xy_restart() {
 }
 
 void xy_shutting_down() {
-    cleanup();
+    xy_cleanup();
     broadcast_send(SHUTTING_DOWN_MSG);
     log_info(global_log, SHUTTING_DOWN_MSG);
 
@@ -205,5 +200,17 @@ void xy_shutdown() {
     log_info(global_log, SHUTDOWN_MSG);
     logging_terminate();
     exit(EXIT_SUCCESS);
+}
+
+void register_cleanup(CLEANUP fx) {
+    if (!cleanup_funcs) {
+        cleanup_funcs = malloc(sizeof(CLEANUP *));
+        cleanup_funcs[0] = *fx;
+        func_ct++;
+        return;
+    }
+    cleanup_funcs = realloc(cleanup_funcs, sizeof(CLEANUP *) * func_ct + 1);
+    cleanup_funcs[func_ct] = *fx;
+    func_ct++;
 }
 

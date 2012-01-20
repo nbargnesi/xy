@@ -37,8 +37,10 @@ struct Monitors {
 };
 typedef struct Monitors MONITORS;
 
-MONITORS * init_monitors(Display *);
-void monitors_terminate(MONITORS *);
+MONITORS *monitors;
+
+void init_monitors(Display *);
+void monitors_terminate();
 
 #endif
 

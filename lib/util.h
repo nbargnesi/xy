@@ -28,33 +28,10 @@ void dump_stack(int);
 void parse_command(char *, char **);
 pid_t exec(const char *);
 char * rc_path();
-
-/*
- * Function: change_name
- *
- * Changes the window manager's name.
- *
- * Parameters:
- *
- *  Display * - The display to use.
- *  const char * - The name to use; NULL will return immediately
- */
 void change_name(Display *, const char *);
-
 bool streq(const char *, const char *);
 char * trim(char *str);
-
-/**
- * Function: restart
- *
- * Invokes execlp using using the supplied command.
- *
- * Parameters:
- *  
- *  char * - command to pass to execlp
- */
 void restart(const char *);
-
 void set_process_name(const char *);
 
 #endif
