@@ -20,11 +20,14 @@
 #ifndef _XY_TYPES_H_
 #define _XY_TYPES_H_ 1
 
+#include <sys/epoll.h>
+
 typedef unsigned long ulong;
 typedef unsigned int uint;
 typedef unsigned char uchar;
-typedef void (*cleanup)();
-typedef cleanup CLEANUP;
+typedef void (*shutdown_hook)();
+typedef shutdown_hook SHUTDOWN_HOOK;
+typedef struct epoll_event EPOLL_EVENT;
 
 #endif
 
