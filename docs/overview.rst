@@ -11,7 +11,7 @@ Directories
 docs
 ^^^^
 
-The documentation for XY resides in the *docs* directory.
+The documentation for xy resides in the *docs* directory.
 
 XY's documentation is managed by Sphinx_; the latest version is always
 available online_.
@@ -21,33 +21,33 @@ available online_.
 examples
 ^^^^^^^^
 
-Various examples for interacting and integrating with XY live in the *examples*
+Various examples for interacting and integrating with xy live in the *examples*
 directory.
 
 lib
 ^^^
 
-The core of XY is housed in the *lib* directory. The real parts of XY live here
--- from utilities and library interefaces to modules like XY's broadcasting
+The core of xy is housed in the *lib* directory. The real parts of xy live here
+-- from utilities and library interefaces to modules like xy's broadcasting
 engine.
 
 resources
 ^^^^^^^^^
 
-The *resources* directory contains XY's ancillary files. Resources for
+The *resources* directory contains xy's ancillary files. Resources for
 build automation and testing, images, and runtime resources are all held here.
 
 src
 ^^^
 
-The *src* directory contains XY's *main* function - the application's entry
-point. The main executable is built independently of XY's libraries and tests
+The *src* directory contains xy's *main* function - the application's entry
+point. The main executable is built independently of xy's libraries and tests
 to allow for things like parallel builds and a robust level of testing.
 
 tests
 ^^^^^
 
-The *tests* directory contains binaries that test pieces of XY. The same tests
+The *tests* directory contains binaries that test pieces of xy. The same tests
 are used to exercise various components and identify potential memory leaks or
 performance problems.
 
@@ -63,26 +63,26 @@ Requirements
 Building
 --------
 
-The XY source tree is managed by Autotools_. It follows a standard
+The xy source tree is managed by Autotools_. It follows a standard
 configure-and-build approach.
 
 .. code-block:: bash
 
     # ./configure --quiet
-    XY build configuration
+    xy build configuration
     ----------------------
     version         : 2012
     cflags          : -pipe -std=c99 -Wall -Wunused -Wextra -Wno-unused-parameter -O0 -g3
     tests           : yes
     optimizations   : no
 
-The default build configuration targets developers. To build XY for production
+The default build configuration targets developers. To build xy for production
 use:
 
 .. code-block:: bash
 
     # ./configure --enable-optimizations --disable-tests --quiet
-    XY build configuration
+    xy build configuration
     ----------------------
     version         : 2012
     cflags          : -pipe -std=c99 -Wall -Wunused -Wextra -Wno-unused-parameter -O3
@@ -96,7 +96,19 @@ Running
 
 XY can be launched using *ck-launch-session* and a ``Xclients`` or ``xsession``
 file in your home directory. Your login manager can also be configured to start
-XY for you. Refer to your distribution's documentation for more information.
+xy for you. Refer to your distribution's documentation for more information.
+
+Under Valgrind
+^^^^^^^^^^^^^^
+
+You can run xy under Valgrind_, to help isolate memory leaks or troubleshoot
+performance problems. The overhead of running xy with Valgrind will make the
+interface cumbersome making xy unsuitable for regular use.
+
+.. code-block:: bash
+
+  valgrind --tool=memcheck --leak-check=full --log-file=$HOME/valgrind.xy.log xy
+
 
 Documenting
 -----------
@@ -111,3 +123,5 @@ Use of this target requires Sphinx_. The HTML-based documentation will be
 located in ``docs/build/html``.
 
 .. _Sphinx: http://sphinx.pocoo.org/index.html
+.. _Valgrind: http://valgrind.org
+
