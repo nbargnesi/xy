@@ -19,6 +19,8 @@
 
 #include "broadcast.h"
 #include "util.h"
+#include "logging.h"
+#include "xy.h"
 
 #include <pthread.h>
 #include <sys/prctl.h>
@@ -69,7 +71,10 @@ static void * pthread_broadcast_send() {
             padded_buffer = malloc(BROADCAST_LENGTH);
             sprintf(padded_buffer, "%s%*s", buffer, (BROADCAST_LENGTH - (len + 1)), "");
             rc = sendto(endpt->sd, padded_buffer, len, 0, endpt->dest, endpt->size); 
-            if (rc == -1) DIE;
+            if (rc == -1) {
+                const char *msg = "failed to broadcast message, shutting down?";
+                log_warn(global_log, msg);
+            }
             current = message;
             message = message->next;
             free(padded_buffer);
@@ -117,6 +122,7 @@ bool broadcast_init(const char *address, const uint port) {
     pthread_t thread;
     pthread_create(&thread, NULL, &pthread_broadcast_send, NULL);
 
+    register_shutdown_hook(broadcast_terminate);
     return true;
 }
 
