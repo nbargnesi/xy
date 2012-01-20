@@ -54,11 +54,13 @@ bool ipc_init() {
         return false;
     }
 
+    register_shutdown_hook(ipc_terminate);
     return true;
 }
 
-void process_ipc_buffer(const char *buffer) {
+void process_ipc_buffer(char *buffer) {
     COMMAND cmd = convert_command_str(buffer);
+    free(buffer);
     switch (cmd) {
         case PING:
             ipc_ping();

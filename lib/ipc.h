@@ -55,7 +55,7 @@ void ipc_terminate();
 /*
  * Function: process_ipc_buffer
  */
-void process_ipc_buffer(const char *);
+void process_ipc_buffer(char *);
 
 /*
  * Function: convert_command_str
