@@ -21,7 +21,7 @@ HACKING
 CONFIGURING AND BUILDING
 --
     To build, simply:
-        ./configure --enable-tests && make
+        ./configure && make
 
     To clean the build:
         make clean
