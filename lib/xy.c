@@ -215,6 +215,8 @@ bool key_pressed(XKeyEvent *ev) {
         return true;
     } else if (is_ks_pressed(get_quit_shortcut(), ev)) {
         transition(SHUTTING_DOWN);
+    } else if (is_ks_pressed(get_restart_shortcut(), ev)) {
+        transition(RESTARTING);
     }
     return false;
 }
@@ -505,6 +507,7 @@ static const char *dmenucmd[] = { "njbdmenu", NULL };
 
 static Key keys[] = {
     /* modifier                     key        function        argument */
+    { MODKEY,                       XK_r,      NULL,           {0} },
     { MODKEY,                       XK_Return, spawn,          {0} },
     { MODKEY,                       XK_p,      spawn,          {.v = dmenucmd } },
     { MODKEY,                       XK_b,      togglebar,      {0} },

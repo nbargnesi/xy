@@ -264,6 +264,11 @@ const char * get_quit_shortcut() {
     return ks;
 }
 
+const char * get_restart_shortcut() {
+    const char *ks = get_config_value(global_cfg, CFG_KS_RESTART);
+    return ks;
+}
+
 const char * get_terminal_command() {
     const char *cmd = get_config_value(global_cfg, CFG_TERMINAL_COMMAND);
     return cmd;

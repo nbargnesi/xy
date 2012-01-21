@@ -283,6 +283,9 @@ r* Define: DEFAULT_KS_QUIT
  */
 #define DEFAULT_KS_QUIT "Mod4"KS_SEPARATOR"q"
 
+#define CFG_KS_RESTART "key_shortcut_restart"
+#define DEFAULT_KS_RESTART "Mod4"KS_SEPARATOR"r"
+
 /*
  * Define: STARTUP_MSG
  *
