@@ -28,8 +28,13 @@ void transition(const STATE state) {
         case STARTED:
             xy_started();
             break;
+        case RESTARTING:
+            xy_shutting_down();
+            xy_restart();
+            break;
         case SHUTTING_DOWN:
             xy_shutting_down();
+            transition(SHUTDOWN);
             break;
         case SHUTDOWN:
             xy_shutdown();

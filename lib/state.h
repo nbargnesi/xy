@@ -23,6 +23,7 @@
 enum StateEnum {
     STARTING_UP,
     STARTED,
+    RESTARTING,
     SHUTTING_DOWN,
     SHUTDOWN
 };

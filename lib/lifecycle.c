@@ -186,17 +186,14 @@ void xy_shutting_down() {
     log_info(global_log, SHUTTING_DOWN_MSG);
 
     if (global_cfg) free_config(global_cfg);
-    close_display(global_display);
 
     // TODO free monitors
     // monitors_terminate();
-
-    free(xy_cmd);
-
-    transition(SHUTDOWN);
 }
 
 void xy_shutdown() {
+    free(xy_cmd);
+    close_display(global_display);
     log_info(global_log, SHUTDOWN_MSG);
     logging_terminate();
     exit(EXIT_SUCCESS);
