@@ -19,10 +19,6 @@ EXTRA_DIST = inotify.h \
              xy.h \
              xyxlib.h
 
-XYLIBS     = @XLIB_LIBS@ \
-             @XINERAMA_LIBS@ \
-             @XFT_LIBS@
-
 noinst_LIBRARIES    = libxy.a
 libxy_a_SOURCES     = inotify.c \
                       broadcast.c \
