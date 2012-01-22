@@ -114,6 +114,7 @@ void xy_startup() {
     }
 
     global_x_fd = ConnectionNumber(global_display);
+    global_dflt_screen = DefaultScreen(global_display);
     fill_config(global_cfg);
     configure(global_cfg);
 

@@ -102,6 +102,8 @@ int *global_num_screens;
  */
 XineramaScreenInfo *global_screens;
 
+int global_dflt_screen;
+
 /*
  * Function: ipc_quit
  */
