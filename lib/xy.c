@@ -112,6 +112,19 @@ static void (*handler[LASTEvent]) (XEvent *) = {
     [ColormapNotify] = eventsink
 };
 
+void xy_init() {
+    global_display = open_display();
+    if (!global_display) {
+        DIE_MSG("failed to open display");
+    }
+    global_x_fd = ConnectionNumber(global_display);
+    global_dflt_screen = DefaultScreen(global_display);
+    configure(global_cfg);
+}
+
+void xy_terminate() {
+}
+
 void main_loop() {
     register_shutdown_hook(xy_cleanup);
     signal(SIGCHLD, SIG_IGN);
@@ -199,7 +212,7 @@ void main_loop() {
 }
 
 void ipc_quit() {
-    transition(SHUTTING_DOWN);
+    transition(STATE_SHUTTING_DOWN);
 }
 
 void ipc_ping() {
@@ -214,9 +227,9 @@ bool key_pressed(XKeyEvent *ev) {
         exec(get_terminal_command());
         return true;
     } else if (is_ks_pressed(get_quit_shortcut(), ev)) {
-        transition(SHUTTING_DOWN);
+        transition(STATE_SHUTTING_DOWN);
     } else if (is_ks_pressed(get_restart_shortcut(), ev)) {
-        transition(RESTARTING);
+        transition(STATE_RESTARTING);
     }
     return false;
 }
@@ -1576,7 +1589,7 @@ propertynotify(XEvent *e) {
 
 void
 quit(const Arg *arg) {
-    transition(SHUTTING_DOWN);
+    transition(STATE_SHUTTING_DOWN);
 }
 
 _Monitor *

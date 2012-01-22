@@ -22,7 +22,6 @@
 
 #include "types.h"
 
-void xy_init(char *);
 void xy_startup();
 void xy_started();
 void xy_restart();

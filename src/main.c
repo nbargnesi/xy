@@ -17,6 +17,7 @@
  * along with xy.  If not, see <http://www.gnu.org/licenses/>.
  */
 
+#include "core.h"
 #include "state.h"
 #include "lifecycle.h"
 #include <stdio.h>
@@ -40,6 +41,7 @@ int main(int argc, char **argv) {
         strcat(cmd, argv[i]);
     }
 
-    xy_init(cmd);
+    run_cmd = cmd;
+    transition(STATE_INIT);
 }
 

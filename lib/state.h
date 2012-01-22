@@ -21,11 +21,11 @@
 #define _XY_STATE_H_ 1
 
 enum StateEnum {
-    STARTING_UP,
-    STARTED,
-    RESTARTING,
-    SHUTTING_DOWN,
-    SHUTDOWN
+    STATE_INIT,
+    STATE_RUNNING,
+    STATE_RESTARTING,
+    STATE_SHUTTING_DOWN,
+    STATE_SHUTDOWN
 };
 typedef enum StateEnum STATE;
 

@@ -19,24 +19,27 @@
 
 #include "state.h"
 #include "lifecycle.h"
+#include "xy.h"
 
 void transition(const STATE state) {
     switch (state) {
-        case STARTING_UP:
+        case STATE_INIT:
             xy_startup();
-            break;
-        case STARTED:
             xy_started();
+            transition(STATE_RUNNING);
             break;
-        case RESTARTING:
+        case STATE_RUNNING:
+            main_loop();
+            break;
+        case STATE_RESTARTING:
             xy_shutting_down();
             xy_restart();
             break;
-        case SHUTTING_DOWN:
+        case STATE_SHUTTING_DOWN:
             xy_shutting_down();
-            transition(SHUTDOWN);
+            transition(STATE_SHUTDOWN);
             break;
-        case SHUTDOWN:
+        case STATE_SHUTDOWN:
             xy_shutdown();
             break;
     }

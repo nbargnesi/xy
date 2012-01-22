@@ -170,4 +170,6 @@ void die(const char *, ...);
  */
 #define MSG_LEN 256
 
+char *run_cmd;
+
 #endif

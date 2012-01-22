@@ -32,8 +32,6 @@
 #include <stdio.h>
 #include <fcntl.h>
 
-static char *xy_cmd;
-
 SHUTDOWN_HOOK *hooks = NULL;
 uint hook_ct = 0;
 
@@ -88,11 +86,6 @@ static CONFIG * xy_rc_init() {
     return ret;
 }
 
-void xy_init(char *cmd) {
-    xy_cmd = cmd;
-    transition(STARTING_UP);
-}
-
 void xy_startup() {
     if (!logging_init()) {
         fprintf(stderr, INIT_LOGGING_FAILURE);
@@ -108,15 +101,7 @@ void xy_startup() {
         DIE_MSG("xy_inotify_init failed");
     }
 
-    global_display = open_display();
-    if (!global_display) {
-        DIE_MSG("failed to open display");
-    }
-
-    global_x_fd = ConnectionNumber(global_display);
-    global_dflt_screen = DefaultScreen(global_display);
     fill_config(global_cfg);
-    configure(global_cfg);
 
     if (!ipc_init()) {
         fprintf(stderr, INIT_IPC_FAILURE);
@@ -164,8 +149,8 @@ void xy_startup() {
     
     // TODO grab keys
      
+    xy_init();
     set_process_name("xy: main");
-    transition(STARTED);
 }
 
 void xy_started() {
@@ -173,27 +158,23 @@ void xy_started() {
 }
 
 void xy_restart() {
-    restart(xy_cmd);
+    restart(run_cmd);
 }
 
 void xy_shutting_down() {
+    log_info(global_log, SHUTTING_DOWN_MSG);
+    broadcast_send(SHUTTING_DOWN_MSG);
 
     // Invoke cleanup functions in reverse.
     for (uint i = (hook_ct - 1); i >= hook_ct; i--) {
         hooks[i]();
     }
 
-    broadcast_send(SHUTTING_DOWN_MSG);
-    log_info(global_log, SHUTTING_DOWN_MSG);
-
     if (global_cfg) free_config(global_cfg);
-
-    // TODO free monitors
-    // monitors_terminate();
 }
 
 void xy_shutdown() {
-    free(xy_cmd);
+    free(run_cmd);
     close_display(global_display);
     log_info(global_log, SHUTDOWN_MSG);
     logging_terminate();

@@ -71,7 +71,7 @@ void process_ipc_buffer(char *buffer) {
             ipc_quit();
             break;
         case RESTART:
-            transition(RESTARTING);
+            transition(STATE_RESTARTING);
             break;
     }
 }
