@@ -25,7 +25,6 @@ void transition(const STATE state) {
     switch (state) {
         case STATE_INIT:
             xy_startup();
-            xy_started();
             transition(STATE_RUNNING);
             break;
         case STATE_RUNNING:

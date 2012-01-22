@@ -153,10 +153,6 @@ void xy_startup() {
     set_process_name("xy: main");
 }
 
-void xy_started() {
-    main_loop();
-}
-
 void xy_restart() {
     restart(run_cmd);
 }
