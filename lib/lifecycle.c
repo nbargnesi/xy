@@ -79,7 +79,7 @@ static CONFIG * xy_rc_init() {
         write_default_config(rcpath);
     }
 
-    log_info(global_log, READING_CONFIGURATION_MSG);
+    log_info(globals->log, READING_CONFIGURATION_MSG);
     ret = get_config(rcpath);
     free(st);
     free(rcpath);
@@ -87,42 +87,44 @@ static CONFIG * xy_rc_init() {
 }
 
 void xy_startup() {
+    globals = malloc(sizeof(GLOBALS));    
+
     if (!logging_init()) {
         fprintf(stderr, INIT_LOGGING_FAILURE);
         exit(1);
     }
-    global_log = get_logger("xy");
-    log_info(global_log, STARTUP_MSG);
+    globals->log = get_logger("xy");
+    log_info(globals->log, STARTUP_MSG);
     xy_dir_init();
-    global_cfg = xy_rc_init();
+    globals->cfg = xy_rc_init();
 
-    xy_in_fd = xy_inotify_init();
-    if (xy_in_fd == -1) {
+    globals->in_fd = xy_inotify_init();
+    if (globals->in_fd == -1) {
         DIE_MSG("xy_inotify_init failed");
     }
 
-    fill_config(global_cfg);
+    fill_config(globals->cfg);
 
     if (!ipc_init()) {
         fprintf(stderr, INIT_IPC_FAILURE);
-        exit(1);
+        DIE;
     }
-    log_info(global_log, IPC_STARTUP_MSG);
+    log_info(globals->log, IPC_STARTUP_MSG);
 
-    const char *group = get_config_value(global_cfg, CFG_BROADCAST_GROUP);
-    const char *portstr = get_config_value(global_cfg, CFG_BROADCAST_PORT);
+    const char *group = get_config_value(globals->cfg, CFG_BROADCAST_GROUP);
+    const char *portstr = get_config_value(globals->cfg, CFG_BROADCAST_PORT);
     const uint port = atoi(portstr);
 
     if (!broadcast_init(group, port)) {
         fprintf(stderr, INIT_BROADCAST_FAILURE);
-        exit(1);
+        DIE;
     }
-    log_info(global_log, BROADCAST_STARTUP_MSG);
+    log_info(globals->log, BROADCAST_STARTUP_MSG);
 
     broadcast_send(STARTUP_MSG);
 
     /*
-    if (!is_xinerama_active(global_display)) {
+    if (!is_xinerama_active(globals->dpy)) {
         fprintf(stderr, "Xinerama is not active\n");
         DIE;
     }
@@ -158,7 +160,7 @@ void xy_restart() {
 }
 
 void xy_shutting_down() {
-    log_info(global_log, SHUTTING_DOWN_MSG);
+    log_info(globals->log, SHUTTING_DOWN_MSG);
     broadcast_send(SHUTTING_DOWN_MSG);
 
     // Invoke cleanup functions in reverse.
@@ -166,13 +168,13 @@ void xy_shutting_down() {
         hooks[i]();
     }
 
-    if (global_cfg) free_config(global_cfg);
+    if (globals->cfg) free_config(globals->cfg);
 }
 
 void xy_shutdown() {
     free(run_cmd);
-    close_display(global_display);
-    log_info(global_log, SHUTDOWN_MSG);
+    close_display(globals->dpy);
+    log_info(globals->log, SHUTDOWN_MSG);
     logging_terminate();
     exit(EXIT_SUCCESS);
 }

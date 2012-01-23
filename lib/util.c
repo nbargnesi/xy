@@ -53,8 +53,11 @@ pid_t exec(const char *cmd) {
         perror("fork failed");
         DIE;
     } else if (pid == 0) {
-        if (global_x_fd) close(global_x_fd);
-        if (global_ipc_fd) close(global_ipc_fd);
+        if (globals) {
+            close(globals->x_fd);
+            close(globals->ipc_fd);
+            close(globals->in_fd);
+        }
         execvp(*argv, argv);
     }
     free(cmd_dup);

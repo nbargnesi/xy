@@ -35,6 +35,19 @@
 #include "monitor.h"
 #include "inotify.h"
 
+typedef struct {
+    CONFIG *cfg;
+    Display *dpy;
+    log4c_category_t *log; 
+    int ipc_fd;
+    int x_fd;
+    int in_fd;
+    XineramaScreenInfo *screens;
+    int num_screens;
+    int dflt_scrn;
+} GLOBALS;
+GLOBALS *globals;
+
 /*
  * Function: main
  *
@@ -50,59 +63,6 @@ void xy_init();
  * The main application loop.
  */
 void main_loop();
-
-/*
- * Variable: global_display
- *
- * Global X display connection.
- */
-Display *global_display;
-
-/*
- * Variable: global_cfg
- *
- * Global configuration.
- */
-CONFIG *global_cfg;
-
-/*
- * Variable: global_log
- *
- * Global log4c log.
- */
-log4c_category_t *global_log;
-
-/*
- * Variable: global_ipc_fd
- *
- * Global IPC file descriptor.
- */
-int global_ipc_fd;
-
-/*
- * Variable: global_x_fd
- *
- * Global X connection file descriptor.
- */
-int global_x_fd;
-
-/*
- * Variable: global_num_screens
- *
- * The number of Xinerama screens available.
- * See <global_screens>.
- */
-int *global_num_screens;
-
-/*
- * Variable: global_screens
- *
- * The Xinerama screens available.
- * See <global_num_screens>.
- */
-XineramaScreenInfo *global_screens;
-
-int global_dflt_screen;
 
 /*
  * Function: ipc_quit

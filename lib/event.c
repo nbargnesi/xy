@@ -184,7 +184,7 @@ bool is_ks_pressed(const char *ks, XKeyEvent *xke) {
     if (!ks) {
         return false;
     }
-    KeySym keysym = XKeycodeToKeysym(global_display, xke->keycode, 0);
+    KeySym keysym = XKeycodeToKeysym(globals->dpy, xke->keycode, 0);
     const char *keystr = XKeysymToString(keysym);
     char *ks2 = strdup(ks);
     bool shft = is_shift_pressed(xke);

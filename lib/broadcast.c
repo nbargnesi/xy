@@ -73,7 +73,7 @@ static void * pthread_broadcast_send() {
             rc = sendto(endpt->sd, padded_buffer, len, 0, endpt->dest, endpt->size); 
             if (rc == -1) {
                 const char *msg = "failed to broadcast message, shutting down?";
-                log_warn(global_log, msg);
+                log_warn(globals->log, msg);
             }
             current = message;
             message = message->next;

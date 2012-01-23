@@ -39,8 +39,8 @@ bool ipc_init() {
     free(path);
     unlink(ipc_path);
     ipc_sckt = malloc(sizeof(struct sockaddr_un));
-    global_ipc_fd = socket(AF_UNIX, SOCK_DGRAM, 0);
-    if (global_ipc_fd < 0) {
+    globals->ipc_fd = socket(AF_UNIX, SOCK_DGRAM, 0);
+    if (globals->ipc_fd < 0) {
         perror("opening IPC");
         return false;
     }
@@ -49,7 +49,7 @@ bool ipc_init() {
     strcpy(ipc_sckt->sun_path, ipc_path);
 
     ssize_t size = sizeof(struct sockaddr_un);
-    if (bind(global_ipc_fd, (struct sockaddr *) ipc_sckt, size)) {
+    if (bind(globals->ipc_fd, (struct sockaddr *) ipc_sckt, size)) {
         perror("binding to IPC");
         return false;
     }
@@ -87,7 +87,7 @@ COMMAND convert_command_str(const char *cmd) {
 }
 
 void ipc_terminate() {
-    close(global_ipc_fd);
+    close(globals->ipc_fd);
     unlink(ipc_path);
 }
 

@@ -163,50 +163,50 @@ void fill_config(CONFIG *cfg) {
 
     char *name = CFG_SKIP_WINDOW_MGR_CHECK;
     char *value = DEFAULT_SKIP_WINDOW_MGR_CHECK;
-    if (!get_config_value(global_cfg, name)) {
-        set_config_value(global_cfg, name, value);
+    if (!get_config_value(globals->cfg, name)) {
+        set_config_value(globals->cfg, name, value);
     }
 
     name = CFG_WINDOW_MGR_NAME;
     value = DEFAULT_WINDOW_MGR_NAME;
-    if (!get_config_value(global_cfg, name)) {
-        set_config_value(global_cfg, name, value);
+    if (!get_config_value(globals->cfg, name)) {
+        set_config_value(globals->cfg, name, value);
     }
 
     name = CFG_BROADCAST_GROUP;
     value = DEFAULT_BROADCAST_GROUP;
-    if (!get_config_value(global_cfg, name)) {
-        set_config_value(global_cfg, name, value);
+    if (!get_config_value(globals->cfg, name)) {
+        set_config_value(globals->cfg, name, value);
     }
 
     name = CFG_BROADCAST_PORT;
     value = DEFAULT_BROADCAST_PORT;
-    if (!get_config_value(global_cfg, name)) {
-        set_config_value(global_cfg, name, value);
+    if (!get_config_value(globals->cfg, name)) {
+        set_config_value(globals->cfg, name, value);
     }
 
     name = CFG_KS_MENU;
     value = DEFAULT_KS_MENU;
-    if (!get_config_value(global_cfg, name)) {
-        set_config_value(global_cfg, name, value);
+    if (!get_config_value(globals->cfg, name)) {
+        set_config_value(globals->cfg, name, value);
     }
 
     name = CFG_KS_TERMINAL;
     value = DEFAULT_KS_TERMINAL;
-    if (!get_config_value(global_cfg, name)) {
-        set_config_value(global_cfg, name, value);
+    if (!get_config_value(globals->cfg, name)) {
+        set_config_value(globals->cfg, name, value);
     }
 
     name = CFG_KS_QUIT;
     value = DEFAULT_KS_QUIT;
-    if (!get_config_value(global_cfg, name)) {
-        set_config_value(global_cfg, name, value);
+    if (!get_config_value(globals->cfg, name)) {
+        set_config_value(globals->cfg, name, value);
     }
 
     name = CFG_TERMINAL_COMMAND;
     value = DEFAULT_TERMINAL_COMMAND;
-    if (!get_config_value(global_cfg, name)) {
-        set_config_value(global_cfg, name, value);
+    if (!get_config_value(globals->cfg, name)) {
+        set_config_value(globals->cfg, name, value);
     }
 
     for (CONFIG_ENTRY *c = cfg->head; c; c = c->next) {
@@ -215,7 +215,7 @@ void fill_config(CONFIG *cfg) {
         const size_t length = strlen(name) + strlen(value) + 3;
         char *buffer = malloc(length);
         sprintf(buffer, "%s: %s", name, value);
-        log_debug(global_log, buffer);
+        log_debug(globals->log, buffer);
         free(buffer);
     }
 }
@@ -223,54 +223,54 @@ void fill_config(CONFIG *cfg) {
 void configure(CONFIG *cfg) {
     // Should we skip the window manager check?
     if (!skip_window_manager_check()) {
-        if (is_window_manager_running(global_display)) {
-            log_fatal(global_log, WINDOW_MGR_RUNNING);
+        if (is_window_manager_running(globals->dpy)) {
+            log_fatal(globals->log, WINDOW_MGR_RUNNING);
         }
     } else
-        log_info(global_log, SKIP_WINDOW_MGR_CHECK_MSG);
+        log_info(globals->log, SKIP_WINDOW_MGR_CHECK_MSG);
 
     // Should we change the window manager's name?
     const char *wmname = change_window_manager_name();
     if (wmname) {
-        log_info(global_log, CHANGE_WINDOW_MGR_NAME_MSG);
-        change_name(global_display, wmname);
+        log_info(globals->log, CHANGE_WINDOW_MGR_NAME_MSG);
+        change_name(globals->dpy, wmname);
     }
 }
 
 bool skip_window_manager_check() {
-    const char *wmcheck = get_config_value(global_cfg, CFG_SKIP_WINDOW_MGR_CHECK);
+    const char *wmcheck = get_config_value(globals->cfg, CFG_SKIP_WINDOW_MGR_CHECK);
     if (!wmcheck || streq(wmcheck, "true"))
         return true;
     return false;
 }
 
 const char * change_window_manager_name() {
-    const char *wmname = get_config_value(global_cfg, CFG_WINDOW_MGR_NAME);
+    const char *wmname = get_config_value(globals->cfg, CFG_WINDOW_MGR_NAME);
     return wmname;
 }
 
 const char * get_menu_shortcut() {
-    const char *ks = get_config_value(global_cfg, CFG_KS_MENU);
+    const char *ks = get_config_value(globals->cfg, CFG_KS_MENU);
     return ks;
 }
 
 const char * get_terminal_shortcut() {
-    const char *ks = get_config_value(global_cfg, CFG_KS_TERMINAL);
+    const char *ks = get_config_value(globals->cfg, CFG_KS_TERMINAL);
     return ks;
 }
 
 const char * get_quit_shortcut() {
-    const char *ks = get_config_value(global_cfg, CFG_KS_QUIT);
+    const char *ks = get_config_value(globals->cfg, CFG_KS_QUIT);
     return ks;
 }
 
 const char * get_restart_shortcut() {
-    const char *ks = get_config_value(global_cfg, CFG_KS_RESTART);
+    const char *ks = get_config_value(globals->cfg, CFG_KS_RESTART);
     return ks;
 }
 
 const char * get_terminal_command() {
-    const char *cmd = get_config_value(global_cfg, CFG_TERMINAL_COMMAND);
+    const char *cmd = get_config_value(globals->cfg, CFG_TERMINAL_COMMAND);
     return cmd;
 }
 
