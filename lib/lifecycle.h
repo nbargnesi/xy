@@ -27,7 +27,7 @@ void xy_started();
 void xy_restart();
 void xy_shutting_down();
 void xy_shutdown();
-void register_shutdown_hook(SHUTDOWN_HOOK);
+void register_shutdown_hook(const char *, shutdown_hook);
 
 #endif
 

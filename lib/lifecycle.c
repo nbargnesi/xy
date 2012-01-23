@@ -33,7 +33,7 @@
 #include <fcntl.h>
 
 SHUTDOWN_HOOK *hooks = NULL;
-uint hook_ct = 0;
+int hook_ct = 0;
 
 /*
  * Function: xy_dir_init
@@ -164,8 +164,13 @@ void xy_shutting_down() {
     broadcast_send(SHUTTING_DOWN_MSG);
 
     // Invoke cleanup functions in reverse.
-    for (uint i = (hook_ct - 1); i >= hook_ct; i--) {
-        hooks[i]();
+    const char *fmt = "invoking shutdown hook: %s";
+    for (int i = (hook_ct - 1); i >= 0; i--) {
+        char *msg = malloc(strlen(fmt) + strlen(hooks[i].name));
+        sprintf(msg, fmt, hooks[i].name);
+        log_info(globals->log, msg);
+        free(msg);
+        hooks[i].hook();
     }
 
     if (globals->cfg) free_config(globals->cfg);
@@ -179,9 +184,15 @@ void xy_shutdown() {
     exit(EXIT_SUCCESS);
 }
 
-void register_shutdown_hook(SHUTDOWN_HOOK sh) {
+void register_shutdown_hook(const char *name, shutdown_hook hook) {
+    const char *fmt = "registered shutdown hook: %s";
+    char *msg = malloc(strlen(fmt) + strlen(name));
+    sprintf(msg, fmt, name);
+    log_info(globals->log, msg);
+    free(msg);
     hooks = realloc(hooks, (sizeof(SHUTDOWN_HOOK) * (hook_ct + 1)));
-    hooks[hook_ct] = sh;
+    hooks[hook_ct].hook = hook;
+    hooks[hook_ct].name = name;
     hook_ct++;
 }
 

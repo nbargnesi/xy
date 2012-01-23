@@ -26,7 +26,10 @@ typedef unsigned long ulong;
 typedef unsigned int uint;
 typedef unsigned char uchar;
 typedef void (*shutdown_hook)();
-typedef shutdown_hook SHUTDOWN_HOOK;
+typedef struct {
+    shutdown_hook hook;
+    const char *name;
+} SHUTDOWN_HOOK;
 typedef struct epoll_event EPOLL_EVENT;
 
 #endif

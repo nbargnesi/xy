@@ -127,7 +127,7 @@ void xy_terminate() {
 }
 
 void main_loop() {
-    register_shutdown_hook(xy_cleanup);
+    register_shutdown_hook("xy", xy_cleanup);
     signal(SIGCHLD, SIG_IGN);
     ssize_t rslt;
     Display *d = globals->dpy;

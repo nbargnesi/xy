@@ -54,7 +54,7 @@ bool ipc_init() {
         return false;
     }
 
-    register_shutdown_hook(ipc_terminate);
+    register_shutdown_hook("ipc", ipc_terminate);
     return true;
 }
 

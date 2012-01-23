@@ -122,7 +122,7 @@ bool broadcast_init(const char *address, const uint port) {
     pthread_t thread;
     pthread_create(&thread, NULL, &pthread_broadcast_send, NULL);
 
-    register_shutdown_hook(broadcast_terminate);
+    register_shutdown_hook("broadcast", broadcast_terminate);
     return true;
 }
 
