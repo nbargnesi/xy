@@ -6,6 +6,29 @@ API Reference
 
 .. highlight:: c
 
+configuration.h
+===============
+
+The configuration module reponsible for managing the xy configuration.
+
+.. type:: CONFIG
+
+   The type made available after a call to :func:`config_init`. It contains all
+   the necessary configuration options xy uses while running.
+
+.. function:: CONFIG * config_init(const char *)
+
+   Initializes xy's configuration. Returns the configuration or NULL on failure.
+   This function makes :type:`CONFIG` available for use.
+
+.. function:: void config_terminate()
+
+   The configuration module's shutdown hook.
+
+.. function:: void write_default_config(const char *)
+
+   Writes the default xy configuration to the path specified.
+
 util.h
 ======
 
@@ -40,7 +63,7 @@ A collection of utility functions meant to stand alone from other XY modules.
 
         char *command = "some string here";
         char *dup = strdup(command);
-        char *argv[3];                                                                                                  
+        char *argv[3];
         parse_command(dup, argv);
         // argv[0]: "some"
         // argv[1]: "string"
