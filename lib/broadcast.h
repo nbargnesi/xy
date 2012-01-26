@@ -29,16 +29,7 @@
  */
 #define BROADCAST_LENGTH 256
 
-/*
- * Function: broadcast_init
- *
- * Initializes the broadcast module.
- *
- * The multicast group specified by <CFG_BROADCAST_GROUP> and
- * <CFG_BROADCAST_PORT> is joined and a thread is created to process broadcast
- * messages.
- */
-bool broadcast_init(const char *, const uint);
+bool broadcast_init();
 
 /*
  * Function: broadcast_send

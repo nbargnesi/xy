@@ -80,7 +80,7 @@ static CONFIG * xy_rc_init() {
     }
 
     log_info(globals->log, READING_CONFIGURATION_MSG);
-    ret = get_config(rcpath);
+    ret = config_init(rcpath);
     free(st);
     free(rcpath);
     return ret;
@@ -103,19 +103,13 @@ void xy_startup() {
         DIE_MSG("xy_inotify_init failed");
     }
 
-    fill_config(globals->cfg);
-
     if (!ipc_init()) {
         fprintf(stderr, INIT_IPC_FAILURE);
         DIE;
     }
     log_info(globals->log, IPC_STARTUP_MSG);
 
-    const char *group = get_config_value(globals->cfg, CFG_BROADCAST_GROUP);
-    const char *portstr = get_config_value(globals->cfg, CFG_BROADCAST_PORT);
-    const uint port = atoi(portstr);
-
-    if (!broadcast_init(group, port)) {
+    if (!broadcast_init()) {
         fprintf(stderr, INIT_BROADCAST_FAILURE);
         DIE;
     }
@@ -172,8 +166,6 @@ void xy_shutting_down() {
         free(msg);
         hooks[i].hook();
     }
-
-    if (globals->cfg) free_config(globals->cfg);
 }
 
 void xy_shutdown() {

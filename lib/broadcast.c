@@ -48,6 +48,7 @@ typedef struct message_list MESSAGES;
 static BCAST_ENDPT *endpt;
 static pthread_cond_t cond = PTHREAD_COND_INITIALIZER;
 static pthread_mutex_t mutex = PTHREAD_MUTEX_INITIALIZER;
+static pthread_t thread;
 static MESSAGES *messages;
 
 static void * pthread_broadcast_send() {
@@ -88,7 +89,7 @@ static void * pthread_broadcast_send() {
     return NULL;
 }
 
-bool broadcast_init(const char *address, const uint port) {
+bool broadcast_init() {
     endpt = malloc(sizeof(BCAST_ENDPT));
     memset(endpt, 0, sizeof(BCAST_ENDPT));
     struct in_addr local_iface;
@@ -101,8 +102,8 @@ bool broadcast_init(const char *address, const uint port) {
 
     memset((char*) &endpt->group_sckt, 0, sizeof(endpt->group_sckt));
     endpt->group_sckt.sin_family = AF_INET;
-    endpt->group_sckt.sin_addr.s_addr = inet_addr(address);
-    endpt->group_sckt.sin_port = htons(port);
+    endpt->group_sckt.sin_addr.s_addr = inet_addr(globals->cfg->bc_group);
+    endpt->group_sckt.sin_port = htons(globals->cfg->bc_port);
     local_iface.s_addr = inet_addr("127.0.0.1");
 
     int len = sizeof(local_iface);
@@ -119,8 +120,8 @@ bool broadcast_init(const char *address, const uint port) {
     pthread_mutex_init(&mutex, NULL);
     pthread_cond_init(&cond, NULL);
 
-    pthread_t thread;
     pthread_create(&thread, NULL, &pthread_broadcast_send, NULL);
+    pthread_detach(thread);
 
     register_shutdown_hook("broadcast", broadcast_terminate);
     return true;
@@ -150,6 +151,7 @@ void broadcast_send(const char *msg) {
 }
 
 void broadcast_terminate() {
+    pthread_cancel(thread);
     if (endpt) {
         close(endpt->sd);
         free(endpt);

@@ -21,14 +21,19 @@
 #include "xy.h"
 #include "configuration.h"
 #include "util.h"
+#include "lifecycle.h"
 
 #include <stdlib.h>
 #include <stdio.h>
 #include <string.h>
 
-CONFIG * get_config(const char *pathname) {
+static CONFIG * default_config();
+static void process_entry(char *, char*);
+static bool get_boolean(char *);
+static uint get_uint(char *);
 
-    FILE *fp = fopen(pathname, "r");
+CONFIG * config_init(const char *rcpath) {
+    FILE *fp = fopen(rcpath, "r");
     if (!fp) return NULL;
 
     char *line = NULL;
@@ -36,7 +41,7 @@ CONFIG * get_config(const char *pathname) {
     char *value = NULL;
     size_t len = 0;
 
-    CONFIG *cfg = empty_config();
+    config = default_config();
     while (getline(&line, &len, fp) != -1) {
 
         // Tokenize the line using '=' as the delimiter.
@@ -52,225 +57,138 @@ CONFIG * get_config(const char *pathname) {
         if (!token) continue;
         value = trim(token);
 
-        // Create a CONFIG_ENTRY for the name/value tokens.
-        CONFIG_ENTRY *ce = malloc(sizeof(CONFIG_ENTRY));
-        memset(ce, 0, sizeof(CONFIG_ENTRY));
-        ce->name = strdup(name);
-        ce->value = strdup(value);
-        ce->next = NULL;
+        name = strdup(name);
+        value = strdup(value);
 
-        // If no entries exist...
-        if (cfg->num_entries == 0) {
-            // ce becomes head and tail
-            cfg->head = ce;
-            cfg->tail = ce;
-        } else {
-            // ce becomes tail
-            cfg->tail->next = ce;
-            cfg->tail = ce;
-        }
-        cfg->num_entries++;
+        process_entry(name, value);
+        free(name);
     }
 
     free(line);
     fclose(fp);
-    return cfg;
+    register_shutdown_hook("config", config_terminate);
+    return config;
 }
 
-CONFIG * empty_config() {
-    CONFIG *cfg = malloc(sizeof(CONFIG));
-    memset(cfg, 0, sizeof(CONFIG));
-    cfg->head = NULL;
-    cfg->tail = NULL;
-    cfg->num_entries = 0;
-    return cfg;
-}
-
-void free_config(CONFIG *cfg) {
-    if (cfg) {
-        for (CONFIG_ENTRY *c = cfg->head; c; ) {
-            free(c->name);
-            free(c->value);
-            CONFIG_ENTRY *next = c->next;
-            free(c);
-            c = next;
-        }
-        free(cfg);
-    }
-}
-
-const char *get_config_value(CONFIG *cfg, const char *name) {
-    for (CONFIG_ENTRY *c = cfg->head; c; c = c->next) {
-        if (streq(c->name, name)) return c->value;
-    }
-    return NULL;
-}
-
-void set_config_value(CONFIG *cfg, const char *name, const char *value) {
-    // Create a CONFIG_ENTRY for the name/value tokens.
-    CONFIG_ENTRY *ce = malloc(sizeof(CONFIG_ENTRY));
-    memset(ce, 0, sizeof(CONFIG_ENTRY));
-    ce->name = strdup(name);
-    ce->value = strdup(value);
-    ce->next = NULL;
-
-    // If no entries exist...
-    if (cfg->num_entries == 0) {
-        // ce becomes head and tail
-        cfg->head = ce;
-        cfg->tail = ce;
-    } else {
-        // ce becomes tail
-        cfg->tail->next = ce;
-        cfg->tail = ce;
+void config_terminate() {
+    if (config) {
+        free(config->term_cmd);
+        free(config->menu_cmd);
+        free(config->wm_name);
+        free(config->bc_group);
+        free(config->ks_menu);
+        free(config->ks_terminal);
+        free(config->ks_quit);
+        free(config->ks_restart);
+        free(config);
     }
 }
 
 void write_default_config(const char *rcpath) {
     FILE *cfg = fopen(rcpath, "w");
-    // XXX: validate cfg
 
-    fprintf(cfg, "%s\n", DEFAULT_CFG_FILE_HDR);
+    fprintf(cfg, "%s\n", DFLT_CFG_FILE_HDR);
 
     fprintf(cfg, "%s = ", CFG_SKIP_WINDOW_MGR_CHECK);
-    fprintf(cfg, "%s\n", DEFAULT_SKIP_WINDOW_MGR_CHECK);
+    fprintf(cfg, "false\n");
 
     fprintf(cfg, "%s = ", CFG_WINDOW_MGR_NAME);
-    fprintf(cfg, "%s\n", DEFAULT_WINDOW_MGR_NAME);
+    fprintf(cfg, "%s\n", DFLT_WINDOW_MGR_NAME);
+
+    fprintf(cfg, "%s = ", CFG_WARP);
+    fprintf(cfg, "true\n");
 
     fprintf(cfg, "%s = ", CFG_BROADCAST_GROUP);
-    fprintf(cfg, "%s\n", DEFAULT_BROADCAST_GROUP);
+    fprintf(cfg, "%s\n", DFLT_BROADCAST_GROUP);
 
     fprintf(cfg, "%s = ", CFG_BROADCAST_PORT);
-    fprintf(cfg, "%s\n", DEFAULT_BROADCAST_PORT);
+    fprintf(cfg, "%d\n", DFLT_BROADCAST_PORT);
 
     fprintf(cfg, "%s = ", CFG_KS_QUIT);
-    fprintf(cfg, "%s\n", DEFAULT_KS_QUIT);
+    fprintf(cfg, "%s\n", DFLT_KS_QUIT);
 
     fprintf(cfg, "%s = ", CFG_KS_TERMINAL);
-    fprintf(cfg, "%s\n", DEFAULT_KS_TERMINAL);
+    fprintf(cfg, "%s\n", DFLT_KS_TERMINAL);
 
     fprintf(cfg, "%s = ", CFG_KS_MENU);
-    fprintf(cfg, "%s\n", DEFAULT_KS_MENU);
+    fprintf(cfg, "%s\n", DFLT_KS_MENU);
 
-    fprintf(cfg, "%s = ", CFG_TERMINAL_COMMAND);
-    fprintf(cfg, "%s\n", DEFAULT_TERMINAL_COMMAND);
+    fprintf(cfg, "%s = ", CFG_KS_RESTART);
+    fprintf(cfg, "%s\n", DFLT_KS_RESTART);
+
+    fprintf(cfg, "%s = ", CFG_TERMINAL_CMD);
+    fprintf(cfg, "%s\n", DFLT_TERMINAL_CMD);
+
+    fprintf(cfg, "%s = ", CFG_MENU_CMD);
+    fprintf(cfg, "%s\n", DFLT_MENU_CMD);
 
     fclose(cfg);
 }
 
-void fill_config(CONFIG *cfg) {
+static CONFIG * default_config() {
+    CONFIG *cfg = malloc(sizeof(CONFIG));
+    memset(cfg, 0, sizeof(CONFIG));
 
-    char *name = CFG_SKIP_WINDOW_MGR_CHECK;
-    char *value = DEFAULT_SKIP_WINDOW_MGR_CHECK;
-    if (!get_config_value(globals->cfg, name)) {
-        set_config_value(globals->cfg, name, value);
-    }
+    cfg->term_cmd = strdup(DFLT_TERMINAL_CMD);
+    cfg->menu_cmd = strdup(DFLT_MENU_CMD);
+    cfg->wm_name = strdup(DFLT_WINDOW_MGR_NAME);
+    cfg->wm_skip_check = DFLT_SKIP_WINDOW_MGR_CHECK;
+    cfg->wm_warp = DFLT_WARP;
+    cfg->bc_port = DFLT_BROADCAST_PORT;
+    cfg->bc_group = strdup(DFLT_BROADCAST_GROUP);
+    cfg->ks_menu = strdup(DFLT_KS_MENU);
+    cfg->ks_terminal = strdup(DFLT_KS_TERMINAL);
+    cfg->ks_quit = strdup(DFLT_KS_QUIT);
+    cfg->ks_restart = strdup(DFLT_KS_RESTART);
 
-    name = CFG_WINDOW_MGR_NAME;
-    value = DEFAULT_WINDOW_MGR_NAME;
-    if (!get_config_value(globals->cfg, name)) {
-        set_config_value(globals->cfg, name, value);
-    }
+    return cfg;
+}
 
-    name = CFG_BROADCAST_GROUP;
-    value = DEFAULT_BROADCAST_GROUP;
-    if (!get_config_value(globals->cfg, name)) {
-        set_config_value(globals->cfg, name, value);
-    }
-
-    name = CFG_BROADCAST_PORT;
-    value = DEFAULT_BROADCAST_PORT;
-    if (!get_config_value(globals->cfg, name)) {
-        set_config_value(globals->cfg, name, value);
-    }
-
-    name = CFG_KS_MENU;
-    value = DEFAULT_KS_MENU;
-    if (!get_config_value(globals->cfg, name)) {
-        set_config_value(globals->cfg, name, value);
-    }
-
-    name = CFG_KS_TERMINAL;
-    value = DEFAULT_KS_TERMINAL;
-    if (!get_config_value(globals->cfg, name)) {
-        set_config_value(globals->cfg, name, value);
-    }
-
-    name = CFG_KS_QUIT;
-    value = DEFAULT_KS_QUIT;
-    if (!get_config_value(globals->cfg, name)) {
-        set_config_value(globals->cfg, name, value);
-    }
-
-    name = CFG_TERMINAL_COMMAND;
-    value = DEFAULT_TERMINAL_COMMAND;
-    if (!get_config_value(globals->cfg, name)) {
-        set_config_value(globals->cfg, name, value);
-    }
-
-    for (CONFIG_ENTRY *c = cfg->head; c; c = c->next) {
-        const char *name = c->name;
-        const char *value = c->value;
-        const size_t length = strlen(name) + strlen(value) + 3;
-        char *buffer = malloc(length);
-        sprintf(buffer, "%s: %s", name, value);
-        log_debug(globals->log, buffer);
-        free(buffer);
+static void process_entry(char *name, char *value) {
+    if (streq(name, CFG_SKIP_WINDOW_MGR_CHECK)) {
+        config->wm_skip_check = get_boolean(value);
+        free(value);
+    } else if (streq(name, CFG_WINDOW_MGR_NAME)) {
+        free(config->wm_name);
+        config->wm_name = value;
+    } else if (streq(name, CFG_BROADCAST_GROUP)) {
+        free(config->bc_group);
+        config->bc_group = value;
+    } else if (streq(name, CFG_BROADCAST_PORT)) {
+        config->bc_port = get_uint(value);
+        free(value);
+    } else if (streq(name, CFG_TERMINAL_CMD)) {
+        free(config->term_cmd);
+        config->term_cmd = value;
+    } else if (streq(name, CFG_MENU_CMD)) {
+        free(config->menu_cmd);
+        config->menu_cmd = value;
+    } else if (streq(name, CFG_WARP)) {
+        config->wm_warp = get_boolean(value);
+        free(value);
+    } else if (streq(name, CFG_KS_MENU)) {
+        free(config->ks_menu);
+        config->ks_menu = value;
+    } else if (streq(name, CFG_KS_TERMINAL)) {
+        free(config->ks_terminal);
+        config->ks_terminal = value;
+    } else if (streq(name, CFG_KS_QUIT)) {
+        free(config->ks_quit);
+        config->ks_quit = value;
+    } else if (streq(name, CFG_KS_RESTART)) {
+        free(config->ks_restart);
+        config->ks_restart = value;
+    } else {
+        fprintf(stderr, "unknown configuration %s\n", name);
     }
 }
 
-void configure(CONFIG *cfg) {
-    // Should we skip the window manager check?
-    if (!skip_window_manager_check()) {
-        if (is_window_manager_running(globals->dpy)) {
-            log_fatal(globals->log, WINDOW_MGR_RUNNING);
-        }
-    } else
-        log_info(globals->log, SKIP_WINDOW_MGR_CHECK_MSG);
-
-    // Should we change the window manager's name?
-    const char *wmname = change_window_manager_name();
-    if (wmname) {
-        log_info(globals->log, CHANGE_WINDOW_MGR_NAME_MSG);
-        change_name(globals->dpy, wmname);
-    }
-}
-
-bool skip_window_manager_check() {
-    const char *wmcheck = get_config_value(globals->cfg, CFG_SKIP_WINDOW_MGR_CHECK);
-    if (!wmcheck || streq(wmcheck, "true"))
-        return true;
+static bool get_boolean(char *c) {
+    if (streq(c, "true")) return true;
     return false;
 }
 
-const char * change_window_manager_name() {
-    const char *wmname = get_config_value(globals->cfg, CFG_WINDOW_MGR_NAME);
-    return wmname;
-}
-
-const char * get_menu_shortcut() {
-    const char *ks = get_config_value(globals->cfg, CFG_KS_MENU);
-    return ks;
-}
-
-const char * get_terminal_shortcut() {
-    const char *ks = get_config_value(globals->cfg, CFG_KS_TERMINAL);
-    return ks;
-}
-
-const char * get_quit_shortcut() {
-    const char *ks = get_config_value(globals->cfg, CFG_KS_QUIT);
-    return ks;
-}
-
-const char * get_restart_shortcut() {
-    const char *ks = get_config_value(globals->cfg, CFG_KS_RESTART);
-    return ks;
-}
-
-const char * get_terminal_command() {
-    const char *cmd = get_config_value(globals->cfg, CFG_TERMINAL_COMMAND);
-    return cmd;
+static uint get_uint(char *c) {
+    return (uint) atoi(c);
 }
 

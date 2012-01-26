@@ -20,198 +20,57 @@
 #ifndef _XY_CONFIGURATION_H_
 #define _XY_CONFIGURATION_H_ 1
 
-struct ConfigEntry {
-    char *name;
-    char *value;
-    struct ConfigEntry *next;
-};
+#include "types.h"
 
-/*
- * typedef: CONFIG_ENTRY
- *
- * Members:
- *
- *  name - the configuration entry's name
- *  value - the configuration entry's value
- *  next - the next configuration entry
- */
-typedef struct ConfigEntry CONFIG_ENTRY;
+// Configuration entries as they appear in the rc
+#define CFG_SKIP_WINDOW_MGR_CHECK   "skip_window_manager_check"
+#define CFG_WINDOW_MGR_NAME         "window_manager_name"
+#define CFG_BROADCAST_GROUP         "broadcast_group"
+#define CFG_BROADCAST_PORT          "broadcast_port"
+#define CFG_TERMINAL_CMD            "terminal_command"
+#define CFG_MENU_CMD                "menu_command"
+#define CFG_WARP                    "warp"
+#define CFG_KS_MENU                 "key_shortcut_menu"
+#define CFG_KS_TERMINAL             "key_shortcut_terminal"
+#define CFG_KS_QUIT                 "key_shortcut_quit"
+#define CFG_KS_RESTART              "key_shortcut_restart"
 
-struct Config {
-    struct ConfigEntry *head;
-    struct ConfigEntry *tail;
-    uint num_entries;
-};
+#define DFLT_CFG_FILE_HDR           "# xy configuration file"
+#define DFLT_SKIP_WINDOW_MGR_CHECK  false
+#define DFLT_WINDOW_MGR_NAME        "xy"
+#define DFLT_BROADCAST_GROUP        "224.0.0.3"
+#define DFLT_BROADCAST_PORT         47002
+#define DFLT_TERMINAL_CMD           "urxvt"
+#define DFLT_MENU_CMD               "dmenu_run"
+#define DFLT_WARP                   true
+#define DFLT_KS_MENU                "Mod4"KS_SEPARATOR"p"
+#define DFLT_KS_TERMINAL            "Mod4"KS_SEPARATOR"Return"
+#define DFLT_KS_QUIT                "Mod4"KS_SEPARATOR"q"
+#define DFLT_KS_RESTART             "Mod4"KS_SEPARATOR"r"
 
-/*
- * typedef: CONFIG
- *
- * Members:
- *
- *  head - the first configuration entry
- *  tail - the last configuration entry
- *  num_entries - the number of configuration entries present
- */
-typedef struct Config CONFIG;
+typedef struct {
+    // Core
+    char *term_cmd;
+    char *menu_cmd;
+    char *wm_name;
+    bool wm_skip_check;
+    bool wm_warp;
 
-/*
- * Function: get_config
- *
- * Returns a <CONFIG> from a path.
- *
- * Returns:
- *
- *  <CONFIG> *
- */
-CONFIG * get_config(const char *);
+    // Broadcast
+    uint bc_port;
+    char *bc_group;
 
-/*
- * Function: empty_config
- *
- * Returns an empty <CONFIG>.
- *
- * Returns:
- *
- *  <CONFIG> *
- */
-CONFIG * empty_config();
+    // Key shortcuts
+    char *ks_menu;
+    char *ks_terminal;
+    char *ks_quit;
+    char *ks_restart;
+} CONFIG;
+CONFIG *config;
 
-/*
- * Function: free_config
- *
- * Frees the <CONFIG>.
- *
- * Parameters:
- *
- *  <CONFIG> * - the configuration to be freed
- */
-void free_config(CONFIG *);
-
-/*
- * Function: get_config_value
- *
- * Gets a configuration value (<CONFIG> value) from the <CONFIG> and name.
- *
- * Parameters:
- *
- *  <CONFIG> * - the configuration
- *  const char * - the configuration entry name
- *
- * Returns:
- *
- *  constant pointer to configuration value
- */
-const char * get_config_value(CONFIG *, const char *);
-
-/*
- * Function: set_config_value
- *
- * Parameters:
- *
- *  <CONFIG> * - the configuration
- *  const char * - the configuration entry name
- *  const char * - the configuration entry value
- */
-void set_config_value(CONFIG *, const char *, const char *);
-
-/*
- * Function: write_default_config
- *
- * Parameters:
- *
- *  const char * - the path to write the default configuration to
- */
+CONFIG * config_init(const char *);
+void config_terminate();
 void write_default_config(const char *);
-
-/*
- * Function: fill_config
- *
- * Inserts any missing configuration items into the provided configuration.
- *
- * Parameters:
- *
- *  <CONFIG> * - the configuration to use
- */
-void fill_config(CONFIG *);
-
-/*
- * Function: configure
- *
- * Processes the application's configuration.
- *
- * Parameters:
- *
- *  <CONFIG> * - the configuration to use
- */
-void configure(CONFIG *);
-
-/*
- * Function: skip_window_manager_check
- *
- * Returns true if the window manager check should be skipped, false otherwise.
- *
- * Returns:
- *
- *  bool
- */
-bool skip_window_manager_check();
-
-/*
- * Function: change_window_manager_name
- *
- * Returns the string to be used as the window manager's name.
- *
- * Returns:
- *
- *  the window manager's name
- */
-const char * change_window_manager_name();
-
-/*
- * Function: get_menu_shortcut
- *
- * Returns the menu shortcut.
- *
- * Returns:
- *
- *  const char *
- */
-const char * get_menu_shortcut();
-
-/*
- * Function: get_terminal_shortcut
- *
- * Returns the terminal shortcut.
- *
- * Returns:
- *
- *  const char *
- */
-const char * get_terminal_shortcut();
-
-/*
- * Function: get_quit_shortcut
- *
- * Returns the quit shortcut.
- *
- * Returns:
- *
- *  const char *
- */
-const char * get_quit_shortcut();
-
-const char * get_restart_shortcut();
-
-/*
- * Function: get_terminal_command
- *
- * Returns the terminal shortcut.
- *
- * Returns:
- *
- *  const char *
- */
-const char * get_terminal_command();
 
 #endif
 

@@ -119,7 +119,13 @@ void xy_init() {
     }
     globals->x_fd = ConnectionNumber(globals->dpy);
     globals->dflt_scrn = DefaultScreen(globals->dpy);
-    configure(globals->cfg);
+
+    if (!globals->cfg->wm_skip_check) {
+        if (is_window_manager_running(globals->dpy)) {
+            log_fatal(globals->log, WINDOW_MGR_RUNNING);
+        }
+    }
+    change_name(globals->dpy, globals->cfg->wm_name);
 }
 
 void xy_terminate() {
@@ -222,14 +228,15 @@ void ipc_ping() {
 
 bool key_pressed(XKeyEvent *ev) {
     KeySym keysym = XKeycodeToKeysym(globals->dpy, ev->keycode, 0);
-    if (is_ks_pressed(get_menu_shortcut(), ev)) {
-        fprintf(stderr, "menu shortcut pressed\n");
-    } else if (is_ks_pressed(get_terminal_shortcut(), ev)) {
-        exec(get_terminal_command());
+    if (is_ks_pressed(globals->cfg->ks_menu, ev)) {
+        exec(globals->cfg->menu_cmd);
         return true;
-    } else if (is_ks_pressed(get_quit_shortcut(), ev)) {
+    } else if (is_ks_pressed(globals->cfg->ks_terminal, ev)) {
+        exec(globals->cfg->term_cmd);
+        return true;
+    } else if (is_ks_pressed(globals->cfg->ks_quit, ev)) {
         transition(STATE_SHUTTING_DOWN);
-    } else if (is_ks_pressed(get_restart_shortcut(), ev)) {
+    } else if (is_ks_pressed(globals->cfg->ks_restart, ev)) {
         transition(STATE_RESTARTING);
     }
     return false;
@@ -480,8 +487,8 @@ static const char font[]            = "-lfp-bright-medium-r-normal--9-90-75-75-c
 static const char normbordercolor[] = "#444444";
 static const char normbgcolor[]     = "#222222";
 static const char normfgcolor[]     = "#bbbbbb";
-static const char selbordercolor[]  = "#005577";
-static const char selbgcolor[]      = "#005577";
+static const char selbordercolor[]  = "#7f9496";
+static const char selbgcolor[]      = "#073642";
 static const char selfgcolor[]      = "#eeeeee";
 static const unsigned int borderpx  = 2;        /* border pixel of windows */
 static const unsigned int snap      = 32;       /* snap pixel */
@@ -1157,7 +1164,7 @@ focusmon(const Arg *arg) {
     unfocus(selmon->sel, True);
     selmon = m;
     focus(NULL);
-    warp(selmon->sel);
+    if (globals->cfg->wm_warp) warp(selmon->sel);
 }
 
 void
@@ -1699,7 +1706,7 @@ restack(_Monitor *m) {
     XSync(globals->dpy, False);
     while (XCheckMaskEvent(globals->dpy, EnterWindowMask, &ev));
     if (m == selmon && (m->tagset[m->seltags] & m->sel->tags))
-        warp(m->sel);
+        if (globals->cfg->wm_warp) warp(m->sel);
 }
 
 /*
