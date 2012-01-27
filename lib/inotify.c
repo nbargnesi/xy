@@ -18,34 +18,67 @@
  */
 
 #include "inotify.h"
+#include "lifecycle.h"
 #include "util.h"
+#include "xy.h"
 #include <sys/ioctl.h>
 
-int xy_inotify_init() {
-    xy_in_fd = inotify_init();
-    if (xy_in_fd == -1) {
+static int inotify_setup();
+
+void xy_inotify_init() {
+    in_fd = inotify_setup();
+    globals->in_fd = in_fd;
+    register_shutdown_hook("inotify", xy_inotify_terminate);
+}
+
+void xy_inotify_reinit() {
+    close(globals->in_fd);
+    in_fd = inotify_setup();
+    globals->in_fd = in_fd;
+}
+
+void xy_inotify_terminate() {
+    close(globals->in_fd);
+}
+
+bool xy_inotify_read() {
+    int nbytes;
+    int ctlval = ioctl(in_fd, FIONREAD, &nbytes);
+    if (ctlval < 0) return false;
+    char *buf = (char *) malloc(nbytes);
+    int rval = read(in_fd, buf, nbytes);
+    uint offset = 0;
+    bool success = true;
+    while (rval != 0) {
+        struct inotify_event *ev = (struct inotify_event *) &buf[offset];
+        int evSize, sSize = sizeof(struct inotify_event);
+        evSize = sSize;
+        if (ev->len != 0) evSize += ev->len;
+        if (ev->mask == IN_IGNORED) success = false;
+        rval -= evSize;
+        offset += evSize;
+    }
+    free(buf);
+    return success;
+}
+
+static int inotify_setup() {
+    int in_fd = inotify_init();
+    if (in_fd == -1) {
         perror("inotify_init()");
         return -1;
     }
-
     char *rcpath = rc_path();
-    int wd = inotify_add_watch(xy_in_fd, rcpath, IN_CLOSE_WRITE | IN_MODIFY);
+    // TODO check rcpath existence, fail if not there (indicates problem with
+    // module load ordering)
+    uint32_t mask = IN_CLOSE_WRITE | IN_MODIFY;
+    int wd = inotify_add_watch(in_fd, rcpath, mask);
     free(rcpath);
     if (wd == -1) {
         perror("inotify_add_watch()");
-        close(xy_in_fd);
+        close(globals->in_fd);
         return -1;
     }
-
-    return xy_in_fd;
-}
-
-void xy_inotify_read() {
-    int nbytes;
-    int ctlval = ioctl(xy_in_fd, FIONREAD, &nbytes);
-    if (ctlval < 0) return;
-    char *buf = (char *) malloc(nbytes);
-    int rval = read(xy_in_fd, buf, nbytes);
-    free(buf);
+    return in_fd;
 }
 

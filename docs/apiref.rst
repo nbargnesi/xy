@@ -9,14 +9,16 @@ API Reference
 configuration.h
 ===============
 
-The configuration module reponsible for managing the xy configuration.
+The configuration module reponsible for managing the configuration of xy.
+Any change to xy's runtime configuration (RC) file will cause the configuration
+to be reloaded (see :func:`config_reinit`).
 
 .. type:: CONFIG
 
    The type made available after a call to :func:`config_init`. It contains all
    the necessary configuration options xy uses while running.
 
-.. function:: CONFIG * config_init(const char *)
+.. function:: CONFIG * config_init()
 
    Initializes xy's configuration. Returns the configuration or NULL on failure.
    This function makes :type:`CONFIG` available for use.
@@ -25,14 +27,23 @@ The configuration module reponsible for managing the xy configuration.
 
    The configuration module's shutdown hook.
 
-.. function:: void write_default_config(const char *)
+.. function:: void write_default_config()
 
-   Writes the default xy configuration to the path specified.
+   Writes the default xy configuration to the xy runtime configuration path.
+
+.. function:: void config_reinit()   
+
+   Reinitializes the configuration from the xy runtime configuration path.
 
 util.h
 ======
 
-A collection of utility functions meant to stand alone from other XY modules.
+A collection of utility functions meant to stand alone from other xy modules.
+
+.. function:: char * rc_path()
+
+   Returns the path of xy's runtime configuration. The returned string should be
+   freed by the caller.
 
 .. function:: bool streq(const char *, const char *)
 
@@ -84,7 +95,7 @@ the filesystem.
 types
 -----
 
-.. type:: xy_in_fd
+.. type:: in_fd
 
    The inotify file descriptor made available after a call to
    :func:`xy_inotify_init`. This file descriptor is suitable for system calls
@@ -93,12 +104,20 @@ types
 functions
 ---------
 
-.. function:: void xy_inotify_init
+.. function:: void xy_inotify_init()
 
-   Initializes xy's inotify module. Returns the inotify file descriptor or -1
-   on failure. This function makes :type:`xy_in_fd` available for use.
+   Initializes xy's inotify module. This function makes :type:`in_fd`
+   available for use, which may be -1 on failure.
 
-.. function:: void xy_inotify_read
+.. function:: void xy_inotify_reinit()
+
+   Reinitializes the inotify module. This function makes a new :type:`in_fd`
+   available for use.
+
+.. function:: void xy_inotify_terminate()
+
+   The inotify module's shutdown hook.
+
+.. function:: void xy_inotify_read()
 
    Drains the inotify event queue of all events.
-

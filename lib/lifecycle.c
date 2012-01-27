@@ -76,11 +76,11 @@ static CONFIG * xy_rc_init() {
     struct stat *st = malloc(sizeof(struct stat));;
 
     if (stat(rcpath, st) != 0) {
-        write_default_config(rcpath);
+        write_default_config();
     }
 
     log_info(globals->log, READING_CONFIGURATION_MSG);
-    ret = config_init(rcpath);
+    ret = config_init();
     free(st);
     free(rcpath);
     return ret;
@@ -98,7 +98,7 @@ void xy_startup() {
     xy_dir_init();
     globals->cfg = xy_rc_init();
 
-    globals->in_fd = xy_inotify_init();
+    xy_inotify_init();
     if (globals->in_fd == -1) {
         DIE_MSG("xy_inotify_init failed");
     }
@@ -150,6 +150,7 @@ void xy_startup() {
 }
 
 void xy_restart() {
+    free(globals);
     restart(run_cmd);
 }
 

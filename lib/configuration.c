@@ -31,43 +31,21 @@ static CONFIG * default_config();
 static void process_entry(char *, char*);
 static bool get_boolean(char *);
 static uint get_uint(char *);
+static void read_config(const char *);
 
-CONFIG * config_init(const char *rcpath) {
-    FILE *fp = fopen(rcpath, "r");
-    if (!fp) return NULL;
-
-    char *line = NULL;
-    char *name = NULL;
-    char *value = NULL;
-    size_t len = 0;
-
+CONFIG * config_init() {
     config = default_config();
-    while (getline(&line, &len, fp) != -1) {
-
-        // Tokenize the line using '=' as the delimiter.
-        char *token = strtok(line, "=");
-        if (!token) continue;
-
-        // Trim leading/trailing whitespace.
-        name = trim(token);
-
-        // Skip comments
-        if (*name == '#') continue;
-        token = strtok(NULL, "=");
-        if (!token) continue;
-        value = trim(token);
-
-        name = strdup(name);
-        value = strdup(value);
-
-        process_entry(name, value);
-        free(name);
-    }
-
-    free(line);
-    fclose(fp);
+    char *rcpath = rc_path();
+    read_config(rcpath);
+    free(rcpath);
     register_shutdown_hook("config", config_terminate);
     return config;
+}
+
+void config_reinit() {
+    char *rcpath = rc_path();
+    read_config(rcpath);
+    free(rcpath);
 }
 
 void config_terminate() {
@@ -84,8 +62,10 @@ void config_terminate() {
     }
 }
 
-void write_default_config(const char *rcpath) {
+void write_default_config() {
+    char *rcpath = rc_path();
     FILE *cfg = fopen(rcpath, "w");
+    free(rcpath);
 
     fprintf(cfg, "%s\n", DFLT_CFG_FILE_HDR);
 
@@ -142,6 +122,41 @@ static CONFIG * default_config() {
     cfg->ks_restart = strdup(DFLT_KS_RESTART);
 
     return cfg;
+}
+
+static void read_config(const char *rcpath) {
+    FILE *fp = fopen(rcpath, "r");
+    if (!fp) return;
+
+    char *line = NULL;
+    char *name = NULL;
+    char *value = NULL;
+    size_t len = 0;
+
+    while (getline(&line, &len, fp) != -1) {
+
+        // Tokenize the line using '=' as the delimiter.
+        char *token = strtok(line, "=");
+        if (!token) continue;
+
+        // Trim leading/trailing whitespace.
+        name = trim(token);
+
+        // Skip comments
+        if (*name == '#') continue;
+        token = strtok(NULL, "=");
+        if (!token) continue;
+        value = trim(token);
+
+        name = strdup(name);
+        value = strdup(value);
+
+        process_entry(name, value);
+        free(name);
+    }
+
+    free(line);
+    fclose(fp);
 }
 
 static void process_entry(char *name, char *value) {

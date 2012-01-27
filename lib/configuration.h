@@ -68,9 +68,10 @@ typedef struct {
 } CONFIG;
 CONFIG *config;
 
-CONFIG * config_init(const char *);
+CONFIG * config_init();
+void config_reinit();
 void config_terminate();
-void write_default_config(const char *);
+void write_default_config();
 
 #endif
 

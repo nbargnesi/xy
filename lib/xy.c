@@ -60,6 +60,8 @@
 //#define log log4c_category_log
 #define FUNCTION_TRACE log_trace(globals->log, __FUNCTION__);
 
+static int epfd;
+
 static void buttonpress(XEvent *e);
 static void clientmessage(XEvent *e);
 static void configurerequest(XEvent *e);
@@ -129,17 +131,18 @@ void xy_init() {
 }
 
 void xy_terminate() {
-    free(globals);
+    xy_cleanup();
+    close(epfd);
 }
 
 void main_loop() {
-    register_shutdown_hook("xy", xy_cleanup);
+    register_shutdown_hook("xy", xy_terminate);
     signal(SIGCHLD, SIG_IGN);
     ssize_t rslt;
     Display *d = globals->dpy;
 
     // XXX any >0 argument to epoll_create (see epoll_create man page)
-    int epfd = epoll_create(1);
+    epfd = epoll_create(1);
 
     if (epfd == -1) {
         perror("epoll_create()");
@@ -170,9 +173,9 @@ void main_loop() {
     }
 
     epev_in.events = EPOLLIN;
-    epev_in.data.fd = xy_in_fd;
-    if (epoll_ctl(epfd, EPOLL_CTL_ADD, xy_in_fd, &epev_in) == -1) {
-        perror("epoll_ctl() xy_in_fd");
+    epev_in.data.fd = globals->in_fd;
+    if (epoll_ctl(epfd, EPOLL_CTL_ADD, globals->in_fd, &epev_in) == -1) {
+        perror("epoll_ctl() globals->in_fd");
         fprintf(stderr, "(epoll_ctl returned %s)\n", strerror(errno));
         DIE;
     }
@@ -210,10 +213,21 @@ void main_loop() {
             memset(ipc_buffer, 0, MSG_LEN);
             rslt = read(globals->ipc_fd, ipc_buffer, MSG_LEN);
             process_ipc_buffer(ipc_buffer);
-        } else if (epev.data.fd == xy_in_fd) {
+        } else if (epev.data.fd == globals->in_fd) {
             // inotify needs servicing.
             log_debug(globals->log, "servicing filesystem event");
-            xy_inotify_read();
+            if (!xy_inotify_read()) {
+
+                // XXX check return here
+                epoll_ctl(epfd, EPOLL_CTL_DEL, globals->in_fd, &epev_in);
+                log_info(globals->log, "reloading configuration");
+                xy_inotify_reinit();
+
+                // TODO check in_fd is not -1 (like lifecycle)
+                // XXX check return here
+                epoll_ctl(epfd, EPOLL_CTL_ADD, globals->in_fd, &epev_in);
+            }
+            config_reinit();
         }
     }
 }

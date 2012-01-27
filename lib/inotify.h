@@ -23,10 +23,12 @@
 #include "core.h"
 #include <sys/inotify.h>
 
-int xy_in_fd;
+int in_fd;
 
-int xy_inotify_init();
-void xy_inotify_read();
+void xy_inotify_init();
+void xy_inotify_reinit();
+void xy_inotify_terminate();
+bool xy_inotify_read();
 
 #endif
 
