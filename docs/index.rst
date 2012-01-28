@@ -14,16 +14,16 @@ Introduction
 XY_ is an environment for GNU/Linux and a playground for innovative computer
 interfacing that aims to integrate the latest technology and hardware.
 
-    Website: https://bitbucket.org/nbargnesi/xy
+    Website: http://bb.den-4.com/xy
 
-    Bugs: https://bitbucket.org/nbargnesi/xy/issues
+    Bugs: http://bb.den-4.com/xy/issues
 
     Documentation: http://xy.readthedocs.org
 
 XY is licensed under version 3 of the `GNU General Public License`_; see LICENSE
 in the source distribution for details.
 
-.. _XY: https://bitbucket.org/nbargnesi/xy
+.. _XY: http://bb.den-4.com/xy
 .. _GNU General Public License: http://www.gnu.org/licenses/gpl-3.0.html
 
 Contents
