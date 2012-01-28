@@ -31,6 +31,7 @@ static CONFIG * default_config();
 static void process_entry(char *, char*);
 static bool get_boolean(char *);
 static uint get_uint(char *);
+static float get_float(char *);
 static void read_config(const char *);
 
 CONFIG * config_init() {
@@ -75,6 +76,12 @@ void write_default_config() {
     fprintf(cfg, "%s = ", CFG_WINDOW_MGR_NAME);
     fprintf(cfg, "%s\n", DFLT_WINDOW_MGR_NAME);
 
+    fprintf(cfg, "%s = ", CFG_MASTER_CLIENTS);
+    fprintf(cfg, "%d\n", DFLT_MASTER_CLIENTS);
+
+    fprintf(cfg, "%s = ", CFG_MASTER_PERCENTAGE);
+    fprintf(cfg, "%f\n", DFLT_MASTER_PERCENTAGE);
+
     fprintf(cfg, "%s = ", CFG_WARP);
     fprintf(cfg, "true\n");
 
@@ -109,6 +116,8 @@ static CONFIG * default_config() {
     CONFIG *cfg = malloc(sizeof(CONFIG));
     memset(cfg, 0, sizeof(CONFIG));
 
+    cfg->wm_master_clnts = DFLT_MASTER_CLIENTS;
+    cfg->wm_master_prcnt = DFLT_MASTER_PERCENTAGE;
     cfg->term_cmd = strdup(DFLT_TERMINAL_CMD);
     cfg->menu_cmd = strdup(DFLT_MENU_CMD);
     cfg->wm_name = strdup(DFLT_WINDOW_MGR_NAME);
@@ -166,6 +175,12 @@ static void process_entry(char *name, char *value) {
     } else if (streq(name, CFG_WINDOW_MGR_NAME)) {
         free(config->wm_name);
         config->wm_name = value;
+    } else if (streq(name, CFG_MASTER_CLIENTS)) {
+        config->wm_master_clnts = get_uint(value);
+        free(value);
+    } else if (streq(name, CFG_MASTER_PERCENTAGE)) {
+        config->wm_master_prcnt = get_float(value);
+        free(value);
     } else if (streq(name, CFG_BROADCAST_GROUP)) {
         free(config->bc_group);
         config->bc_group = value;
@@ -205,5 +220,9 @@ static bool get_boolean(char *c) {
 
 static uint get_uint(char *c) {
     return (uint) atoi(c);
+}
+
+static float get_float(char *c) {
+    return (float) atof(c);
 }
 

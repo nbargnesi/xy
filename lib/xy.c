@@ -315,15 +315,15 @@ enum { ClkTagBar, ClkLtSymbol, ClkStatusText, ClkWinTitle,
 
 typedef union {
     int i;
-    unsigned int ui;
+    uint ui;
     float f;
     const void *v;
 } Arg;
 
 typedef struct {
-    unsigned int click;
-    unsigned int mask;
-    unsigned int button;
+    uint click;
+    uint mask;
+    uint button;
     void (*func)(const Arg *arg);
     const Arg arg;
 } Button;
@@ -337,7 +337,7 @@ struct Client {
     int oldx, oldy, oldw, oldh;
     int basew, baseh, incw, inch, maxw, maxh, minw, minh;
     int bw, oldbw;
-    unsigned int tags;
+    uint tags;
     Bool isfixed, isfloating, isurgent, neverfocus, oldstate, isfullscreen;
     Client *next;
     Client *snext;
@@ -361,7 +361,7 @@ typedef struct {
 } DC; /* draw context */
 
 typedef struct {
-    unsigned int mod;
+    uint mod;
     KeySym keysym;
     void (*func)(const Arg *);
     const Arg arg;
@@ -374,15 +374,13 @@ typedef struct {
 
 struct _Monitor {
     char ltsymbol[16];
-    float mfact;
-    int nmaster;
     int num;
     int by;               /* bar geometry */
     int mx, my, mw, mh;   /* screen size */
     int wx, wy, ww, wh;   /* window area  */
-    unsigned int seltags;
-    unsigned int sellt;
-    unsigned int tagset[2];
+    uint seltags;
+    uint sellt;
+    uint tagset[2];
     Bool showbar;
     Bool topbar;
     Client *clients;
@@ -390,14 +388,14 @@ struct _Monitor {
     Client *stack;
     _Monitor *next;
     Window barwin;
-    const Layout *lt[2];
+    const Layout *lt[3];
 };
 
 typedef struct {
     const char *class;
     const char *instance;
     const char *title;
-    unsigned int tags;
+    uint tags;
     Bool isfloating;
     int monitor;
 } Rule;
@@ -427,10 +425,9 @@ static void focusmon(const Arg *arg);
 static void focusstack(const Arg *arg);
 static Bool getrootptr(int *x, int *y);
 static long getstate(Window w);
-static Bool gettextprop(Window w, Atom atom, char *text, unsigned int size);
+static Bool gettextprop(Window w, Atom atom, char *text, uint size);
 static void grabbuttons(Client *c, Bool focused);
 static void grabkeys(void);
-static void incnmaster(const Arg *arg);
 static void initfont(const char *fontstr);
 static void killclient(const Arg *arg);
 static void manage(Window w, XWindowAttributes *wa);
@@ -451,14 +448,14 @@ static void setclientstate(Client *c, long state);
 static void setfocus(Client *c);
 static void setfullscreen(Client *c, Bool fullscreen);
 static void setlayout(const Arg *arg);
-static void setmfact(const Arg *arg);
 static void setup(void);
 static void showhide(Client *c);
 static void spawn(const Arg *arg);
 static void tag(const Arg *arg);
 static void tagmon(const Arg *arg);
-static int textnw(const char *text, unsigned int len);
+static int textnw(const char *text, uint len);
 static void tile(_Monitor *);
+static void rows(_Monitor *);
 static void togglebar(const Arg *arg);
 static void togglefloating(const Arg *arg);
 static void toggletag(const Arg *arg);
@@ -489,7 +486,7 @@ static int screen;
 static int sw, sh;           /* X display screen geometry width, height */
 static int bh, blw = 0;      /* bar geometry */
 static int (*xerrorxlib)(Display *, XErrorEvent *);
-static unsigned int numlockmask = 0;
+static uint numlockmask = 0;
 static Atom wmatom[WMLast], netatom[NetLast];
 static Bool running = True;
 static Cursor cursor[CurLast];
@@ -504,8 +501,8 @@ static const char normfgcolor[]     = "#bbbbbb";
 static const char selbordercolor[]  = "#7f9496";
 static const char selbgcolor[]      = "#073642";
 static const char selfgcolor[]      = "#eeeeee";
-static const unsigned int borderpx  = 2;        /* border pixel of windows */
-static const unsigned int snap      = 32;       /* snap pixel */
+static const uint borderpx  = 2;        /* border pixel of windows */
+static const uint snap      = 32;       /* snap pixel */
 static const Bool showbar           = True;     /* False means no bar */
 static const Bool topbar            = True;     /* False means bottom bar */
 
@@ -518,15 +515,14 @@ static const Rule rules[] = {
 };
 
 /* layout(s) */
-static const float mfact      = 0.55; /* factor of master area size [0.05..0.95] */
-static const int nmaster      = 1;    /* number of clients in master area */
 static const Bool resizehints = True; /* True means respect size hints in tiled resizals */
 
 static const Layout layouts[] = {
     /* symbol     arrange function */
-    { "[]=",      tile },    /* first entry is default */
-    { "><>",      NULL },    /* no layout function means floating behavior */
-    { "[M]",      monocle },
+    { "[tile] ",     tile },    /* first entry is default */
+    { "[rows] ",    rows },
+    { "[float]",    NULL },    /* no layout function means floating behavior */
+    { "[focus]",    monocle },
 };
 
 /* key definitions */
@@ -548,16 +544,13 @@ static Key keys[] = {
     { MODKEY,                       XK_b,      togglebar,      {0} },
     { MODKEY,                       XK_j,      focusstack,     {.i = +1 } },
     { MODKEY,                       XK_k,      focusstack,     {.i = -1 } },
-    { MODKEY,                       XK_i,      incnmaster,     {.i = +1 } },
-    { MODKEY,                       XK_d,      incnmaster,     {.i = -1 } },
-    { MODKEY,                       XK_h,      setmfact,       {.f = -0.05} },
-    { MODKEY,                       XK_l,      setmfact,       {.f = +0.05} },
     { MODKEY,                       XK_space,  zoom,           {0} },
     { MODKEY,                       XK_Tab,    view,           {0} },
     { MODKEY,                       XK_c,      killclient,     {0} },
     { MODKEY,                       XK_t,      setlayout,      {.v = &layouts[0]} },
-    { MODKEY,                       XK_f,      setlayout,      {.v = &layouts[1]} },
-    { MODKEY,                       XK_m,      setlayout,      {.v = &layouts[2]} },
+    { MODKEY,                       XK_u,      setlayout,      {.v = &layouts[1]} },
+    { MODKEY,                       XK_f,      setlayout,      {.v = &layouts[2]} },
+    { MODKEY,                       XK_m,      setlayout,      {.v = &layouts[3]} },
     { MODKEY,                       XK_End,    setlayout,      {0} },
     { MODKEY|ShiftMask,             XK_space,  togglefloating, {0} },
     { MODKEY,                       XK_0,      view,           {.ui = ~0 } },
@@ -583,7 +576,7 @@ static Key keys[] = {
 static Button buttons[] = {
     /* click                event mask      button          function        argument */
     { ClkLtSymbol,          0,              Button1,        setlayout,      {0} },
-    { ClkLtSymbol,          0,              Button3,        setlayout,      {.v = &layouts[2]} },
+    { ClkLtSymbol,          0,              Button3,        setlayout,      {.v = &layouts[3]} },
     { ClkWinTitle,          0,              Button2,        zoom,           {0} },
     { ClkClientWin,         MODKEY,         Button1,        movemouse,      {0} },
     { ClkClientWin,         MODKEY,         Button2,        togglefloating, {0} },
@@ -600,7 +593,7 @@ struct NumTags { char limitexceeded[LENGTH(tags) > 31 ? -1 : 1]; };
 void
 applyrules(Client *c) {
     const char *class, *instance;
-    unsigned int i;
+    uint i;
     const Rule *r;
     _Monitor *m;
     XClassHint ch = { NULL, NULL };
@@ -731,7 +724,7 @@ attachstack(Client *c) {
 
 void
 buttonpress(XEvent *e) {
-    unsigned int i, x, click;
+    uint i, x, click;
     Arg arg = {0};
     Client *c;
     _Monitor *m;
@@ -748,12 +741,12 @@ buttonpress(XEvent *e) {
         i = x = 0;
         do
             x += TEXTW(tags[i]);
-        while ((unsigned int) ev->x >= x && ++i < LENGTH(tags));
+        while ((uint) ev->x >= x && ++i < LENGTH(tags));
         if (i < LENGTH(tags)) {
             click = ClkTagBar;
             arg.ui = 1 << i;
         }
-        else if ((unsigned int) ev->x < x + blw)
+        else if ((uint) ev->x < x + blw)
             click = ClkLtSymbol;
         else if (ev->x > selmon->ww - TEXTW(stext))
             click = ClkStatusText;
@@ -830,7 +823,7 @@ clientmessage(XEvent *e) {
     if (!c)
         return;
     if (cme->message_type == netatom[NetWMState]) {
-        if ((unsigned int) cme->data.l[1] == netatom[NetWMFullscreen] || (unsigned int) cme->data.l[2] == netatom[NetWMFullscreen])
+        if ((uint) cme->data.l[1] == netatom[NetWMFullscreen] || (uint) cme->data.l[2] == netatom[NetWMFullscreen])
             setfullscreen(c, (cme->data.l[0] == 1 /* _NET_WM_STATE_ADD    */
                           || (cme->data.l[0] == 2 /* _NET_WM_STATE_TOGGLE */ && !c->isfullscreen)));
     }
@@ -944,8 +937,6 @@ createmon(void) {
     if (!(m = (_Monitor *)calloc(1, sizeof(_Monitor))))
         die("fatal: could not malloc() %u bytes\n", sizeof(_Monitor));
     m->tagset[0] = m->tagset[1] = 1;
-    m->mfact = mfact;
-    m->nmaster = nmaster;
     m->showbar = showbar;
     m->topbar = topbar;
     m->lt[0] = &layouts[0];
@@ -1012,7 +1003,7 @@ dirtomon(int dir) {
 void
 drawbar(_Monitor *m) {
     int x;
-    unsigned int i, occ = 0, urg = 0;
+    uint i, occ = 0, urg = 0;
     unsigned long *col;
     Client *c;
 
@@ -1083,7 +1074,7 @@ void
 drawtext(const char *text, unsigned long col[ColLast], Bool invert) {
     char buf[256];
     int x, y, h;
-    unsigned int len, olen, i;
+    uint len, olen, i;
 
     XSetForeground(globals->dpy, dc.gc, col[invert ? ColFG : ColBG]);
     XFillRectangle(globals->dpy, dc.drawable, dc.gc, dc.x, dc.y, dc.w, dc.h);
@@ -1094,7 +1085,7 @@ drawtext(const char *text, unsigned long col[ColLast], Bool invert) {
     y = dc.y + (dc.h / 2) - (h / 2) + dc.font.ascent;
     x = dc.x + (h / 2);
     /* shorten text if necessary */
-    for (len = MIN(olen, sizeof buf); len && (unsigned int) textnw(text, len) > (unsigned int) dc.w - h; len--);
+    for (len = MIN(olen, sizeof buf); len && (uint) textnw(text, len) > (uint) dc.w - h; len--);
     if (!len)
         return;
     memcpy(buf, text, len);
@@ -1225,7 +1216,7 @@ getatomprop(Client *c, Atom prop) {
 Bool
 getrootptr(int *x, int *y) {
     int di;
-    unsigned int dui;
+    uint dui;
     Window dummy;
 
     return XQueryPointer(globals->dpy, root, &dummy, &dummy, x, y, &di, &di, &dui);
@@ -1249,7 +1240,7 @@ getstate(Window w) {
 }
 
 Bool
-gettextprop(Window w, Atom atom, char *text, unsigned int size) {
+gettextprop(Window w, Atom atom, char *text, uint size) {
     char **list = NULL;
     int n;
     XTextProperty name;
@@ -1277,8 +1268,8 @@ void
 grabbuttons(Client *c, Bool focused) {
     updatenumlockmask();
     {
-        unsigned int i, j;
-        unsigned int modifiers[] = { 0, LockMask, numlockmask, numlockmask|LockMask };
+        uint i, j;
+        uint modifiers[] = { 0, LockMask, numlockmask, numlockmask|LockMask };
         XUngrabButton(globals->dpy, AnyButton, AnyModifier, c->win);
         if (focused) {
             for (i = 0; i < LENGTH(buttons); i++)
@@ -1299,8 +1290,8 @@ void
 grabkeys(void) {
     updatenumlockmask();
     {
-        unsigned int i, j;
-        unsigned int modifiers[] = { 0, LockMask, numlockmask, numlockmask|LockMask };
+        uint i, j;
+        uint modifiers[] = { 0, LockMask, numlockmask, numlockmask|LockMask };
         KeyCode code;
 
         XUngrabKey(globals->dpy, AnyKey, AnyModifier, root);
@@ -1310,12 +1301,6 @@ grabkeys(void) {
                     XGrabKey(globals->dpy, code, keys[i].mod | modifiers[j], root,
                          True, GrabModeAsync, GrabModeAsync);
     }
-}
-
-void
-incnmaster(const Arg *arg) {
-    selmon->nmaster = MAX(selmon->nmaster + arg->i, 0);
-    arrange(selmon);
 }
 
 void
@@ -1367,7 +1352,7 @@ void
 keypress(XEvent *e) {
     XKeyEvent *ev = &e->xkey;
     if (key_pressed(ev)) return;
-    unsigned int i;
+    uint i;
     KeySym keysym;
 
     keysym = XKeycodeToKeysym(globals->dpy, (KeyCode)ev->keycode, 0);
@@ -1477,7 +1462,7 @@ maprequest(XEvent *e) {
 
 void
 monocle(_Monitor *m) {
-    unsigned int n = 0;
+    uint n = 0;
     Client *c;
 
     for (c = m->clients; c; c = c->next)
@@ -1534,16 +1519,16 @@ movemouse(const Arg *arg) {
             ny = ocy + (ev.xmotion.y - y);
             if (nx >= selmon->wx && nx <= selmon->wx + selmon->ww
             && ny >= selmon->wy && ny <= selmon->wy + selmon->wh) {
-                if ((unsigned int) abs(selmon->wx - nx) < (unsigned int) snap)
+                if ((uint) abs(selmon->wx - nx) < (uint) snap)
                     nx = selmon->wx;
-                else if ((unsigned int) abs((selmon->wx + selmon->ww) - (nx + WIDTH(c))) < (unsigned int) snap)
+                else if ((uint) abs((selmon->wx + selmon->ww) - (nx + WIDTH(c))) < (uint) snap)
                     nx = selmon->wx + selmon->ww - WIDTH(c);
-                if ((unsigned int) abs(selmon->wy - ny) < (unsigned int) snap)
+                if ((uint) abs(selmon->wy - ny) < (uint) snap)
                     ny = selmon->wy;
-                else if ((unsigned int) abs((selmon->wy + selmon->wh) - (ny + HEIGHT(c))) < (unsigned int) snap)
+                else if ((uint) abs((selmon->wy + selmon->wh) - (ny + HEIGHT(c))) < (uint) snap)
                     ny = selmon->wy + selmon->wh - HEIGHT(c);
                 if (!c->isfloating && selmon->lt[selmon->sellt]->arrange
-                && ((unsigned int) abs(nx - c->x) > (unsigned int) snap || (unsigned int) abs(ny - c->y) > (unsigned int) snap))
+                && ((uint) abs(nx - c->x) > (uint) snap || (uint) abs(ny - c->y) > (uint) snap))
                     togglefloating(NULL);
             }
             if (!selmon->lt[selmon->sellt]->arrange || c->isfloating)
@@ -1679,7 +1664,7 @@ resizemouse(const Arg *arg) {
             && c->mon->wy + nh >= selmon->wy && c->mon->wy + nh <= selmon->wy + selmon->wh)
             {
                 if (!c->isfloating && selmon->lt[selmon->sellt]->arrange
-                && ((unsigned int) abs(nw - c->w) > (unsigned int) snap || (unsigned int) abs(nh - c->h) > (unsigned int) snap))
+                && ((uint) abs(nw - c->w) > (uint) snap || (uint) abs(nh - c->h) > (uint) snap))
                     togglefloating(NULL);
             }
             if (!selmon->lt[selmon->sellt]->arrange || c->isfloating)
@@ -1736,7 +1721,7 @@ run(void) {
 
 void
 scan(void) {
-    unsigned int i, num;
+    uint i, num;
     Window d1, d2, *wins = NULL;
     XWindowAttributes wa;
 
@@ -1855,20 +1840,6 @@ setlayout(const Arg *arg) {
         drawbar(selmon);
 }
 
-/* arg > 1.0 will set mfact absolutly */
-void
-setmfact(const Arg *arg) {
-    float f;
-
-    if (!arg || !selmon->lt[selmon->sellt]->arrange)
-        return;
-    f = arg->f < 1.0 ? arg->f + selmon->mfact : arg->f - 1.0;
-    if (f < 0.1 || f > 0.9)
-        return;
-    selmon->mfact = f;
-    arrange(selmon);
-}
-
 void
 setup(void) {
     XSetWindowAttributes wa;
@@ -1976,7 +1947,7 @@ tagmon(const Arg *arg) {
 }
 
 int
-textnw(const char *text, unsigned int len) {
+textnw(const char *text, uint len) {
     XRectangle r;
 
     if (dc.font.set) {
@@ -1988,20 +1959,24 @@ textnw(const char *text, unsigned int len) {
 
 void
 tile(_Monitor *m) {
-    unsigned int i, n, h, mw, my, ty;
+    uint i, n, h, mw, my, ty;
     Client *c;
 
     for (n = 0, c = nexttiled(m->clients); c; c = nexttiled(c->next), n++);
     if (n == 0)
         return;
 
-    if (n > (unsigned int) m->nmaster)
-        mw = m->nmaster ? m->ww * m->mfact : 0;
+    uint master_clnts = globals->cfg->wm_master_clnts;
+    float master_prcnt = globals->cfg->wm_master_prcnt;
+
+    if (n > (uint) master_clnts)
+        mw = master_clnts ? m->ww * master_prcnt : 0;
     else
         mw = m->ww;
+
     for (i = my = ty = 0, c = nexttiled(m->clients); c; c = nexttiled(c->next), i++)
-        if (i < (unsigned int) m->nmaster) {
-            h = (m->wh - my) / (MIN(n, (unsigned int) m->nmaster) - i);
+        if (i < (uint) master_clnts) {
+            h = (m->wh - my) / (MIN(n, (uint) master_clnts) - i);
             resize(c, m->wx, m->wy + my, mw - (2*c->bw), h - (2*c->bw), False);
             my += HEIGHT(c);
         }
@@ -2010,6 +1985,24 @@ tile(_Monitor *m) {
             resize(c, m->wx + mw, m->wy + ty, m->ww - mw - (2*c->bw), h - (2*c->bw), False);
             ty += HEIGHT(c);
         }
+}
+
+void rows(_Monitor *m) {
+    uint n;
+    Client *c;
+
+    for (n = 0, c = nexttiled(m->clients); c; c = nexttiled(c->next), n++);
+    if (n == 0)
+        return;
+
+    uint y = 0, h = 0, clients_left = n;
+    uint avail_width = m->ww, avail_height = m->wh;
+    uint x_origin = m->wx, y_origin = m->wy;
+    for (c = nexttiled(m->clients); c; c = nexttiled(c->next)) {
+        h = ((avail_height - y) / clients_left--) - (2 * c->bw);
+        resize(c, x_origin, y_origin + y, avail_width - (2 * c->bw), h, False);
+        y += HEIGHT(c);
+    }
 }
 
 void
@@ -2033,7 +2026,7 @@ togglefloating(const Arg *arg) {
 
 void
 toggletag(const Arg *arg) {
-    unsigned int newtags;
+    uint newtags;
 
     if (!selmon->sel)
         return;
@@ -2047,7 +2040,7 @@ toggletag(const Arg *arg) {
 
 void
 toggleview(const Arg *arg) {
-    unsigned int newtagset = selmon->tagset[selmon->seltags] ^ (arg->ui & TAGMASK);
+    uint newtagset = selmon->tagset[selmon->seltags] ^ (arg->ui & TAGMASK);
 
     if (newtagset) {
         selmon->tagset[selmon->seltags] = newtagset;
@@ -2215,13 +2208,13 @@ updategeom(void) {
 
 void
 updatenumlockmask(void) {
-    unsigned int i, j;
+    uint i, j;
     XModifierKeymap *modmap;
 
     numlockmask = 0;
     modmap = XGetModifierMapping(globals->dpy);
     for (i = 0; i < 8; i++)
-        for (j = 0; j < (unsigned int) modmap->max_keypermod; j++)
+        for (j = 0; j < (uint) modmap->max_keypermod; j++)
             if (modmap->modifiermap[i * modmap->max_keypermod + j]
                == XKeysymToKeycode(globals->dpy, XK_Num_Lock))
                 numlockmask = (1 << i);
@@ -2338,7 +2331,7 @@ void
 warp(const Client *c) {
     Window dummy;
     int x, y, di;
-    unsigned int dui;
+    uint dui;
 
     if (!c) {
         XWarpPointer(globals->dpy, None, root, 0, 0, 0, 0, selmon->wx + selmon->ww / 2, selmon->wy + selmon->wh/2);

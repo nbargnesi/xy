@@ -25,6 +25,8 @@
 // Configuration entries as they appear in the rc
 #define CFG_SKIP_WINDOW_MGR_CHECK   "skip_window_manager_check"
 #define CFG_WINDOW_MGR_NAME         "window_manager_name"
+#define CFG_MASTER_CLIENTS          "master_clients"
+#define CFG_MASTER_PERCENTAGE       "master_percentage"
 #define CFG_BROADCAST_GROUP         "broadcast_group"
 #define CFG_BROADCAST_PORT          "broadcast_port"
 #define CFG_TERMINAL_CMD            "terminal_command"
@@ -38,6 +40,8 @@
 #define DFLT_CFG_FILE_HDR           "# xy configuration file"
 #define DFLT_SKIP_WINDOW_MGR_CHECK  false
 #define DFLT_WINDOW_MGR_NAME        "xy"
+#define DFLT_MASTER_CLIENTS         1
+#define DFLT_MASTER_PERCENTAGE      0.50
 #define DFLT_BROADCAST_GROUP        "224.0.0.3"
 #define DFLT_BROADCAST_PORT         47002
 #define DFLT_TERMINAL_CMD           "urxvt"
@@ -55,6 +59,8 @@ typedef struct {
     char *wm_name;
     bool wm_skip_check;
     bool wm_warp;
+    uint wm_master_clnts;
+    float wm_master_prcnt;
 
     // Broadcast
     uint bc_port;
