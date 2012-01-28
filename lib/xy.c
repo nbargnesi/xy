@@ -374,6 +374,7 @@ typedef struct {
 
 struct _Monitor {
     char ltsymbol[16];
+    float mfact;
     int num;
     int by;               /* bar geometry */
     int mx, my, mw, mh;   /* screen size */
@@ -448,6 +449,7 @@ static void setclientstate(Client *c, long state);
 static void setfocus(Client *c);
 static void setfullscreen(Client *c, Bool fullscreen);
 static void setlayout(const Arg *arg);
+static void setmfact(const Arg *);
 static void setup(void);
 static void showhide(Client *c);
 static void spawn(const Arg *arg);
@@ -541,6 +543,8 @@ static Key keys[] = {
     { MODKEY,                       XK_r,      NULL,           {0} },
     { MODKEY,                       XK_Return, spawn,          {0} },
     { MODKEY,                       XK_p,      spawn,          {.v = dmenucmd } },
+    { MODKEY,                       XK_h,      setmfact,       {.f = -0.01} },
+    { MODKEY,                       XK_l,      setmfact,       {.f = +0.01} },
     { MODKEY,                       XK_b,      togglebar,      {0} },
     { MODKEY,                       XK_j,      focusstack,     {.i = +1 } },
     { MODKEY,                       XK_k,      focusstack,     {.i = -1 } },
@@ -937,6 +941,7 @@ createmon(void) {
     if (!(m = (_Monitor *)calloc(1, sizeof(_Monitor))))
         die("fatal: could not malloc() %u bytes\n", sizeof(_Monitor));
     m->tagset[0] = m->tagset[1] = 1;
+    m->mfact = globals->cfg->wm_master_prcnt;
     m->showbar = showbar;
     m->topbar = topbar;
     m->lt[0] = &layouts[0];
@@ -1840,6 +1845,14 @@ setlayout(const Arg *arg) {
         drawbar(selmon);
 }
 
+void setmfact(const Arg *a) {
+    if (!a || !selmon->lt[selmon->sellt]->arrange) return;
+    float f = a->f < 1.0 ? a->f + selmon->mfact : a->f - 1.0;
+    if (f < 0.25 || f > 0.75) return;
+    selmon->mfact = f;
+    arrange(selmon);
+}
+
 void
 setup(void) {
     XSetWindowAttributes wa;
@@ -1967,7 +1980,7 @@ tile(_Monitor *m) {
         return;
 
     uint master_clnts = globals->cfg->wm_master_clnts;
-    float master_prcnt = globals->cfg->wm_master_prcnt;
+    float master_prcnt = m->mfact;
 
     if (n > (uint) master_clnts)
         mw = master_clnts ? m->ww * master_prcnt : 0;
