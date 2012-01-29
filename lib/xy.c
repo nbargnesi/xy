@@ -389,7 +389,7 @@ struct _Monitor {
     Client *stack;
     _Monitor *next;
     Window barwin;
-    const Layout *lt[3];
+    const Layout *lt[5];
 };
 
 typedef struct {
@@ -402,6 +402,7 @@ typedef struct {
 } Rule;
 
 /* function declarations */
+static Client ** tileable_clients(_Monitor *, uint *);
 static void _init();
 static void applyrules(Client *c);
 static Bool applysizehints(Client *c, int *x, int *y, int *w, int *h, Bool interact);
@@ -458,6 +459,8 @@ static void tagmon(const Arg *arg);
 static int textnw(const char *text, uint len);
 static void tile(_Monitor *);
 static void rows(_Monitor *);
+static void cols(_Monitor *);
+static void grid(_Monitor *);
 static void togglebar(const Arg *arg);
 static void togglefloating(const Arg *arg);
 static void toggletag(const Arg *arg);
@@ -521,8 +524,10 @@ static const Bool resizehints = True; /* True means respect size hints in tiled 
 
 static const Layout layouts[] = {
     /* symbol     arrange function */
-    { "[tile] ",     tile },    /* first entry is default */
+    { "[tile] ",    tile },    /* first entry is default */
     { "[rows] ",    rows },
+    { "[cols] ",    cols },
+    { "[grid] ",    grid },
     { "[float]",    NULL },    /* no layout function means floating behavior */
     { "[focus]",    monocle },
 };
@@ -553,8 +558,10 @@ static Key keys[] = {
     { MODKEY,                       XK_c,      killclient,     {0} },
     { MODKEY,                       XK_t,      setlayout,      {.v = &layouts[0]} },
     { MODKEY,                       XK_u,      setlayout,      {.v = &layouts[1]} },
-    { MODKEY,                       XK_f,      setlayout,      {.v = &layouts[2]} },
-    { MODKEY,                       XK_m,      setlayout,      {.v = &layouts[3]} },
+    { MODKEY,                       XK_o,      setlayout,      {.v = &layouts[2]} },
+    { MODKEY,                       XK_g,      setlayout,      {.v = &layouts[3]} },
+    { MODKEY,                       XK_f,      setlayout,      {.v = &layouts[4]} },
+    { MODKEY,                       XK_m,      setlayout,      {.v = &layouts[5]} },
     { MODKEY,                       XK_End,    setlayout,      {0} },
     { MODKEY|ShiftMask,             XK_space,  togglefloating, {0} },
     { MODKEY,                       XK_0,      view,           {.ui = ~0 } },
@@ -580,7 +587,7 @@ static Key keys[] = {
 static Button buttons[] = {
     /* click                event mask      button          function        argument */
     { ClkLtSymbol,          0,              Button1,        setlayout,      {0} },
-    { ClkLtSymbol,          0,              Button3,        setlayout,      {.v = &layouts[3]} },
+    { ClkLtSymbol,          0,              Button3,        setlayout,      {.v = &layouts[4]} },
     { ClkWinTitle,          0,              Button2,        zoom,           {0} },
     { ClkClientWin,         MODKEY,         Button1,        movemouse,      {0} },
     { ClkClientWin,         MODKEY,         Button2,        togglefloating, {0} },
@@ -1549,8 +1556,7 @@ movemouse(const Arg *arg) {
     }
 }
 
-Client *
-nexttiled(Client *c) {
+static inline Client * nexttiled(Client *c) {
     for (; c && (c->isfloating || !ISVISIBLE(c)); c = c->next);
     return c;
 }
@@ -1972,12 +1978,14 @@ textnw(const char *text, uint len) {
 
 void
 tile(_Monitor *m) {
-    uint i, n, h, mw, my, ty;
-    Client *c;
-
-    for (n = 0, c = nexttiled(m->clients); c; c = nexttiled(c->next), n++);
-    if (n == 0)
+    uint n;
+    Client *c, **clients = tileable_clients(m, &n);
+    if (n == 0) {
+        free(clients);
         return;
+    }
+
+    uint i, h, mw, my, ty;
 
     uint master_clnts = globals->cfg->wm_master_clnts;
     float master_prcnt = m->mfact;
@@ -1987,7 +1995,8 @@ tile(_Monitor *m) {
     else
         mw = m->ww;
 
-    for (i = my = ty = 0, c = nexttiled(m->clients); c; c = nexttiled(c->next), i++)
+    for (i = my = ty = 0; i < n; i++) {
+        c = clients[i];
         if (i < (uint) master_clnts) {
             h = (m->wh - my) / (MIN(n, (uint) master_clnts) - i);
             resize(c, m->wx, m->wy + my, mw - (2*c->bw), h - (2*c->bw), False);
@@ -1998,24 +2007,53 @@ tile(_Monitor *m) {
             resize(c, m->wx + mw, m->wy + ty, m->ww - mw - (2*c->bw), h - (2*c->bw), False);
             ty += HEIGHT(c);
         }
+    }
+    free(clients);
 }
 
 void rows(_Monitor *m) {
     uint n;
-    Client *c;
-
-    for (n = 0, c = nexttiled(m->clients); c; c = nexttiled(c->next), n++);
-    if (n == 0)
+    Client *c, **clients = tileable_clients(m, &n);
+    if (n == 0) {
+        free(clients);
         return;
+    }
 
     uint y = 0, h = 0, clients_left = n;
     uint avail_width = m->ww, avail_height = m->wh;
     uint x_origin = m->wx, y_origin = m->wy;
-    for (c = nexttiled(m->clients); c; c = nexttiled(c->next)) {
+
+    for (uint i = 0; i < n; i++) {
+        c = clients[i];
         h = ((avail_height - y) / clients_left--) - (2 * c->bw);
         resize(c, x_origin, y_origin + y, avail_width - (2 * c->bw), h, False);
         y += HEIGHT(c);
     }
+    free(clients);
+}
+
+void cols(_Monitor *m) {
+    uint n;
+    Client *c, **clients = tileable_clients(m, &n);
+    if (n == 0) {
+        free(clients);
+        return;
+    }
+
+    uint x = 0, w = 0, clients_left = n;
+    uint x_origin = m->wx, y_origin = m->wy;
+    uint avail_width = m->ww, avail_height = m->wh;
+
+    for (uint i = 0; i < n; i++) {
+        c = clients[i];
+        w = ((avail_width - x) / clients_left--) - (2 * c->bw);
+        resize(c, x_origin + x, y_origin, w, avail_height - (2 * c->bw), False);
+        x += WIDTH(c);
+    }
+}
+
+void grid(_Monitor *m) {
+    tile(m);
 }
 
 void
@@ -2431,5 +2469,20 @@ void _init() {
         fputs("warning: no locale support\n", stderr);
     setup();
     scan();
+}
+
+static inline Client ** tileable_clients(_Monitor *m, uint *num) {
+    Client *c = m->clients, **ret = NULL;
+    uint i = 0;
+    for (; c; c = c->next, i++) {
+        if (c->isfloating || !ISVISIBLE(c)) {
+            i--;
+            continue;
+        }
+        ret = realloc(ret, (sizeof(Client *) * (i + 1)));
+        ret[i] = c;
+    }
+    *num = i;
+    return ret;
 }
 
