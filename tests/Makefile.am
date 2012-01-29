@@ -10,16 +10,15 @@ AM_CFLAGS = -D_GNU_SOURCE \
             -I$(top_srcdir)/lib \
             @CHECK_CFLAGS@
 
-test_suitedir = .
 TESTS = core_tests \
         util_tests \
         xlib_tests \
         monitor_tests
 
-test_suite_PROGRAMS     = core_tests \
-                          util_tests \
-                          xlib_tests \
-                          monitor_tests
+check_PROGRAMS = core_tests \
+                 util_tests \
+                 xlib_tests \
+                 monitor_tests
 
 core_tests_SOURCES      = core_tests.c
 core_tests_LDADD        = @CHECK_LIBS@

@@ -14,7 +14,6 @@
 # PARTICULAR PURPOSE.
 
 @SET_MAKE@
-
 VPATH = @srcdir@
 pkgdatadir = $(datadir)/@PACKAGE@
 pkgincludedir = $(includedir)/@PACKAGE@
@@ -34,9 +33,8 @@ PRE_UNINSTALL = :
 POST_UNINSTALL = :
 @TESTING_TRUE@TESTS = core_tests$(EXEEXT) util_tests$(EXEEXT) \
 @TESTING_TRUE@	xlib_tests$(EXEEXT) monitor_tests$(EXEEXT)
-@TESTING_TRUE@test_suite_PROGRAMS = core_tests$(EXEEXT) \
-@TESTING_TRUE@	util_tests$(EXEEXT) xlib_tests$(EXEEXT) \
-@TESTING_TRUE@	monitor_tests$(EXEEXT)
+@TESTING_TRUE@check_PROGRAMS = core_tests$(EXEEXT) util_tests$(EXEEXT) \
+@TESTING_TRUE@	xlib_tests$(EXEEXT) monitor_tests$(EXEEXT)
 subdir = tests
 DIST_COMMON = $(srcdir)/Makefile.am $(srcdir)/Makefile.in
 ACLOCAL_M4 = $(top_srcdir)/aclocal.m4
@@ -47,8 +45,6 @@ mkinstalldirs = $(install_sh) -d
 CONFIG_HEADER = $(top_builddir)/config.h
 CONFIG_CLEAN_FILES =
 CONFIG_CLEAN_VPATH_FILES =
-am__installdirs = "$(DESTDIR)$(test_suitedir)"
-PROGRAMS = $(test_suite_PROGRAMS)
 am__core_tests_SOURCES_DIST = core_tests.c
 @TESTING_TRUE@am_core_tests_OBJECTS = core_tests.$(OBJEXT)
 core_tests_OBJECTS = $(am_core_tests_OBJECTS)
@@ -201,7 +197,6 @@ top_srcdir = @top_srcdir@
 @TESTING_TRUE@            -I$(top_srcdir)/lib \
 @TESTING_TRUE@            @CHECK_CFLAGS@
 
-@TESTING_TRUE@test_suitedir = .
 @TESTING_TRUE@core_tests_SOURCES = core_tests.c
 @TESTING_TRUE@core_tests_LDADD = @CHECK_LIBS@
 @TESTING_TRUE@util_tests_SOURCES = util_tests.c
@@ -253,43 +248,9 @@ $(top_srcdir)/configure: @MAINTAINER_MODE_TRUE@ $(am__configure_deps)
 $(ACLOCAL_M4): @MAINTAINER_MODE_TRUE@ $(am__aclocal_m4_deps)
 	cd $(top_builddir) && $(MAKE) $(AM_MAKEFLAGS) am--refresh
 $(am__aclocal_m4_deps):
-install-test_suitePROGRAMS: $(test_suite_PROGRAMS)
-	@$(NORMAL_INSTALL)
-	test -z "$(test_suitedir)" || $(MKDIR_P) "$(DESTDIR)$(test_suitedir)"
-	@list='$(test_suite_PROGRAMS)'; test -n "$(test_suitedir)" || list=; \
-	for p in $$list; do echo "$$p $$p"; done | \
-	sed 's/$(EXEEXT)$$//' | \
-	while read p p1; do if test -f $$p; \
-	  then echo "$$p"; echo "$$p"; else :; fi; \
-	done | \
-	sed -e 'p;s,.*/,,;n;h' -e 's|.*|.|' \
-	    -e 'p;x;s,.*/,,;s/$(EXEEXT)$$//;$(transform);s/$$/$(EXEEXT)/' | \
-	sed 'N;N;N;s,\n, ,g' | \
-	$(AWK) 'BEGIN { files["."] = ""; dirs["."] = 1 } \
-	  { d=$$3; if (dirs[d] != 1) { print "d", d; dirs[d] = 1 } \
-	    if ($$2 == $$4) files[d] = files[d] " " $$1; \
-	    else { print "f", $$3 "/" $$4, $$1; } } \
-	  END { for (d in files) print "f", d, files[d] }' | \
-	while read type dir files; do \
-	    if test "$$dir" = .; then dir=; else dir=/$$dir; fi; \
-	    test -z "$$files" || { \
-	      echo " $(INSTALL_PROGRAM_ENV) $(INSTALL_PROGRAM) $$files '$(DESTDIR)$(test_suitedir)$$dir'"; \
-	      $(INSTALL_PROGRAM_ENV) $(INSTALL_PROGRAM) $$files "$(DESTDIR)$(test_suitedir)$$dir" || exit $$?; \
-	    } \
-	; done
 
-uninstall-test_suitePROGRAMS:
-	@$(NORMAL_UNINSTALL)
-	@list='$(test_suite_PROGRAMS)'; test -n "$(test_suitedir)" || list=; \
-	files=`for p in $$list; do echo "$$p"; done | \
-	  sed -e 'h;s,^.*/,,;s/$(EXEEXT)$$//;$(transform)' \
-	      -e 's/$$/$(EXEEXT)/' `; \
-	test -n "$$list" || exit 0; \
-	echo " ( cd '$(DESTDIR)$(test_suitedir)' && rm -f" $$files ")"; \
-	cd "$(DESTDIR)$(test_suitedir)" && rm -f $$files
-
-clean-test_suitePROGRAMS:
-	-test -z "$(test_suite_PROGRAMS)" || rm -f $(test_suite_PROGRAMS)
+clean-checkPROGRAMS:
+	-test -z "$(check_PROGRAMS)" || rm -f $(check_PROGRAMS)
 core_tests$(EXEEXT): $(core_tests_OBJECTS) $(core_tests_DEPENDENCIES) 
 	@rm -f core_tests$(EXEEXT)
 	$(LINK) $(core_tests_OBJECTS) $(core_tests_LDADD) $(LIBS)
@@ -503,13 +464,11 @@ distdir: $(DISTFILES)
 	  fi; \
 	done
 check-am: all-am
+	$(MAKE) $(AM_MAKEFLAGS) $(check_PROGRAMS)
 	$(MAKE) $(AM_MAKEFLAGS) check-TESTS
 check: check-am
-all-am: Makefile $(PROGRAMS)
+all-am: Makefile
 installdirs:
-	for dir in "$(DESTDIR)$(test_suitedir)"; do \
-	  test -z "$$dir" || $(MKDIR_P) "$$dir"; \
-	done
 install: install-am
 install-exec: install-exec-am
 install-data: install-data-am
@@ -537,7 +496,7 @@ maintainer-clean-generic:
 	@echo "it deletes files that may require special tools to rebuild."
 clean: clean-am
 
-clean-am: clean-generic clean-test_suitePROGRAMS mostlyclean-am
+clean-am: clean-checkPROGRAMS clean-generic mostlyclean-am
 
 distclean: distclean-am
 	-rm -rf ./$(DEPDIR)
@@ -557,7 +516,7 @@ info: info-am
 
 info-am:
 
-install-data-am: install-test_suitePROGRAMS
+install-data-am:
 
 install-dvi: install-dvi-am
 
@@ -602,23 +561,22 @@ ps: ps-am
 
 ps-am:
 
-uninstall-am: uninstall-test_suitePROGRAMS
+uninstall-am:
 
 .MAKE: check-am install-am install-strip
 
 .PHONY: CTAGS GTAGS all all-am check check-TESTS check-am clean \
-	clean-generic clean-test_suitePROGRAMS ctags distclean \
+	clean-checkPROGRAMS clean-generic ctags distclean \
 	distclean-compile distclean-generic distclean-tags distdir dvi \
 	dvi-am html html-am info info-am install install-am \
 	install-data install-data-am install-dvi install-dvi-am \
 	install-exec install-exec-am install-html install-html-am \
 	install-info install-info-am install-man install-pdf \
 	install-pdf-am install-ps install-ps-am install-strip \
-	install-test_suitePROGRAMS installcheck installcheck-am \
-	installdirs maintainer-clean maintainer-clean-generic \
-	mostlyclean mostlyclean-compile mostlyclean-generic pdf pdf-am \
-	ps ps-am tags uninstall uninstall-am \
-	uninstall-test_suitePROGRAMS
+	installcheck installcheck-am installdirs maintainer-clean \
+	maintainer-clean-generic mostlyclean mostlyclean-compile \
+	mostlyclean-generic pdf pdf-am ps ps-am tags uninstall \
+	uninstall-am
 
 
 # Tell versions [3.59,3.63) of GNU make to not export all variables.
