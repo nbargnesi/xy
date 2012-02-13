@@ -2039,7 +2039,7 @@ tile_right(_Monitor *m) {
     mw = m->ww * master_prcnt;
     c = clients[0];
     uint offset = 2 * c->bw;
-    resize(c, m->ww - mw, m->wy, mw - offset, m->wh - offset, False);
+    resize(c, m->wx + (m->ww - mw), m->wy, mw - offset, m->wh - offset, False);
 
     for (i = 1, my = ty = 0; i < n; i++) {
         c = clients[i];
