@@ -952,6 +952,7 @@ createmon(void) {
     m->lt[3] = &layouts[3];
     m->lt[4] = &layouts[4];
     m->lt[5] = &layouts[5];
+    m->lt[6] = &layouts[6];
 
     m->sellt = 0;
     strncpy(m->ltsymbol, layouts[0].symbol, sizeof m->ltsymbol);
