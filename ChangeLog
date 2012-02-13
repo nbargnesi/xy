@@ -1,1452 +1,1283 @@
-2012-01-18  Nick Bargnesi  <nick@den-4.com>
-
-	* lib/lifecycle.c:
-	Add TODO.
-	[fd305b24fdfb] [tip]
-
-	* lib/monitor.c, lib/monitor.h:
-	Add terminate function to monitor module.
-	[0f5cf3530598]
-
-	* lib/inotify.c:
-	Leak fix.
-	[b00016c87025]
-
-	* configure:
-	Default CFLAGS use O2 now.
-	[836b060bbd4c]
-
-	* README, configure.in:
-	merge
-	[a694c5d1355f]
-
-	* configure, configure.in, docs/apiref.rst, docs/conf.py,
-	docs/index.rst, docs/overview.rst, lib/Makefile.am, lib/Makefile.in,
-	lib/broadcast.c, lib/broadcast.h, lib/configuration.c,
-	lib/configuration.h, lib/constants.h, lib/core.h, lib/die.c,
-	lib/event.c, lib/event.h, lib/inotify.c, lib/inotify.h, lib/ipc.c,
-	lib/ipc.h, lib/layout.c, lib/layout.h, lib/lifecycle.c,
-	lib/lifecycle.h, lib/logging.c, lib/logging.h, lib/monitor.c,
-	lib/monitor.h, lib/state.c, lib/state.h, lib/sysinfo.c,
-	lib/sysinfo.h, lib/types.h, lib/util.c, lib/util.h, lib/xy.c,
-	lib/xy.h, lib/xyxlib.c, lib/xyxlib.h, src/main.c,
-	tests/core_tests.c, tests/monitor_tests.c, tests/util_tests.c,
-	tests/xlib_tests.c:
-	Update version (2012), copyright headers, bump documentation, and
-	make it functional.
-	[142e28361484]
-
-	* README:
-	Explicitly state use of copyright year ranges.
-	[0bb1c0dab29e]
-
-2012-01-15  Nick Bargnesi  <nick@den-4.com>
-
-	* README:
-	Remove build server link.
-	[fdbe06ec0d02]
-
-	* configure.in:
-	Default CFLAGS to -O2 instead of -O0.
-	[da7264c5b715]
-
-2011-12-19  Nick Bargnesi  <nick@den-4.com>
-
-	* Makefile.in, configure, configure.in, docs/Makefile.in,
-	lib/Makefile.am, lib/Makefile.in, lib/util.c, lib/util.h,
-	lib/xyxcb.c, lib/xyxcb.h, src/Makefile.am, src/Makefile.in,
-	tests/Makefile.am, tests/Makefile.in, tests/xcb_tests.c:
-	Remove linking and code to xlib and friends.
-	[81dbc9f66bc4] <xcb>
-
-2011-12-18  Nick Bargnesi  <nick@den-4.com>
-
-	* docs/apiref.rst, lib/lifecycle.c, lib/xyxcb.c, lib/xyxcb.h,
-	tests/xcb_tests.c:
-	Defer configuration of X-related globals to the lifecycle's
-	processing of xy state vice the xcb interface.
-	[c7aad05a2939] <xcb>
-
-2011-12-17  Nick Bargnesi  <nick@den-4.com>
-
-	* configure, docs/apiref.rst, lib/configuration.c, lib/event.c,
-	lib/ipc.c, lib/lifecycle.c, lib/xy.c, lib/xy.h, lib/xyxcb.c,
-	lib/xyxcb.h, tests/Makefile.am, tests/Makefile.in,
-	tests/xcb_tests.c, tests/xlib_tests.c:
-	Make x_connect/x_disconnect setup all the X-related settings. Added
-	xyxlib.h section to apiref.
-	[f83c73eeb4db] <xcb>
-
-	* configure, lib/Makefile.am, lib/Makefile.in, lib/configuration.c,
-	lib/core.h, lib/event.c, lib/lifecycle.c, lib/monitor.c,
-	lib/monitor.h, lib/xy.c, lib/xy.h, lib/xyxcb.c, lib/xyxcb.h,
-	lib/xyxlib.c, lib/xyxlib.h, tests/core_tests.c,
-	tests/monitor_tests.c, tests/util_tests.c, tests/xlib_tests.c:
-	Comment out old xlib code and annotate with 'XXX xcb'. Make tree
-	build successfully.
-	[e6e3a9e1a902] <xcb>
-
-2011-12-16  Nick Bargnesi  <nick@den-4.com>
-
-	* configure, configure.in, docs/index.rst, docs/overview.rst,
-	resources/leaktest, tests/leaktest:
-	Bump documentation and relocate leaktest.
-	[e784e97c9614]
-
-2011-12-15  Nick Bargnesi  <nick@den-4.com>
-
-	* docs/conf.py:
-	Try path mangling a la Pylons.
-	[3dcd90679223]
-
-2011-12-14  Nick Bargnesi  <nick@den-4.com>
+commit e2d2a1bad37c6fef5da70fdc881b39fa2d55321c
+Author: Nick Bargnesi <nick@den-4.com>
+Date:   Sun Feb 12 21:56:07 2012 -0500
 
-	* docs/conf.py:
-	Documentation again.
-	[629cf56ab0b9]
+    Update minimum and maximum master percentage, change keybindings.
+    
+    The minimum and maximum master percentages are now anywhere from 10 to
+    90 percent of the monitor's available width and height. Eliminated the
+    layout specific keybindings and added bindings for next/previous layout.
+    Next layout is available via mod-down, previous mod-up.
 
-	* docs/_themes/bootstrap/theme.conf:
-	Adjust theme.conf.
-	[9d45592bdeca]
+commit 705774ba5be7ed38ef133d5189a429e7a3f651cf
+Author: Nick Bargnesi <nick@den-4.com>
+Date:   Sun Jan 29 02:24:39 2012 -0500
 
-	* docs/conf.py:
-	Fix sys.path.
-	[05ac5ef002f3]
+    Don't install artifacts from the tests directory.
 
-	* docs/bootstrap.zip, docs/conf.py:
-	Backed out changeset cbfbfb761759
-	[2834fa920c6d]
+commit 10bf553abde76c67e06ef0a4e7c1b487c19e793d
+Author: Nick Bargnesi <nick@den-4.com>
+Date:   Sun Jan 29 01:53:44 2012 -0500
 
-	* docs/bootstrap.zip, docs/conf.py:
-	Documentation bump.
-	[cbfbfb761759]
+    Add column layout and returning the tileable clients as an array for faster
+    layouts.
 
-	* docs/conf.py, makedist:
-	Merge.
-	[6d6bfb375993]
+commit e21f70a5ff73940b1ab0e17b1134b4ca3f3333a3
+Author: Nick Bargnesi <nick@den-4.com>
+Date:   Sat Jan 28 17:48:47 2012 -0500
 
-2011-12-12  Nick Bargnesi  <nick@den-4.com>
+    Update website and bug URLs.
 
-	* docs/conf.py:
-	Update pygments style for sphinx documentation.
-	[80225addc625]
+commit 53d581d3d1b468cdbdd22a3a447496c4791f13ec
+Author: Nick Bargnesi <nick@den-4.com>
+Date:   Sat Jan 28 16:12:57 2012 -0500
 
-2011-12-14  Nick Bargnesi  <nick@den-4.com>
+    Update website and bugs URLs.
 
-	* makedist, resources/makedist, resources/maketest, tests/leaktest:
-	Relocate makedist. Use start/stop display in leaktest and maketest.
-	[f113e52d3a2e]
+commit 74dc4c2fbb87b2fdf8f69d810122092e45f1f338
+Author: Nick Bargnesi <nick@den-4.com>
+Date:   Sat Jan 28 16:11:49 2012 -0500
 
-	* resources/common.sh:
-	Add bash functions to launch a Xvfb server for DISPLAY-based testing
-	and an equivalent function for terminating it.
-	[d83e538c7ee0]
+    Increase/decrease master percentage - accidentally removed in last commit.
 
-	* docs/_themes/bootstrap/globaltoc.html,
-	docs/_themes/bootstrap/layout.html,
-	docs/_themes/bootstrap/localtoc.html,
-	docs/_themes/bootstrap/relations.html,
-	docs/_themes/bootstrap/searchbox.html,
-	docs/_themes/bootstrap/sourcelink.html,
-	docs/_themes/bootstrap/static/bootstrap-dropdown.js,
-	docs/_themes/bootstrap/static/bootstrap-scrollspy.js,
-	docs/_themes/bootstrap/static/bootstrap-sphinx.css_t,
-	docs/_themes/bootstrap/static/bootstrap.css,
-	docs/_themes/bootstrap/theme.conf, docs/conf.py, docs/index.rst:
-	Documentation bump.
-	[07555c43772c]
+commit 9fe556df28d68933401c67de315600563820bbed
+Author: Nick Bargnesi <nick@den-4.com>
+Date:   Sat Jan 28 01:08:37 2012 -0500
 
-2011-12-12  Nick Bargnesi  <nick@den-4.com>
+    Add a row-based layout, and make master clients and master percentage
+    configuration options.
+    
+    The master percentage option controls what percentage of the screen the master
+    area gets. The master clients option controls how many clients are allowed in
+    the master area.
 
-	* README, docs/conf.py, docs/index.rst:
-	Documentation update.
+commit 06a90937f4ca1e4839908eb1e0fdcdc05cd95ded
+Author: Nick Bargnesi <nick@den-4.com>
+Date:   Thu Jan 26 22:08:44 2012 -0500
 
-	Update README with documentation URL and bump API documentation.
-	[f82ad0fed3a8]
+    Reconfigure xy at runtime any time a change is detected to $HOME/.xy/rc. Don't
+    leak file inotify and epoll file descriptors when we're asked to restart.
 
-2011-12-11  Nick Bargnesi  <nick@den-4.com>
+commit 0f9f60e80bbc77ba694aa119ac04acf00d941bd8
+Author: Nick Bargnesi <nick@den-4.com>
+Date:   Wed Jan 25 20:42:38 2012 -0500
 
-	* README:
-	Correct port number.
-	[a5728bb1a616]
+    Redesign configuration module.
 
-	* README:
-	Update README w/ links to web site, bug tracker, and builds.
-	[4ea0470d8843]
+commit 50dad0ec9f5745e92dec7d74ecc578920f40b109
+Author: Nick Bargnesi <nick@den-4.com>
+Date:   Wed Jan 25 20:41:58 2012 -0500
 
-2011-12-07  Nick Bargnesi  <nick@den-4.com>
+    Bump version, add configuration section.
 
-	* Makefile.in, configure, configure.in, docs/Makefile.in,
-	lib/Makefile.in, src/Makefile.in, tests/Makefile.in:
-	Check for xdamage.
-	[46f2417b386e]
+commit d4971070f6dba08e2c108a1459ce10664469ed77
+Author: Nick Bargnesi <nick@den-4.com>
+Date:   Mon Jan 23 00:08:44 2012 -0500
 
-2011-11-27  Nick Bargnesi  <nick@den-4.com>
+    Shutdown hook registration requires a name. When registering/invoking a
+    shutdown hook, print the name to INFO level.
 
-	* Makefile.in, configure, configure.in, docs/Makefile.in,
-	lib/Makefile.in, src/Makefile.in, tests/Makefile.in:
-	Create 'xcb' feature branch, check for xcb during configuration.
-	[0ff9aeda2518] <xcb>
+commit 6d890366e3e726f208269a36e3b9eeb2beb6bbef
+Author: Nick Bargnesi <nick@den-4.com>
+Date:   Sun Jan 22 23:38:54 2012 -0500
 
-2011-11-25  Nick Bargnesi  <nick@den-4.com>
+    Refactor individual global variables into a GLOBALS struct.
 
-	* lib/ipc.c, lib/ipc.h, lib/layout.h, lib/state.c, lib/state.h,
-	lib/xyxlib.c, lib/xyxlib.h:
-	Add size_hints and update enums/structs to match conventions.
-	[02e986809dc1]
+commit c7b46e03b107e10d79341cc72329e7d2f5fea2bf
+Author: Nick Bargnesi <nick@den-4.com>
+Date:   Sun Jan 22 00:52:31 2012 -0500
 
-2011-11-22  Nick Bargnesi  <nick@den-4.com>
+    Remove xy_started. main_loop is called in STATE_RUNNING
 
-	* configure:
-	Remove sleep.
-	[7dd65a0acb03]
+commit ddb589dde5c559f639de7ccb74a695dda67125b0
+Author: Nick Bargnesi <nick@den-4.com>
+Date:   Sun Jan 22 00:16:49 2012 -0500
 
-2011-11-20  Nick Bargnesi  <nick@den-4.com>
+    Rework some of the initialization logic and states.
 
-	* configure, lib/Makefile.am, lib/Makefile.in, lib/layout.c,
-	lib/layout.h:
-	Initial layout module.
-	[cfca4ecda6c6]
+commit 7e0a08e233481d4a2fc77649b5f0d4f42b71764a
+Author: Nick Bargnesi <nick@den-4.com>
+Date:   Sat Jan 21 23:55:58 2012 -0500
 
-2011-10-30  Nick Bargnesi  <nick@den-4.com>
+    Remove XYLIBS from lib. No linking is done until src or tests.
 
-	* Makefile.am, Makefile.in, makedist:
-	Make 'distcheck' default to '--disable-tests'.
-	[47ebad372b17]
+commit 1629cee958c80b9468557063d1c29be8c1d3c682
+Author: Nick Bargnesi <nick@den-4.com>
+Date:   Sat Jan 21 23:53:36 2012 -0500
 
-	* Makefile.in, configure.in:
-	Add 'dist-xz' to AM_INIT_AUTOMAKE options.
-	[bda7855cb9b1]
+    Add global_dflt_screen.
 
-	* configure, configure.in:
-	Standardize CFLAGS, and include '-pipe'. Optimizations/debugging
-	only switches
-	-O3 / -O0 -g3.
-	[6afb09a971c2]
-
-	* configure, configure.in:
-	Switch configure's --enable-tests to --disable-tests. Defaults to
-	disabled.
-	[23ca36ac68b5]
-
-2011-10-28  Nick Bargnesi  <nick@den-4.com>
-
-	* config.h.in, configure, configure.in, lib/Makefile.am,
-	lib/Makefile.in, lib/osd.c, lib/osd.h:
-	Removing xosd support until it's used.
-	[6ff82c33ea4a]
-
-	* Makefile.in, configure, configure.in, docs/Makefile.in,
-	lib/Makefile.in, src/Makefile.in, tests/Makefile.in:
-	Remove AC_PATH_X macro in favor of PKG_CHECK for libraries only.
-	[54de40ec76de]
-
-	* Makefile.in, config.h.in, configure, configure.in, docs/Makefile.in,
-	lib/Makefile.am, lib/Makefile.in, lib/osd.c, lib/osd.h,
-	src/Makefile.in, tests/Makefile.in:
-	Backed out changeset a6ab6e06930e
-	[394d32cbe3fc]
-
-	* Makefile.in, config.h.in, configure, configure.in, docs/Makefile.in,
-	lib/Makefile.am, lib/Makefile.in, lib/osd.c, lib/osd.h,
-	src/Makefile.in, tests/Makefile.in:
-	Remove AC_PATH_X
-	[a6ab6e06930e]
-
-	* lib/broadcast.c, lib/lifecycle.c:
-	Invoke set_process_name. Main thread is 'xy: main', broadcast thread
-	is 'xy: broadcast'.
-	[c90537caef95]
-
-	* lib/util.c, lib/util.h, tests/util_tests.c:
-	Add set_process_name and unit test.
-	[5dee0ab37dc2]
-
-2011-10-21  Nick Bargnesi  <nick@den-4.com>
-
-	* lib/ipc.c, lib/ipc.h, lib/lifecycle.c, lib/lifecycle.h, src/main.c:
-	Support for restarting when RESTART is received via ipc.
-	[cc562ebacd4e]
-
-	* lib/Makefile.am, lib/Makefile.in:
-	Here, too. Remove libusb, add jansson.
-	[c4e180f72382]
-
-2011-10-20  Nick Bargnesi  <nick@den-4.com>
-
-	* Makefile.in, configure, configure.in, docs/Makefile.in,
-	src/Makefile.am, src/Makefile.in, tests/Makefile.am,
-	tests/Makefile.in:
-	Remove libusb, add jansson.
-	[75e53edeaa67]
-
-2011-10-19  Nick Bargnesi  <nick@den-4.com>
-
-	* lib/broadcast.c:
-	Fix pthread_cond_wait call with un-held mutex (reported via check-
-	threads).
-	[8c652d8229b7]
-
-2011-10-16  Nick Bargnesi  <nick@den-4.com>
-
-	* .hgtags:
-	Added tag generic_tree_tag for changeset 56869fd5f4e6
-	[7111f2ff0f14] <generic_tree>
-
-	* .hgtags:
-	Added tag generic_tree for changeset e7fc9813c392
-	[56869fd5f4e6] [generic_tree_tag] <generic_tree>
-
-	* Merge.
-	[12855d83c473]
-
-	* lib/Makefile.am, lib/Makefile.in:
-	Remove LIBADD - no longer needed.
-	[0c8d5a83bdfa]
-
-	* COPYING:
-	Add COPYING.
-	[e7fc9813c392] [generic_tree] <generic_tree>
-
-	* AUTHORS, CONVENTIONS, COPYING, INSTALL, Makefile.am, Makefile.in,
-	check-calls, check-mem, check-threads, config.h.in, configure,
-	configure.in, debug, docs/Makefile.am, docs/Makefile.in,
-	docs/apiref.rst, docs/conf.py, docs/index.rst, examples/broadcast
-	/print-broadcasts.py, examples/broadcast/print-broadcasts.rb,
-	examples/broadcast/speak-broadcasts.py, examples/broadcast/speak-
-	broadcasts.rb, examples/ipc/afunix_send.c, examples/ipc/in-
-	python.py, lib/Makefile.am, lib/Makefile.in, lib/broadcast.c,
-	lib/broadcast.h, lib/configuration.c, lib/configuration.h,
-	lib/constants.h, lib/core.h, lib/die.c, lib/event.c, lib/event.h,
-	lib/ipc.c, lib/ipc.h, lib/lifecycle.c, lib/lifecycle.h,
-	lib/logging.c, lib/logging.h, lib/monitor.c, lib/monitor.h,
-	lib/osd.c, lib/osd.h, lib/project.c, lib/project.h, lib/state.c,
-	lib/state.h, lib/sysinfo.c, lib/sysinfo.h, lib/types.h, lib/util.c,
-	lib/util.h, lib/xy.c, lib/xy.h, lib/xyxlib.c, lib/xyxlib.h,
-	resources/log4crc, resources/xy-brand.png, src/Makefile.am,
-	src/Makefile.in, src/main.c, tests/Makefile.am, tests/Makefile.in,
-	tests/core_tests.c, tests/leaktest, tests/monitor_tests.c,
-	tests/project_tests.c, tests/util_tests.c, tests/vg_suppressions,
-	tests/xlib_tests.c:
-	Remove all xy references. This tree should be suitable for any
-	C-based project needing support for unit tests, valgrind, and split
-	lib/src directories.
-	[0d00f081accf] <generic_tree>
-
-	* Create generic_tree branch. This branch will house a generic C-based
-	source tree with support for unit tests, valgrind, and split lib/src
-	directories.
-	[2488a50fa4cd] <generic_tree>
-
-	* lib/broadcast.h, lib/configuration.h, lib/constants.h, lib/core.h,
-	lib/event.h, lib/ipc.h, lib/lifecycle.h, lib/logging.h,
-	lib/monitor.h, lib/osd.h, lib/state.h, lib/sysinfo.h, lib/types.h,
-	lib/util.h, lib/xy.h, lib/xyxlib.h:
-	Fix ifndef/define to include _XY_ prefix.
-	[db9f61a8734d]
-
-	* Merge.
-	[6bfd40b363f6]
-
-	* check-calls, check-mem, check-threads, leaktest, memcheck,
-	tests/leaktest:
-	Add callgrind and helgrind support. Use check- script convention.
-	[18e21c4fe497]
-
-2011-10-15  Nick Bargnesi  <nick@den-4.com>
-
-	* tests/Makefile.am, tests/Makefile.in:
-	Remove vg_suppressions from EXTRA_DIST. Support for running valgrind
-	leak tests is only available in the source tree, not the
-	distributable package.
-	[dbf27f20797e]
-
-	* Makefile.in:
-	Remove leaktest and memcheck from EXTRA_DIST. These files should not
-	be in the distributed package.
-	[5c37cb2018d3]
-
-	* Makefile.am:
-	Remove leaktest and memcheck from EXTRA_DIST. These files should not
-	be in the distributed package.
-	[275785ccdd03]
+commit 2ccfc13dbf30a2d79210576fe39371d9f75a8b55
+Author: Nick Bargnesi <nick@den-4.com>
+Date:   Sat Jan 21 23:51:16 2012 -0500
 
-2011-10-09  Nick Bargnesi  <nick@den-4.com>
-
-	* README:
-	"autotool maintainers" -> "package maintainers"
-	[2ee69f0ba9f2]
-
-2011-10-04  Nick Bargnesi  <nick@den-4.com>
+    Default CFLAGS back to O0.
 
-	* lib/xyxlib.c, lib/xyxlib.h, tests/xlib_tests.c:
-	Test cases, add root_window(Display *).
-	[ee0aee4d48a7]
+commit 9f9579230460081191fa795c70a404fbc3dc0116
+Author: Nick Bargnesi <nick@den-4.com>
+Date:   Sat Jan 21 23:46:40 2012 -0500
 
-	* debug:
-	Add support for check CK_FORK="no" when debugging anything in
-	tests/. See
-	http://check.sourceforge.net/doc/check_html/check_4.html.
-	[416ba1b0da92]
-
-2011-04-05  Nick Bargnesi  <nick@den-4.com>
-
-	* Closing branch. Switching module approach.
-	[0312cedc5515] <ocz-nia>
-
-2011-04-03  Nick Bargnesi  <nick@den-4.com>
-
-	* src/Makefile.am, src/Makefile.in, src/lifecycle.c, src/ocznia.c,
-	src/ocznia.h:
-	Initial integration of OCZ NIA module.
-	[60d58c5437fa] <ocz-nia>
-
-	* Start OCZ NIA feature branch.
-	[1e67ba1a03db] <ocz-nia>
-
-2011-09-29  Nick Bargnesi  <nick@den-4.com>
-
-	* ChangeLog:
-	Backed out changeset 86c7cf5a2ba3
-	[7d6100a687ad]
-
-	* ChangeLog:
-	test
-	[86c7cf5a2ba3]
-
-	* makedist:
-	Carry $@ to make dist.
-	[b85fb79179d9]
-
-2011-09-13  Nick Bargnesi  <nick@den-4.com>
-
-	* tests/monitor_tests.c, tests/xlib_tests.c:
-	Don't run display-based tests if no display is available.
-	[32d3377219f1]
-
-	* Makefile.am, Makefile.in, src/Makefile.am:
-	Suppress printing of clean-local statements.
-	[3f5b60fd9cb5]
-
-2011-09-12  Nick Bargnesi  <nick@den-4.com>
+    Add min(x,y) macro.
 
-	* src/main.c:
-	Fix build.
-	[fdd2c0f11436]
+commit 5696d0353bea6efb6f26567c5f6df5dd4493d6c5
+Author: Nick Bargnesi <nick@den-4.com>
+Date:   Sat Jan 21 13:22:52 2012 -0500
 
-	* src/main.c:
-	Test fixing build.
-	[9f83839905ef]
+    Restart via key shortcut in addition to IPC.
 
-	* src/main.c:
-	Test breaking build.
-	[f5519a91184c]
+commit 5284f32d04e6596cb352e9ed5b51ab13158140f5
+Merge: e53136d fd52d63
+Author: Nick Bargnesi <nick@den-4.com>
+Date:   Fri Jan 20 23:52:40 2012 -0500
 
-	* src/main.c:
-	Test fixing build.
-	[e48e4edeeb7a]
+    Merge
 
-	* src/main.c:
-	Test breaking build.
-	[61c9fa67da05]
+commit e53136d9691e4fbc6b2a0a8dcd77f463242ceb4c
+Author: Nick Bargnesi <nick@den-4.com>
+Date:   Fri Jan 20 23:47:12 2012 -0500
 
-	* src/main.c:
-	Test fixing build.
-	[e402bc2f6f7e]
+    Add RESTARTING state and support restarting the interface at runtime.
 
-2011-09-11  Nick Bargnesi  <nick@den-4.com>
-
-	* src/main.c:
-	Test breaking build.
-	[121f458e9ae6]
-
-2011-09-10  Nick Bargnesi  <nick@den-4.com>
+commit fd52d63a49ffbbc8a5ed5bad4d5c4fef63a0e73b
+Author: Nick Bargnesi <nick@den-4.com>
+Date:   Fri Jan 20 18:45:12 2012 -0500
 
-	* lib/lifecycle.c:
-	Add TODO.
-	[d1f2c97c23fe]
+    Remove --enable-tests. Testing is enabled by default.
 
-	* src/main.c:
-	Test fixing build.
-	[c1c06db2fa4b]
+commit b5811f34d7952487dabc4a033e3b2a388e817364
+Author: Nick Bargnesi <nick@den-4.com>
+Date:   Fri Jan 20 18:39:22 2012 -0500
 
-	* src/main.c:
-	Test breaking build.
-	[4e3135611daf]
+    Don't DIE if epoll_wait is interrupted, simply try again.
 
-	* src/main.c:
-	Test fixing build.
-	[5ab02c1c84a7]
+commit f290fb00d3a4bb9f132d4a005ddcef07d1f71244
+Author: Nick Bargnesi <nick@den-4.com>
+Date:   Fri Jan 20 18:38:40 2012 -0500
 
-	* src/main.c:
-	Test breaking build.
-	[4a1611c15324]
+    Don't DIE if broadcast msg can't be sent. This is most likely because we're
+    shutting down.
 
-	* lib/configuration.c:
-	Kick all configuration name-value pairs out to the debug log on
-	startup.
-	[e889efe2bc4c]
+commit bc3a5ea3fc7efdb3c43dec7ffc4da377b313f60f
+Author: Nick Bargnesi <nick@den-4.com>
+Date:   Fri Jan 20 18:38:08 2012 -0500
 
-	* lib/util.c, lib/util.h, tests/util_tests.c:
-	Exec returns pid_t, instead of void.
-	[a95d108c987f]
+    Free the IPC buffer when we're done with it.
 
-	* configure, configure.in:
-	Update bug report address.
-	[b6fa256d1b87]
+commit 998675bf32752250b29a79472710f2dca7ebccc6
+Author: Nick Bargnesi <nick@den-4.com>
+Date:   Fri Jan 20 18:37:27 2012 -0500
 
-2011-09-06  Nick Bargnesi  <nick@den-4.com>
+    cleanup -> shutdown hooks
 
-	* Makefile.am, Makefile.in, tests/Makefile.am, tests/Makefile.in:
-	Fix EXTRA_DIST.
-	[b4a9e03275ad]
+commit 7293ce81ff27f8890d53399160fb71b57e6b449c
+Author: Nick Bargnesi <nick@den-4.com>
+Date:   Fri Jan 20 18:37:06 2012 -0500
 
-	* tests/Makefile.am, tests/Makefile.in, tests/monitor_tests.c,
-	tests/vg_suppressions, tests/xlib_tests.c:
-	Add monitor_tests and valgrind suppression file.
-	[a7c4b2336bef]
+    Use shutdown hooks; don't close the x fd, close_display takes care of that I
+    think.
 
-	* debug, leaktest, memcheck:
-	Debug and memcheck support overriding the target binary with $@.
-	Added leaktest to perform leak checks against all tests/*_tests
-	using valgrind.
-	[6aba7d000176]
+commit 62e1ff4cf974539ac87fd4958626bc43706a82ff
+Author: Nick Bargnesi <nick@den-4.com>
+Date:   Fri Jan 20 18:34:15 2012 -0500
 
-	* README:
-	Bump.
-	[8a0938744f4d]
+    Type struct epoll_event and rename cleanup functions to shutdown hooks.
 
-2011-09-05  Nick Bargnesi  <nick@den-4.com>
+commit b40085badb27d71be7642fd554f11aee6386afe7
+Author: Nick Bargnesi <nick@den-4.com>
+Date:   Thu Jan 19 22:07:33 2012 -0500
 
-	* .hgignore:
-	Ignore tests/*_tests.
-	[09d3a9469e1b]
+    Bump.
 
-2011-09-04  Nick Bargnesi  <nick@den-4.com>
+commit 2750b3dd026db4be7fbaf6012652c258d88e49c5
+Author: Nick Bargnesi <nick@den-4.com>
+Date:   Thu Jan 19 22:07:28 2012 -0500
 
-	* configure, lib/core.h, tests/Makefile.am, tests/Makefile.in,
-	tests/core_tests.c:
-	Bring in initial support for generic lists.
-	[897b22112c30]
+    Bump.
 
-	* Makefile.am, Makefile.in:
-	Make clean-local remove xy-*tar* build files on 'make clean'.
-	[dfe3f62b775a]
+commit 98ce0b5d7b49afca29dad4a12a1428229d3f2298
+Author: Nick Bargnesi <nick@den-4.com>
+Date:   Thu Jan 19 22:07:17 2012 -0500
 
-	* lib/monitor.c:
-	Fill out Xinerama-based monitor initialization.
-	[4d9da31f5e4b]
+    Fix defunct processes, start work on module shutdown hooks.
 
-2011-09-02  Nick Bargnesi  <nick@den-4.com>
+commit 8da04c258c43210f6fe7bb26c78340b8f28792a9
+Author: Nick Bargnesi <nick@den-4.com>
+Date:   Wed Jan 18 21:40:32 2012 -0500
 
-	* CONVENTIONS, makedist:
-	Include testing the produced archive, and then running distcheck to
-	check the build.
-	[6474c39269dd]
+    Add TODO.
 
-	* src/Makefile.am, src/Makefile.in, tests/Makefile.am,
-	tests/Makefile.in:
-	Fix out-of-tree builds, using top_srcdir and top_builddir.
-	[4a0c870b0179]
-
-	* debug:
-	Add -d arguments to gdb to specify source directories.
-	[db9502e29578]
-
-	* tests/xlib_tests.c:
-	Print to stdout.
-	[23ee19d2ebba]
-
-	* gendoc:
-	Removed gendoc, no longer needed with sphinx.
-	[51e1cfd6a622]
-
-2011-08-31  Nick Bargnesi  <nick@den-4.com>
-
-	* .hgignore:
-	Ignore tests/*_tests.
-	[423823828786]
-
-	* .hgignore, makedist:
-	Ignore _tests and update hgignore.
-	[e4d37ecbead1]
-
-2011-08-30  Nick Bargnesi  <nick@den-4.com>
-
-	* configure, tests/Makefile.am, tests/Makefile.in, tests/test_suite.c,
-	tests/util_tests.c, tests/xlib_tests.c:
-	Break test_suite into xlib_tests and util_tests.
-	[97e464e8b85b]
-
-	* lib/Makefile.am, lib/Makefile.in:
-	Add lib headers to EXTRA_DIST. This includes them in the dist-all
-	packages.
-	[119e589d3157]
-
-2011-08-29  Nick Bargnesi  <nick@den-4.com>
-
-	* configure, docs/source/conf.py, docs/source/index.rst,
-	lib/sysinfo.c, lib/xy.c:
-	Merge sphinx.
-	[9ed2b39349c0]
-
-	* .hgignore, configure, docs/Makefile.am, docs/Makefile.in,
-	docs/apiref.rst, docs/conf.py, docs/index.rst, docs/source/conf.py,
-	docs/source/index.rst, lib/util.h:
-	Migrate util documentation to sphinx.
-	[475621bae367] <sphinx>
-
-2011-08-28  Nick Bargnesi  <nick@den-4.com>
-
-	* Start sphinx documentation branch.
-	[d45544d023aa] <sphinx>
-
-2011-08-29  Nick Bargnesi  <nick@den-4.com>
-
-	* .hgignore, Makefile.am, Makefile.in, compile, configure,
-	configure.in, tests/Makefile.am, tests/Makefile.in,
-	tests/test_suite.c:
-	Update test support and build configuration. The configure argument
-	--enable-tests and --enable-optimizations enable test and compiler
-	optimizations.
-	[bd07dd4ee3e0]
-
-2011-08-28  Nick Bargnesi  <nick@den-4.com>
-
-	* .hgignore:
-	Update hgignore.
-	[0eb13a1fcdd4]
-
-	* tests/Makefile.am, tests/Makefile.in, tests/test_suite:
-	Add Makefile.in/am and remove test_suite binary.
-	[3594c103af30]
-
-	* .hgignore, Makefile.am, Makefile.in, configure, configure.in,
-	lib/Makefile.am, lib/Makefile.in, lib/test_suite.c,
-	tests/test_suite, tests/test_suite.c:
-	Put tests in tests/, update hgignore.
-	[dc8b46a1e84a]
-
-	* check-tree:
-	Print an error if the AM_SANITY_CHECK "sleep 1" is inside configure.
-	[a62fcffe3c51]
-
-2011-08-27  Nick Bargnesi  <nick@den-4.com>
-
-	* lib/Makefile.am, lib/Makefile.in:
-	Add missing lib/Makefiles.
-	[5d7e4703b3e5]
-
-2011-08-26  Nick Bargnesi  <nick@den-4.com>
-
-	* Makefile.am, Makefile.in, check-tree, configure, configure.in,
-	docs/Makefile.in, lib/broadcast.c, lib/broadcast.h,
-	lib/configuration.c, lib/configuration.h, lib/constants.h,
-	lib/core.h, lib/die.c, lib/event.c, lib/event.h, lib/ipc.c,
-	lib/ipc.h, lib/lifecycle.c, lib/lifecycle.h, lib/logging.c,
-	lib/logging.h, lib/monitor.c, lib/monitor.h, lib/osd.c, lib/osd.h,
-	lib/state.c, lib/state.h, lib/sysinfo.c, lib/sysinfo.h,
-	lib/test_suite.c, lib/types.h, lib/util.c, lib/util.h, lib/xy.c,
-	lib/xy.h, lib/xyxlib.c, lib/xyxlib.h, src/Makefile.am,
-	src/Makefile.in, src/broadcast.c, src/broadcast.h,
-	src/configuration.c, src/configuration.h, src/constants.h,
-	src/core.h, src/die.c, src/event.c, src/event.h, src/ipc.c,
-	src/ipc.h, src/lifecycle.c, src/lifecycle.h, src/logging.c,
-	src/logging.h, src/monitor.c, src/monitor.h, src/osd.c, src/osd.h,
-	src/state.c, src/state.h, src/sysinfo.c, src/sysinfo.h,
-	src/test_suite.c, src/types.h, src/util.c, src/util.h, src/xy.c,
-	src/xy.h, src/xyxlib.c, src/xyxlib.h,
-	tools/NaturalDocs-1.52/Config/Languages.txt,
-	tools/NaturalDocs-1.52/Config/Topics.txt,
-	tools/NaturalDocs-1.52/Help/customizinglanguages.html,
-	tools/NaturalDocs-1.52/Help/customizingtopics.html,
-	tools/NaturalDocs-1.52/Help/documenting.html,
-	tools/NaturalDocs-1.52/Help/documenting/reference.html,
-	tools/NaturalDocs-1.52/Help/documenting/walkthrough.html,
-	tools/NaturalDocs-1.52/Help/example/Default.css,
-	tools/NaturalDocs-1.52/Help/example/NaturalDocs.js,
-	tools/NaturalDocs-1.52/Help/example/Roman.css,
-	tools/NaturalDocs-1.52/Help/example/Small.css,
-	tools/NaturalDocs-1.52/Help/example/showstyle.html,
-	tools/NaturalDocs-1.52/Help/examples.css,
-	tools/NaturalDocs-1.52/Help/images/header/background.png,
-	tools/NaturalDocs-1.52/Help/images/header/leftside.png,
-	tools/NaturalDocs-1.52/Help/images/header/logo.png,
-	tools/NaturalDocs-1.52/Help/images/header/overbody.png,
-	tools/NaturalDocs-1.52/Help/images/header/overbodybg.png,
-	tools/NaturalDocs-1.52/Help/images/header/overleftmargin.png,
-	tools/NaturalDocs-1.52/Help/images/header/overmenu.png,
-	tools/NaturalDocs-1.52/Help/images/header/overmenubg.png,
-	tools/NaturalDocs-1.52/Help/images/header/rightside.png,
-	tools/NaturalDocs-1.52/Help/images/menu/about.png,
-	tools/NaturalDocs-1.52/Help/images/menu/background.png,
-	tools/NaturalDocs-1.52/Help/images/menu/bottomleft.png,
-	tools/NaturalDocs-1.52/Help/images/menu/bottomright.png,
-	tools/NaturalDocs-1.52/Help/images/menu/community.png,
-	tools/NaturalDocs-1.52/Help/images/menu/customizing.png,
-	tools/NaturalDocs-1.52/Help/images/menu/using.png,
-	tools/NaturalDocs-1.52/Help/index.html,
-	tools/NaturalDocs-1.52/Help/javascript/BrowserStyles.js,
-	tools/NaturalDocs-1.52/Help/javascript/PNGHandling.js,
-	tools/NaturalDocs-1.52/Help/keywords.html,
-	tools/NaturalDocs-1.52/Help/languages.html,
-	tools/NaturalDocs-1.52/Help/menu.html,
-	tools/NaturalDocs-1.52/Help/output.html,
-	tools/NaturalDocs-1.52/Help/running.html,
-	tools/NaturalDocs-1.52/Help/styles.css,
-	tools/NaturalDocs-1.52/Help/styles.html,
-	tools/NaturalDocs-1.52/Help/troubleshooting.html,
-	tools/NaturalDocs-1.52/Info/CSSGuide.txt,
-	tools/NaturalDocs-1.52/Info/File Parsing.txt,
-	tools/NaturalDocs-1.52/Info/HTMLTestCases.pm,
-	tools/NaturalDocs-1.52/Info/Languages.txt,
-	tools/NaturalDocs-1.52/Info/NDMarkup.txt,
-	tools/NaturalDocs-1.52/Info/Symbol Management.txt,
-	tools/NaturalDocs-1.52/Info/images/Logo.png,
-	tools/NaturalDocs-1.52/JavaScript/GooglePrettify.js,
-	tools/NaturalDocs-1.52/JavaScript/NaturalDocs.js,
-	tools/NaturalDocs-1.52/License.txt,
-	tools/NaturalDocs-1.52/Modules/NaturalDocs/BinaryFile.pm,
-	tools/NaturalDocs-1.52/Modules/NaturalDocs/Builder.pm,
-	tools/NaturalDocs-1.52/Modules/NaturalDocs/Builder/Base.pm,
-	tools/NaturalDocs-1.52/Modules/NaturalDocs/Builder/FramedHTML.pm,
-	tools/NaturalDocs-1.52/Modules/NaturalDocs/Builder/HTML.pm,
-	tools/NaturalDocs-1.52/Modules/NaturalDocs/Builder/HTMLBase.pm,
-	tools/NaturalDocs-1.52/Modules/NaturalDocs/ClassHierarchy.pm,
-	tools/NaturalDocs-1.52/Modules/NaturalDocs/ClassHierarchy/Class.pm,
-	tools/NaturalDocs-1.52/Modules/NaturalDocs/ClassHierarchy/File.pm,
-	tools/NaturalDocs-1.52/Modules/NaturalDocs/ConfigFile.pm,
-	tools/NaturalDocs-1.52/Modules/NaturalDocs/Constants.pm,
-	tools/NaturalDocs-1.52/Modules/NaturalDocs/DefineMembers.pm,
-	tools/NaturalDocs-1.52/Modules/NaturalDocs/Error.pm,
-	tools/NaturalDocs-1.52/Modules/NaturalDocs/File.pm,
-	tools/NaturalDocs-1.52/Modules/NaturalDocs/ImageReferenceTable.pm, t
-	ools/NaturalDocs-1.52/Modules/NaturalDocs/ImageReferenceTable/Refere
-	nce.pm, tools/NaturalDocs-1.52/Modules/NaturalDocs/ImageReferenceTab
-	le/String.pm,
-	tools/NaturalDocs-1.52/Modules/NaturalDocs/Languages.pm, tools/Natur
-	alDocs-1.52/Modules/NaturalDocs/Languages/ActionScript.pm,
-	tools/NaturalDocs-1.52/Modules/NaturalDocs/Languages/Ada.pm,
-	tools/NaturalDocs-1.52/Modules/NaturalDocs/Languages/Advanced.pm, to
-	ols/NaturalDocs-1.52/Modules/NaturalDocs/Languages/Advanced/Scope.pm
-	, tools/NaturalDocs-1.52/Modules/NaturalDocs/Languages/Advanced/Scop
-	eChange.pm,
-	tools/NaturalDocs-1.52/Modules/NaturalDocs/Languages/Base.pm,
-	tools/NaturalDocs-1.52/Modules/NaturalDocs/Languages/CSharp.pm,
-	tools/NaturalDocs-1.52/Modules/NaturalDocs/Languages/PLSQL.pm,
-	tools/NaturalDocs-1.52/Modules/NaturalDocs/Languages/Pascal.pm,
-	tools/NaturalDocs-1.52/Modules/NaturalDocs/Languages/Perl.pm,
-	tools/NaturalDocs-1.52/Modules/NaturalDocs/Languages/Prototype.pm, t
-	ools/NaturalDocs-1.52/Modules/NaturalDocs/Languages/Prototype/Parame
-	ter.pm,
-	tools/NaturalDocs-1.52/Modules/NaturalDocs/Languages/Simple.pm,
-	tools/NaturalDocs-1.52/Modules/NaturalDocs/Languages/Tcl.pm,
-	tools/NaturalDocs-1.52/Modules/NaturalDocs/LineReader.pm,
-	tools/NaturalDocs-1.52/Modules/NaturalDocs/Menu.pm,
-	tools/NaturalDocs-1.52/Modules/NaturalDocs/Menu/Entry.pm,
-	tools/NaturalDocs-1.52/Modules/NaturalDocs/NDMarkup.pm,
-	tools/NaturalDocs-1.52/Modules/NaturalDocs/Parser.pm,
-	tools/NaturalDocs-1.52/Modules/NaturalDocs/Parser/JavaDoc.pm,
-	tools/NaturalDocs-1.52/Modules/NaturalDocs/Parser/Native.pm,
-	tools/NaturalDocs-1.52/Modules/NaturalDocs/Parser/ParsedTopic.pm,
-	tools/NaturalDocs-1.52/Modules/NaturalDocs/Project.pm,
-	tools/NaturalDocs-1.52/Modules/NaturalDocs/Project/ImageFile.pm,
-	tools/NaturalDocs-1.52/Modules/NaturalDocs/Project/SourceFile.pm,
-	tools/NaturalDocs-1.52/Modules/NaturalDocs/ReferenceString.pm,
-	tools/NaturalDocs-1.52/Modules/NaturalDocs/Settings.pm,
-	tools/NaturalDocs-1.52/Modules/NaturalDocs/Settings/BuildTarget.pm,
-	tools/NaturalDocs-1.52/Modules/NaturalDocs/SourceDB.pm,
-	tools/NaturalDocs-1.52/Modules/NaturalDocs/SourceDB/Extension.pm,
-	tools/NaturalDocs-1.52/Modules/NaturalDocs/SourceDB/File.pm,
-	tools/NaturalDocs-1.52/Modules/NaturalDocs/SourceDB/Item.pm, tools/N
-	aturalDocs-1.52/Modules/NaturalDocs/SourceDB/ItemDefinition.pm, tool
-	s/NaturalDocs-1.52/Modules/NaturalDocs/SourceDB/WatchedFileDefinitio
-	ns.pm, tools/NaturalDocs-1.52/Modules/NaturalDocs/StatusMessage.pm,
-	tools/NaturalDocs-1.52/Modules/NaturalDocs/SymbolString.pm,
-	tools/NaturalDocs-1.52/Modules/NaturalDocs/SymbolTable.pm,
-	tools/NaturalDocs-1.52/Modules/NaturalDocs/SymbolTable/File.pm, tool
-	s/NaturalDocs-1.52/Modules/NaturalDocs/SymbolTable/IndexElement.pm,
-	tools/NaturalDocs-1.52/Modules/NaturalDocs/SymbolTable/Reference.pm,
-	tools/NaturalDocs-1.52/Modules/NaturalDocs/SymbolTable/ReferenceTarg
-	et.pm,
-	tools/NaturalDocs-1.52/Modules/NaturalDocs/SymbolTable/Symbol.pm, to
-	ols/NaturalDocs-1.52/Modules/NaturalDocs/SymbolTable/SymbolDefinitio
-	n.pm, tools/NaturalDocs-1.52/Modules/NaturalDocs/Topics.pm,
-	tools/NaturalDocs-1.52/Modules/NaturalDocs/Topics/Type.pm,
-	tools/NaturalDocs-1.52/Modules/NaturalDocs/Version.pm,
-	tools/NaturalDocs-1.52/NaturalDocs,
-	tools/NaturalDocs-1.52/NaturalDocs.bat,
-	tools/NaturalDocs-1.52/Styles/Default.css,
-	tools/NaturalDocs-1.52/Styles/Roman.css,
-	tools/NaturalDocs-1.52/Styles/Small.css:
-	Split src into lib and src, to keep test separate from main.
-	[0dcb8d7cc22e]
-
-2011-08-24  Nick Bargnesi  <nick@den-4.com>
-
-	* Makefile.in, aclocal.m4, configure, docs/Makefile.am,
-	docs/Makefile.in, docs/source/conf.py, docs/source/index.rst:
-	Remove CHANGES, add docs/Makefile*.
-	[5371ce9a26e6]
-
-2011-07-10  Nick Bargnesi  <nick@den-4.com>
-
-	* examples/broadcast/print-broadcasts.py, examples/broadcast/print-
-	broadcasts.rb, examples/broadcast/speak-broadcasts.py,
-	examples/broadcast/speak-broadcasts.rb:
-	Make each broadcast example program as close to the other language
-	equivalent. I.e., print-broadcasts looks similar in both Python and
-	Ruby.
-	[a69fde1addd3]
-
-2011-07-08  Nick Bargnesi  <nick@den-4.com>
-
-	* examples/broadcast/print-broadcasts.py, examples/broadcast/print-
-	broadcasts.rb, examples/broadcast/speak-broadcasts.py:
-	Add Python print/speak variants to complement the Ruby examples.
-	The Python-based speak implementation will use festival's text2wave
-	and pyaudio for audio output (see AUDIO_DEVICE_INDEX and AUDIO_CHUNK
-	if nothing is heard.
-	[455747f953e6]
-
-2011-07-07  Nick Bargnesi  <nick@den-4.com>
-
-	* .hgignore, Makefile.am, Makefile.in, aclocal.m4, configure,
-	configure.in:
-	Add sphinx-based documentation output to docs/.
-	[50f146abb6c3]
-
-2011-07-05  Nick Bargnesi  <nick@den-4.com>
-
-	* examples/broadcast/in-ruby.rb, examples/broadcast/print-
-	broadcasts.rb, examples/broadcast/speak-broadcasts.rb:
-	Break the Ruby-based broadcast listener into a printer and a speaker
-	via festival.
-	[d755034a3153]
-
-	* src/lifecycle.c, src/xy.c:
-	Don't send the startup message until we hit the main loop.
-	[199ec597cfa4]
-
-2011-06-23  Nick Bargnesi  <nick@den-4.com>
-
-	* src/event.h:
-	Documentation.
-	[ed9d9030f56b]
-
-2011-06-22  Nick Bargnesi  <nick@den-4.com>
-
-	* src/constants.h:
-	Documentation.
-	[3a7e39f32294]
-
-2011-06-21  Nick Bargnesi  <nick@den-4.com>
-
-	* src/configuration.h:
-	Documentation.
-	[0ad2c36ba6b2]
-
-2011-06-08  Nick Bargnesi  <nick@den-4.com>
-
-	* aclocal.m4, configure, src/Makefile.am, src/Makefile.in,
-	src/test_suite.c, src/util.h:
-	Finish documenting util, add test cases for same.
-	[58f6315f32dd]
-
-2011-06-07  Nick Bargnesi  <nick@den-4.com>
-
-	* src/util.h:
-	Documentation updates.
-	[5e35f055da6f]
-
-2011-05-31  Nick Bargnesi  <nick@den-4.com>
-
-	* .hgignore:
-	Glob the src/*.o files in hgignore.
-	[b6e31f344584]
-
-2011-05-25  Nick Bargnesi  <nick@den-4.com>
-
-	* Makefile.in, src/lifecycle.c, src/monitor.c, src/monitor.h:
-	Initial support for monitor initialization.
-	[74cdce4911f3]
-
-2011-05-24  Nick Bargnesi  <nick@den-4.com>
-
-	* src/Makefile.am, src/Makefile.in, src/color.c, src/color.h,
-	src/configuration.c, src/lifecycle.c, src/test_suite.c,
-	src/wmcheck.c, src/wmcheck.h, src/xinerama.c, src/xinerama.h,
-	src/xy.h, src/xyxlib.c, src/xyxlib.h:
-	Collapse color, wmcheck, and xinerama into xyxlib and util.
-	[06106bae8b86]
-
-2011-05-23  Nick Bargnesi  <nick@den-4.com>
-
-	* src/Makefile.am, src/Makefile.in, src/configuration.h, src/core.h,
-	src/event.c, src/event.h, src/monitor.h, src/restart.c,
-	src/restart.h, src/screen.c, src/screen.h, src/util.c, src/util.h,
-	src/xy.h, src/xyxlib.c, src/xyxlib.h:
-	Collapse modules. Restart into util, screen into xyxlib.
-	[e1897b711e3c]
-
-2011-05-19  Nick Bargnesi  <nick@den-4.com>
-
-	* src/lifecycle.c:
-	Use get_xinerama_screens.
-	[0ff939a12c84]
-
-	* .hgignore, Makefile.am, Makefile.in, configure, configure.in,
-	src/Makefile.am, src/Makefile.in, src/lifecycle.c, src/test_suite.c,
-	src/xinerama.c, tests/test_suite.c:
-	Monitor-based test cases.
-	[7d0408fa7729]
-
-2011-05-18  Nick Bargnesi  <nick@den-4.com>
-
-	* Makefile.am, Makefile.in, aclocal.m4, compile, config.h.in,
-	configure, configure.in, src/Makefile.am, src/Makefile.in,
-	src/display.c, src/display.h, src/monitor.c, src/monitor.h,
-	src/tests.c, src/xy.h, src/xyxlib.c, src/xyxlib.h,
-	tests/test_suite.c:
-	Integrate unit testing via check into tests subdirectory. Add
-	monitor module and collapse display into xyxlib.
-	[6539999d5da5]
-
-2011-05-17  Nick Bargnesi  <nick@den-4.com>
-
-	* Makefile.in, configure, configure.in, src/Makefile.am,
-	src/Makefile.in, src/core.h, src/lifecycle.c, src/tests.c,
-	src/util.c, src/xy.c:
-	Add unit test support via check, and DIE_MSG to print a message
-	before dying. A suicide note, if you will.
-	[a889a239a081]
-
-2011-05-15  Nick Bargnesi  <nick@den-4.com>
-
-	* src/xinerama.h:
-	Correct documentation.
-	[2900283b0ccc]
-
-	* src/constants.h, src/lifecycle.c, src/util.h, src/xinerama.c,
-	src/xinerama.h, src/xy.h:
-	Establish global access to all Xinerama screens on startup.
-	Broadcast the number of screens and each screen's set of properties.
-	[64ef4d94d876]
-
-	* memcheck:
-	Add memcheck, memory checking via valgrind.
-	[337b8ec23dce]
-
-	* .hgignore, gendoc, tools/NaturalDocs-1.52/Config/Languages.txt,
-	tools/NaturalDocs-1.52/Config/Topics.txt,
-	tools/NaturalDocs-1.52/Help/customizinglanguages.html,
-	tools/NaturalDocs-1.52/Help/customizingtopics.html,
-	tools/NaturalDocs-1.52/Help/documenting.html,
-	tools/NaturalDocs-1.52/Help/documenting/reference.html,
-	tools/NaturalDocs-1.52/Help/documenting/walkthrough.html,
-	tools/NaturalDocs-1.52/Help/example/Default.css,
-	tools/NaturalDocs-1.52/Help/example/NaturalDocs.js,
-	tools/NaturalDocs-1.52/Help/example/Roman.css,
-	tools/NaturalDocs-1.52/Help/example/Small.css,
-	tools/NaturalDocs-1.52/Help/example/showstyle.html,
-	tools/NaturalDocs-1.52/Help/examples.css,
-	tools/NaturalDocs-1.52/Help/images/header/background.png,
-	tools/NaturalDocs-1.52/Help/images/header/leftside.png,
-	tools/NaturalDocs-1.52/Help/images/header/logo.png,
-	tools/NaturalDocs-1.52/Help/images/header/overbody.png,
-	tools/NaturalDocs-1.52/Help/images/header/overbodybg.png,
-	tools/NaturalDocs-1.52/Help/images/header/overleftmargin.png,
-	tools/NaturalDocs-1.52/Help/images/header/overmenu.png,
-	tools/NaturalDocs-1.52/Help/images/header/overmenubg.png,
-	tools/NaturalDocs-1.52/Help/images/header/rightside.png,
-	tools/NaturalDocs-1.52/Help/images/menu/about.png,
-	tools/NaturalDocs-1.52/Help/images/menu/background.png,
-	tools/NaturalDocs-1.52/Help/images/menu/bottomleft.png,
-	tools/NaturalDocs-1.52/Help/images/menu/bottomright.png,
-	tools/NaturalDocs-1.52/Help/images/menu/community.png,
-	tools/NaturalDocs-1.52/Help/images/menu/customizing.png,
-	tools/NaturalDocs-1.52/Help/images/menu/using.png,
-	tools/NaturalDocs-1.52/Help/index.html,
-	tools/NaturalDocs-1.52/Help/javascript/BrowserStyles.js,
-	tools/NaturalDocs-1.52/Help/javascript/PNGHandling.js,
-	tools/NaturalDocs-1.52/Help/keywords.html,
-	tools/NaturalDocs-1.52/Help/languages.html,
-	tools/NaturalDocs-1.52/Help/menu.html,
-	tools/NaturalDocs-1.52/Help/output.html,
-	tools/NaturalDocs-1.52/Help/running.html,
-	tools/NaturalDocs-1.52/Help/styles.css,
-	tools/NaturalDocs-1.52/Help/styles.html,
-	tools/NaturalDocs-1.52/Help/troubleshooting.html,
-	tools/NaturalDocs-1.52/Info/CSSGuide.txt,
-	tools/NaturalDocs-1.52/Info/File Parsing.txt,
-	tools/NaturalDocs-1.52/Info/HTMLTestCases.pm,
-	tools/NaturalDocs-1.52/Info/Languages.txt,
-	tools/NaturalDocs-1.52/Info/NDMarkup.txt,
-	tools/NaturalDocs-1.52/Info/Symbol Management.txt,
-	tools/NaturalDocs-1.52/Info/images/Logo.png,
-	tools/NaturalDocs-1.52/JavaScript/GooglePrettify.js,
-	tools/NaturalDocs-1.52/JavaScript/NaturalDocs.js,
-	tools/NaturalDocs-1.52/License.txt,
-	tools/NaturalDocs-1.52/Modules/NaturalDocs/BinaryFile.pm,
-	tools/NaturalDocs-1.52/Modules/NaturalDocs/Builder.pm,
-	tools/NaturalDocs-1.52/Modules/NaturalDocs/Builder/Base.pm,
-	tools/NaturalDocs-1.52/Modules/NaturalDocs/Builder/FramedHTML.pm,
-	tools/NaturalDocs-1.52/Modules/NaturalDocs/Builder/HTML.pm,
-	tools/NaturalDocs-1.52/Modules/NaturalDocs/Builder/HTMLBase.pm,
-	tools/NaturalDocs-1.52/Modules/NaturalDocs/ClassHierarchy.pm,
-	tools/NaturalDocs-1.52/Modules/NaturalDocs/ClassHierarchy/Class.pm,
-	tools/NaturalDocs-1.52/Modules/NaturalDocs/ClassHierarchy/File.pm,
-	tools/NaturalDocs-1.52/Modules/NaturalDocs/ConfigFile.pm,
-	tools/NaturalDocs-1.52/Modules/NaturalDocs/Constants.pm,
-	tools/NaturalDocs-1.52/Modules/NaturalDocs/DefineMembers.pm,
-	tools/NaturalDocs-1.52/Modules/NaturalDocs/Error.pm,
-	tools/NaturalDocs-1.52/Modules/NaturalDocs/File.pm,
-	tools/NaturalDocs-1.52/Modules/NaturalDocs/ImageReferenceTable.pm, t
-	ools/NaturalDocs-1.52/Modules/NaturalDocs/ImageReferenceTable/Refere
-	nce.pm, tools/NaturalDocs-1.52/Modules/NaturalDocs/ImageReferenceTab
-	le/String.pm,
-	tools/NaturalDocs-1.52/Modules/NaturalDocs/Languages.pm, tools/Natur
-	alDocs-1.52/Modules/NaturalDocs/Languages/ActionScript.pm,
-	tools/NaturalDocs-1.52/Modules/NaturalDocs/Languages/Ada.pm,
-	tools/NaturalDocs-1.52/Modules/NaturalDocs/Languages/Advanced.pm, to
-	ols/NaturalDocs-1.52/Modules/NaturalDocs/Languages/Advanced/Scope.pm
-	, tools/NaturalDocs-1.52/Modules/NaturalDocs/Languages/Advanced/Scop
-	eChange.pm,
-	tools/NaturalDocs-1.52/Modules/NaturalDocs/Languages/Base.pm,
-	tools/NaturalDocs-1.52/Modules/NaturalDocs/Languages/CSharp.pm,
-	tools/NaturalDocs-1.52/Modules/NaturalDocs/Languages/PLSQL.pm,
-	tools/NaturalDocs-1.52/Modules/NaturalDocs/Languages/Pascal.pm,
-	tools/NaturalDocs-1.52/Modules/NaturalDocs/Languages/Perl.pm,
-	tools/NaturalDocs-1.52/Modules/NaturalDocs/Languages/Prototype.pm, t
-	ools/NaturalDocs-1.52/Modules/NaturalDocs/Languages/Prototype/Parame
-	ter.pm,
-	tools/NaturalDocs-1.52/Modules/NaturalDocs/Languages/Simple.pm,
-	tools/NaturalDocs-1.52/Modules/NaturalDocs/Languages/Tcl.pm,
-	tools/NaturalDocs-1.52/Modules/NaturalDocs/LineReader.pm,
-	tools/NaturalDocs-1.52/Modules/NaturalDocs/Menu.pm,
-	tools/NaturalDocs-1.52/Modules/NaturalDocs/Menu/Entry.pm,
-	tools/NaturalDocs-1.52/Modules/NaturalDocs/NDMarkup.pm,
-	tools/NaturalDocs-1.52/Modules/NaturalDocs/Parser.pm,
-	tools/NaturalDocs-1.52/Modules/NaturalDocs/Parser/JavaDoc.pm,
-	tools/NaturalDocs-1.52/Modules/NaturalDocs/Parser/Native.pm,
-	tools/NaturalDocs-1.52/Modules/NaturalDocs/Parser/ParsedTopic.pm,
-	tools/NaturalDocs-1.52/Modules/NaturalDocs/Project.pm,
-	tools/NaturalDocs-1.52/Modules/NaturalDocs/Project/ImageFile.pm,
-	tools/NaturalDocs-1.52/Modules/NaturalDocs/Project/SourceFile.pm,
-	tools/NaturalDocs-1.52/Modules/NaturalDocs/ReferenceString.pm,
-	tools/NaturalDocs-1.52/Modules/NaturalDocs/Settings.pm,
-	tools/NaturalDocs-1.52/Modules/NaturalDocs/Settings/BuildTarget.pm,
-	tools/NaturalDocs-1.52/Modules/NaturalDocs/SourceDB.pm,
-	tools/NaturalDocs-1.52/Modules/NaturalDocs/SourceDB/Extension.pm,
-	tools/NaturalDocs-1.52/Modules/NaturalDocs/SourceDB/File.pm,
-	tools/NaturalDocs-1.52/Modules/NaturalDocs/SourceDB/Item.pm, tools/N
-	aturalDocs-1.52/Modules/NaturalDocs/SourceDB/ItemDefinition.pm, tool
-	s/NaturalDocs-1.52/Modules/NaturalDocs/SourceDB/WatchedFileDefinitio
-	ns.pm, tools/NaturalDocs-1.52/Modules/NaturalDocs/StatusMessage.pm,
-	tools/NaturalDocs-1.52/Modules/NaturalDocs/SymbolString.pm,
-	tools/NaturalDocs-1.52/Modules/NaturalDocs/SymbolTable.pm,
-	tools/NaturalDocs-1.52/Modules/NaturalDocs/SymbolTable/File.pm, tool
-	s/NaturalDocs-1.52/Modules/NaturalDocs/SymbolTable/IndexElement.pm,
-	tools/NaturalDocs-1.52/Modules/NaturalDocs/SymbolTable/Reference.pm,
-	tools/NaturalDocs-1.52/Modules/NaturalDocs/SymbolTable/ReferenceTarg
-	et.pm,
-	tools/NaturalDocs-1.52/Modules/NaturalDocs/SymbolTable/Symbol.pm, to
-	ols/NaturalDocs-1.52/Modules/NaturalDocs/SymbolTable/SymbolDefinitio
-	n.pm, tools/NaturalDocs-1.52/Modules/NaturalDocs/Topics.pm,
-	tools/NaturalDocs-1.52/Modules/NaturalDocs/Topics/Type.pm,
-	tools/NaturalDocs-1.52/Modules/NaturalDocs/Version.pm,
-	tools/NaturalDocs-1.52/NaturalDocs,
-	tools/NaturalDocs-1.52/NaturalDocs.bat,
-	tools/NaturalDocs-1.52/Styles/Default.css,
-	tools/NaturalDocs-1.52/Styles/Roman.css,
-	tools/NaturalDocs-1.52/Styles/Small.css:
-	Add doc generation support, via Natural Docs.
-	(http://www.naturaldocs.org/)
-	[3d4e88eff4e1]
-
-2011-05-14  Nick Bargnesi  <nick@den-4.com>
-
-	* src/Makefile.am, src/Makefile.in, src/main.c, src/xy.c:
-	Push main() into main.c.
-	[2f2acb6f252d]
-
-2011-05-13  Nick Bargnesi  <nick@den-4.com>
-
-	* src/event.c, src/xy.c, src/xy.h:
-	Fill out a handful of XEvent functions.
-	[c914f8193028]
-
-2011-05-12  Nick Bargnesi  <nick@den-4.com>
-
-	* src/configuration.c, src/configuration.h, src/constants.h,
-	src/lifecycle.c, src/util.c, src/util.h, src/xy.c:
-	Initial support for spawning a terminal.
-	[b7f0bafd27ed]
-
-2011-05-11  Nick Bargnesi  <nick@den-4.com>
-
-	* src/configuration.c, src/configuration.h, src/constants.h,
-	src/lifecycle.c, src/xy.c:
-	Add shortcut for shutting down xy.
-	[693861c7f22c]
-
-	* src/configuration.c, src/configuration.h, src/constants.h, src/xy.c:
-	Add a shortcut for launching a terminal.
-	[8dd4c54d2c80]
-
-2011-05-10  Nick Bargnesi  <nick@den-4.com>
-
-	* src/util.c, src/util.h, src/xy.c:
-	Finish key event parsing, considering keystr. Add dump_stack.
-	[cbcf73b3e5c6]
-
-2011-05-07  Nick Bargnesi  <nick@den-4.com>
-
-	* src/configuration.c, src/configuration.h, src/constants.h,
-	src/ipc.c, src/lifecycle.c, src/util.c, src/util.h, src/xy.c:
-	Address TODO, implementing fill_config. Start processing key
-	shortcuts.
-	[318c921ba916]
-
-2011-05-02  Nick Bargnesi  <nick@den-4.com>
-
-	* README:
-	Test.
-	[42fbd2b29dd5]
-
-2011-04-29  Nick Bargnesi  <nick@den-4.com>
-
-	* src/xy.c:
-	Remove debug loggings for "servicing..." messages.
-	[05911e5528de]
-
-	* src/Makefile.am, src/Makefile.in, src/event.c, src/xy.c, src/xy.h:
-	Add no-unused-variable to AM_CFLAGS.
-	[631f0d25ed21]
-
-	* src/util.c, src/util.h:
-	Add key state utility functions for key events.
-	[c3fda3e0404e]
-
-2011-04-25  Nick Bargnesi  <nick@den-4.com>
-
-	* .hgignore, Makefile.in, src/Makefile.am, src/Makefile.in,
-	src/configuration.c, src/configuration.h, src/event.c, src/event.h,
-	src/xy.c, src/xy.h:
-	Add event and push configuration items into configuration.c.
-	[c6253ed8f746]
-
-2011-04-24  Nick Bargnesi  <nick@den-4.com>
-
-	* src/configuration.c, src/xy.c:
-	TODOs.
-	[a8ca3a4cc5bd]
-
-2011-04-23  Nick Bargnesi  <nick@den-4.com>
-
-	* TODO:
-	Remove TODO.
-	[840a494e6e88]
-
-	* src/xy.c:
-	Beginning XEvent hooks.
-	[71c47cc813b5]
-
-2011-04-22  Nick Bargnesi  <nick@den-4.com>
-
-	* src/xy.c:
-	Send SHUTDOWN message in correct location.
-	[4fc4858008d0]
-
-	* src/configuration.c, src/constants.h, src/core.h, src/ipc.c,
-	src/ipc.h, src/lifecycle.c, src/util.c, src/util.h, src/xy.c,
-	src/xy.h:
-	Service the IPC socket. Currently supports QUIT and PING.
-	[abf1eae43356]
-
-	* .hgignore:
-	Update.
-	[fe0a7ff7949e]
-
-	* src/color.h:
-	Remove accidental inclusion of broadcast.h.
-	[9b522637a6f3]
-
-	* examples/ipc/in-python.py:
-	Send sys.argv[1] as IPC message.
-	[4c7fc985b7f7]
-
-2011-04-21  Nick Bargnesi  <nick@den-4.com>
-
-	* src/broadcast.c, src/broadcast.h, src/color.c, src/color.h,
-	src/configuration.c, src/configuration.h, src/constants.h,
-	src/core.h, src/die.c, src/display.c, src/display.h, src/ipc.c,
-	src/ipc.h, src/lifecycle.c, src/lifecycle.h, src/logging.c,
-	src/logging.h, src/osd.c, src/osd.h, src/restart.c, src/restart.h,
-	src/screen.c, src/screen.h, src/state.c, src/state.h, src/sysinfo.c,
-	src/sysinfo.h, src/types.h, src/util.c, src/util.h, src/wmcheck.c,
-	src/wmcheck.h, src/xinerama.c, src/xinerama.h, src/xy.c, src/xy.h,
-	src/xyxlib.c, src/xyxlib.h:
-	Apply GPLv3 header.
-	[6051ab9464c7]
-
-	* .hgignore, src/Makefile.am, src/Makefile.in, src/core.h, src/die.c,
-	src/xy.c:
-	Fix DIE, add die(), add likely/unlikely.
-	[1fac5dd78e7b]
-
-	* src/ipc.c, src/lifecycle.c, src/xy.c, src/xy.h:
-	Initial select() loop inside main_loop.
-	[521613852d93]
-
-	* resources/xy-doxygen.png:
-	Remove old doxygen logo.
-	[86e34d826eeb]
-
-	* .hgignore:
-	Update hgignore.
-	[07b8404dfcd6]
-
-2011-04-20  Nick Bargnesi  <nick@den-4.com>
-
-	* src/ipc.c, src/ipc.h, src/lifecycle.c, src/xy.c, src/xy.h:
-	ipc_close -> ipc_terminate, and initialize display and configuration
-	in lifecycle startup.
-	[49ae417bd730]
-
-	* src/Makefile.in:
-	AM_CFLAGS - include Werror.
-	[8dbbc4b24fee]
-
-	* src/Makefile.am:
-	Add -Werror to AM_CFLAGS.
-	[16d90d654a75]
-
-2011-04-18  Nick Bargnesi  <nick@den-4.com>
-
-	* examples/ipc/in-python.py:
-	Add Python-based IPC example.
-	[970780a8b97d]
-
-	* examples/ipc/afunix_send.c:
-	Add example IPC connector.
-	[2f097e8b4aea]
-
-	* src/core.h, src/lifecycle.c, src/xy.c, src/xy.h:
-	Add main_loop function to xy, to execute select against IPC and X
-	descriptors.
-	[267d7ad6d281]
-
-2011-04-16  Nick Bargnesi  <nick@den-4.com>
-
-	* src/Makefile.am, src/Makefile.in, src/core.h, src/ipc.c, src/ipc.h,
-	src/lifecycle.c, src/xy.h:
-	Add ipc module.
-	[03157a5bcacb]
-
-2011-04-15  Nick Bargnesi  <nick@den-4.com>
-
-	* examples/broadcast/in-ruby.rb:
-	Add broadcast receiver example, in Ruby.
-	[f8147e23feb5]
-
-	* src/broadcast.c, src/broadcast.h, src/constants.h, src/core.h,
-	src/lifecycle.c, src/xy.c, src/xy.h:
-	Better broadcast support, allowing for broadcasting lots of messages
-	at a time without loss beyond what is provided by UDP.
-	[da664016bfb6]
-
-	* Doxyfile:
-	Ditch doxygen in favor of natural docs.
-	[38e654b940cb]
-
-2011-04-14  Nick Bargnesi  <nick@den-4.com>
-
-	* config.h.in, configure, configure.in, src/Makefile.am,
-	src/Makefile.in, src/broadcast.c, src/broadcast.h, src/constants.h,
-	src/core.h, src/lifecycle.c, src/lifecycle.h, src/state.c, src/xy.c:
-	Integrate communication from xy out to receivers via unreliable UDP
-	and multicast.
-	[2073290db801]
-
-2011-04-13  Nick Bargnesi  <nick@den-4.com>
-
-	* .hgignore, Doxyfile, resources/xy-brand.png, resources/xy-
-	doxygen.png, src/color.h, src/xy.h:
-	Integrate doxygen.
-	[d113774680b0]
-
-2011-04-12  Nick Bargnesi  <nick@den-4.com>
-
-	* src/lifecycle.c:
-	Zero rcpath, append '/'.
-	[c66a174b0c63]
-
-	* src/constants.h, src/core.h, src/lifecycle.c, src/lifecycle.h,
-	src/state.c, src/state.h:
-	Lifecycle updates.
-	[cd46a143d317]
-
-2011-04-07  Nick Bargnesi  <nick@den-4.com>
-
-	* src/core.h, src/lifecycle.c, src/lifecycle.h, src/state.c:
-	Directory init logic.
-	[39c02f7bef45]
-
-	* src/constants.h:
-	Bump.
-	[6b0a066ed836]
-
-2011-04-03  Nick Bargnesi  <nick@den-4.com>
-
-	* src/Makefile.am, src/Makefile.in, src/constants.h, src/lifecycle.c,
-	src/lifecycle.h, src/startup.c, src/startup.h, src/state.c,
-	src/state.h, src/xy.c, src/xy.h:
-	Migrate startup to lifecycle, push more startup/shutdown logic in.
-	[f3554937449c]
-
-	* src/constants.h, src/xy.c, src/xy.h:
-	Push strings into constants.h.
-	[0e6c4b1058f3]
-
-2011-04-01  Nick Bargnesi  <nick@den-4.com>
-
-	* src/logging.c, src/logging.h, src/startup.c, src/startup.h,
-	src/state.c, src/state.h, src/xy.c, src/xy.h:
-	Begin making modules conform to _init and _terminate function names.
-	Push startup logic into startup.c.
-	[f8db562c36e0]
-
-2011-03-30  Nick Bargnesi  <nick@den-4.com>
-
-	* src/Makefile.am, src/Makefile.in, src/constants.h, src/startup.c,
-	src/startup.h, src/state.c, src/state.h, src/xy.c:
-	Start to pull out constants. Add startup code and state machine
-	placeholder.
-	[967b592271e4]
-
-2011-03-24  Nick Bargnesi  <nick@den-4.com>
-
-	* AUTHORS, CONVENTIONS, COPYING, ChangeLog, INSTALL, Makefile.am,
-	Makefile.in, NEWS, README, TODO, aclocal.m4, config.h.in, configure,
-	configure.in, debug, depcomp, install-sh, missing,
-	resources/log4crc, src/Makefile.am, src/Makefile.in, src/color.c,
-	src/color.h, src/configuration.c, src/configuration.h, src/core.h,
-	src/display.c, src/display.h, src/logging.c, src/logging.h,
-	src/osd.c, src/osd.h, src/restart.c, src/restart.h, src/screen.c,
-	src/screen.h, src/sysinfo.c, src/sysinfo.h, src/types.h, src/util.c,
-	src/util.h, src/wmcheck.c, src/wmcheck.h, src/xinerama.c,
-	src/xinerama.h, src/xy.c, src/xy.h, src/xyxlib.c, src/xyxlib.h:
-	Initial import.
-	[1014dffdd662]
-
-	* xy-trunk/AUTHORS, xy-trunk/CONVENTIONS, xy-trunk/COPYING, xy-
-	trunk/ChangeLog, xy-trunk/INSTALL, xy-trunk/Makefile.am, xy-
-	trunk/Makefile.in, xy-trunk/NEWS, xy-trunk/README, xy-trunk/TODO,
-	xy-trunk/aclocal.m4, xy-trunk/config.h.in, xy-trunk/configure, xy-
-	trunk/configure.in, xy-trunk/debug, xy-trunk/depcomp, xy-trunk
-	/install-sh, xy-trunk/missing, xy-trunk/resources/log4crc, xy-
-	trunk/src/Makefile.am, xy-trunk/src/Makefile.in, xy-
-	trunk/src/color.c, xy-trunk/src/color.h, xy-
-	trunk/src/configuration.c, xy-trunk/src/configuration.h, xy-
-	trunk/src/core.h, xy-trunk/src/display.c, xy-trunk/src/display.h,
-	xy-trunk/src/logging.c, xy-trunk/src/logging.h, xy-trunk/src/osd.c,
-	xy-trunk/src/osd.h, xy-trunk/src/restart.c, xy-trunk/src/restart.h,
-	xy-trunk/src/screen.c, xy-trunk/src/screen.h, xy-
-	trunk/src/sysinfo.c, xy-trunk/src/sysinfo.h, xy-trunk/src/types.h,
-	xy-trunk/src/util.c, xy-trunk/src/util.h, xy-trunk/src/wmcheck.c,
-	xy-trunk/src/wmcheck.h, xy-trunk/src/xinerama.c, xy-
-	trunk/src/xinerama.h, xy-trunk/src/xy.c, xy-trunk/src/xy.h, xy-
-	trunk/src/xyxlib.c, xy-trunk/src/xyxlib.h:
-	Removing.
-	[af229e764af1]
-
-	* xy-trunk/AUTHORS, xy-trunk/CONVENTIONS, xy-trunk/COPYING, xy-
-	trunk/ChangeLog, xy-trunk/INSTALL, xy-trunk/Makefile.am, xy-
-	trunk/Makefile.in, xy-trunk/NEWS, xy-trunk/README, xy-trunk/TODO,
-	xy-trunk/aclocal.m4, xy-trunk/config.h.in, xy-trunk/configure, xy-
-	trunk/configure.in, xy-trunk/debug, xy-trunk/depcomp, xy-trunk
-	/install-sh, xy-trunk/missing, xy-trunk/resources/log4crc, xy-
-	trunk/src/Makefile.am, xy-trunk/src/Makefile.in, xy-
-	trunk/src/color.c, xy-trunk/src/color.h, xy-
-	trunk/src/configuration.c, xy-trunk/src/configuration.h, xy-
-	trunk/src/core.h, xy-trunk/src/display.c, xy-trunk/src/display.h,
-	xy-trunk/src/logging.c, xy-trunk/src/logging.h, xy-trunk/src/osd.c,
-	xy-trunk/src/osd.h, xy-trunk/src/restart.c, xy-trunk/src/restart.h,
-	xy-trunk/src/screen.c, xy-trunk/src/screen.h, xy-
-	trunk/src/sysinfo.c, xy-trunk/src/sysinfo.h, xy-trunk/src/types.h,
-	xy-trunk/src/util.c, xy-trunk/src/util.h, xy-trunk/src/wmcheck.c,
-	xy-trunk/src/wmcheck.h, xy-trunk/src/xinerama.c, xy-
-	trunk/src/xinerama.h, xy-trunk/src/xy.c, xy-trunk/src/xy.h, xy-
-	trunk/src/xyxlib.c, xy-trunk/src/xyxlib.h:
-	Initial import of trunk.
-	[d967fbf3db18]
-
-	* xy/trunk/AUTHORS, xy/trunk/CONVENTIONS, xy/trunk/COPYING,
-	xy/trunk/ChangeLog, xy/trunk/INSTALL, xy/trunk/Makefile.am,
-	xy/trunk/Makefile.in, xy/trunk/NEWS, xy/trunk/README, xy/trunk/TODO,
-	xy/trunk/aclocal.m4, xy/trunk/config.h.in, xy/trunk/configure,
-	xy/trunk/configure.in, xy/trunk/debug, xy/trunk/depcomp, xy/trunk
-	/install-sh, xy/trunk/missing, xy/trunk/resources/log4crc,
-	xy/trunk/src/Makefile.am, xy/trunk/src/Makefile.in,
-	xy/trunk/src/color.c, xy/trunk/src/color.h,
-	xy/trunk/src/configuration.c, xy/trunk/src/configuration.h,
-	xy/trunk/src/core.h, xy/trunk/src/display.c, xy/trunk/src/display.h,
-	xy/trunk/src/logging.c, xy/trunk/src/logging.h, xy/trunk/src/osd.c,
-	xy/trunk/src/osd.h, xy/trunk/src/restart.c, xy/trunk/src/restart.h,
-	xy/trunk/src/screen.c, xy/trunk/src/screen.h,
-	xy/trunk/src/sysinfo.c, xy/trunk/src/sysinfo.h,
-	xy/trunk/src/types.h, xy/trunk/src/util.c, xy/trunk/src/util.h,
-	xy/trunk/src/wmcheck.c, xy/trunk/src/wmcheck.h,
-	xy/trunk/src/xinerama.c, xy/trunk/src/xinerama.h, xy/trunk/src/xy.c,
-	xy/trunk/src/xy.h, xy/trunk/src/xyxlib.c, xy/trunk/src/xyxlib.h:
-	Remove.
-	[a414798ce6ae]
-
-	* xy/trunk/AUTHORS, xy/trunk/CONVENTIONS, xy/trunk/COPYING,
-	xy/trunk/ChangeLog, xy/trunk/INSTALL, xy/trunk/Makefile.am,
-	xy/trunk/Makefile.in, xy/trunk/NEWS, xy/trunk/README, xy/trunk/TODO,
-	xy/trunk/aclocal.m4, xy/trunk/config.h.in, xy/trunk/configure,
-	xy/trunk/configure.in, xy/trunk/debug, xy/trunk/depcomp, xy/trunk
-	/install-sh, xy/trunk/missing, xy/trunk/resources/log4crc,
-	xy/trunk/src/Makefile.am, xy/trunk/src/Makefile.in,
-	xy/trunk/src/color.c, xy/trunk/src/color.h,
-	xy/trunk/src/configuration.c, xy/trunk/src/configuration.h,
-	xy/trunk/src/core.h, xy/trunk/src/display.c, xy/trunk/src/display.h,
-	xy/trunk/src/logging.c, xy/trunk/src/logging.h, xy/trunk/src/osd.c,
-	xy/trunk/src/osd.h, xy/trunk/src/restart.c, xy/trunk/src/restart.h,
-	xy/trunk/src/screen.c, xy/trunk/src/screen.h,
-	xy/trunk/src/sysinfo.c, xy/trunk/src/sysinfo.h,
-	xy/trunk/src/types.h, xy/trunk/src/util.c, xy/trunk/src/util.h,
-	xy/trunk/src/wmcheck.c, xy/trunk/src/wmcheck.h,
-	xy/trunk/src/xinerama.c, xy/trunk/src/xinerama.h, xy/trunk/src/xy.c,
-	xy/trunk/src/xy.h, xy/trunk/src/xyxlib.c, xy/trunk/src/xyxlib.h:
-	Initial import.
-	[063653b880e2]
-
-	* AUTHORS, CONVENTIONS, COPYING, ChangeLog, INSTALL, Makefile.am,
-	Makefile.in, NEWS, README, TODO, aclocal.m4, config.h.in, configure,
-	configure.in, debug, depcomp, install-sh, missing,
-	resources/log4crc, src/Makefile.am, src/Makefile.in, src/color.c,
-	src/color.h, src/configuration.c, src/configuration.h, src/core.h,
-	src/display.c, src/display.h, src/logging.c, src/logging.h,
-	src/osd.c, src/osd.h, src/restart.c, src/restart.h, src/screen.c,
-	src/screen.h, src/sysinfo.c, src/sysinfo.h, src/types.h, src/util.c,
-	src/util.h, src/wmcheck.c, src/wmcheck.h, src/xinerama.c,
-	src/xinerama.h, src/xy.c, src/xy.h, src/xyxlib.c, src/xyxlib.h:
-	Removing.
-	[05b2cd016ef2]
-
-	* AUTHORS, CONVENTIONS, COPYING, ChangeLog, INSTALL, Makefile.am,
-	Makefile.in, NEWS, README, TODO, aclocal.m4, config.h.in, configure,
-	configure.in, debug, depcomp, install-sh, missing,
-	resources/log4crc, src/Makefile.am, src/Makefile.in, src/color.c,
-	src/color.h, src/configuration.c, src/configuration.h, src/core.h,
-	src/display.c, src/display.h, src/logging.c, src/logging.h,
-	src/osd.c, src/osd.h, src/restart.c, src/restart.h, src/screen.c,
-	src/screen.h, src/sysinfo.c, src/sysinfo.h, src/types.h, src/util.c,
-	src/util.h, src/wmcheck.c, src/wmcheck.h, src/xinerama.c,
-	src/xinerama.h, src/xy.c, src/xy.h, src/xyxlib.c, src/xyxlib.h:
-	Initial commit.
-	[7997790d419c]
+commit ed5b534a4a7b78a9d123abfaa97e8420ae5c8612
+Author: Nick Bargnesi <nick@den-4.com>
+Date:   Wed Jan 18 21:40:14 2012 -0500
 
+    Add terminate function to monitor module.
+
+commit fb677f6107835eb0cab6b6e8641f8bc18df70f68
+Author: Nick Bargnesi <nick@den-4.com>
+Date:   Wed Jan 18 21:38:25 2012 -0500
+
+    Leak fix.
+
+commit 9b4164a0178267f2064dc7f7803652f5d64b575b
+Author: Nick Bargnesi <nick@den-4.com>
+Date:   Wed Jan 18 21:38:10 2012 -0500
+
+    Default CFLAGS use O2 now.
+
+commit 9e950112d02f15a6cbb84f102d2441d28228b9d9
+Merge: 445d04a 045a0bf
+Author: Nick Bargnesi <nick@den-4.com>
+Date:   Wed Jan 18 18:18:07 2012 -0500
+
+    merge
+
+commit 045a0bf01960b4fe76c24ecc0ae96064a7a75968
+Author: Nick Bargnesi <nick@den-4.com>
+Date:   Wed Jan 18 18:17:39 2012 -0500
+
+    Update version (2012), copyright headers, bump documentation, and make it
+    functional.
+
+commit e0d322f8b95a89d8ca590055d8f40deb49ac7d1e
+Author: Nick Bargnesi <nick@den-4.com>
+Date:   Wed Jan 18 18:15:21 2012 -0500
+
+    Explicitly state use of copyright year ranges.
+
+commit 445d04a0ec3b0abed7d18b87622c2a2523cff829
+Author: Nick Bargnesi <nick@den-4.com>
+Date:   Sun Jan 15 22:06:09 2012 -0500
+
+    Remove build server link.
+
+commit b75640f342a3cfcf3770e31ed1811a0345d014d5
+Author: Nick Bargnesi <nick@den-4.com>
+Date:   Sun Jan 15 22:05:10 2012 -0500
+
+    Default CFLAGS to -O2 instead of -O0.
+
+commit bf11e87e57ef3c46d055c68d4be6367693878d3d
+Author: Nick Bargnesi <nick@den-4.com>
+Date:   Fri Dec 16 17:52:11 2011 -0500
+
+    Bump documentation and relocate leaktest.
+
+commit 126d0534f24e55ffdcba0ec466511185e0851d54
+Author: Nick Bargnesi <nick@den-4.com>
+Date:   Thu Dec 15 06:04:23 2011 -0500
+
+    Try path mangling a la Pylons.
+
+commit 4410d99218b41acea1cd4e653a1cc2cfeffd02e2
+Author: Nick Bargnesi <nick@den-4.com>
+Date:   Wed Dec 14 21:32:45 2011 -0500
+
+    Documentation again.
+
+commit 0b2a38b16da0136c532111642a19ceb8d2097cb4
+Author: Nick Bargnesi <nick@den-4.com>
+Date:   Wed Dec 14 21:24:04 2011 -0500
+
+    Adjust theme.conf.
+
+commit 02e46a5099d751a444bd667d70d48871e1909cb7
+Author: Nick Bargnesi <nick@den-4.com>
+Date:   Wed Dec 14 21:15:00 2011 -0500
+
+    Fix sys.path.
+
+commit e394d4eef8e12a2dfe6fd3405cc85e6da32d9cc7
+Author: Nick Bargnesi <nick@den-4.com>
+Date:   Wed Dec 14 21:13:21 2011 -0500
+
+    Backed out changeset cbfbfb761759
+
+commit 28c85bf166986ff7ed2b1d14254270f6932d8fbe
+Author: Nick Bargnesi <nick@den-4.com>
+Date:   Wed Dec 14 21:05:35 2011 -0500
+
+    Documentation bump.
+
+commit 01610d1a96bade03ea8ceeb2bb99a9de5c474d53
+Merge: 87ad0c6 2b9529c
+Author: Nick Bargnesi <nick@den-4.com>
+Date:   Wed Dec 14 20:51:01 2011 -0500
+
+    Merge.
+
+commit 87ad0c6cc5e6271e2c595f3988d31d2e9f79b6cf
+Author: Nick Bargnesi <nick@den-4.com>
+Date:   Wed Dec 14 20:49:38 2011 -0500
+
+    Relocate makedist. Use start/stop display in leaktest and maketest.
+
+commit cf737814cde582e63f49275b4cad69c33b33b6f2
+Author: Nick Bargnesi <nick@den-4.com>
+Date:   Wed Dec 14 20:48:48 2011 -0500
+
+    Add bash functions to launch a Xvfb server for DISPLAY-based testing and an
+    equivalent function for terminating it.
+
+commit 0dcdb8cd150360cdc3ff516270c7a7d7369e2711
+Author: Nick Bargnesi <nick@den-4.com>
+Date:   Wed Dec 14 20:47:47 2011 -0500
+
+    Documentation bump.
+
+commit 2b9529c6040b5f949413386d8a0fb9d37fb76569
+Author: Nick Bargnesi <nick@den-4.com>
+Date:   Mon Dec 12 21:07:08 2011 -0500
+
+    Update pygments style for sphinx documentation.
+
+commit b9771c46b4f7ec31bd77f45d5dad8ed5e94fa1e0
+Author: Nick Bargnesi <nick@den-4.com>
+Date:   Mon Dec 12 17:34:59 2011 -0500
+
+    Documentation update.
+    
+    Update README with documentation URL and bump API documentation.
+
+commit bb9bfdcac93f0779a58e74d984a081f3106e7f20
+Author: Nick Bargnesi <nick@den-4.com>
+Date:   Sun Dec 11 23:07:07 2011 -0500
+
+    Correct port number.
+
+commit a26216aa21adbaf39be5440bf4a0626a71685ad0
+Author: Nick Bargnesi <nick@den-4.com>
+Date:   Sun Dec 11 23:04:36 2011 -0500
+
+    Update README w/ links to web site, bug tracker, and builds.
+
+commit 5c4169cf3a3ef8fe57314f2ca00f121f176206d7
+Author: Nick Bargnesi <nick@den-4.com>
+Date:   Wed Dec 7 18:33:53 2011 -0500
+
+    Check for xdamage.
+
+commit 457a1c37a00b54af36c99e0970739eea73ce8ff4
+Author: Nick Bargnesi <nick@den-4.com>
+Date:   Fri Nov 25 23:47:32 2011 -0500
+
+    Add size_hints and update enums/structs to match conventions.
+
+commit 8820fb72da77d27a9d958c1bdd2a9f9d008f1525
+Author: Nick Bargnesi <nick@den-4.com>
+Date:   Tue Nov 22 22:46:33 2011 -0500
+
+    Remove sleep.
+
+commit 8b683391a9d28f2eea31ad8a96ae6edf840353d6
+Author: Nick Bargnesi <nick@den-4.com>
+Date:   Sun Nov 20 23:47:44 2011 -0500
+
+    Initial layout module.
+
+commit 7ad48a66d99971286d4b2347ed8bcc1a3c01cc4a
+Author: Nick Bargnesi <nick@den-4.com>
+Date:   Sun Oct 30 23:30:24 2011 -0400
+
+    Make 'distcheck' default to '--disable-tests'.
+
+commit 904699f6ad343311544898a2c6f8f43e415a0872
+Author: Nick Bargnesi <nick@den-4.com>
+Date:   Sun Oct 30 23:03:52 2011 -0400
+
+    Add 'dist-xz' to AM_INIT_AUTOMAKE options.
+
+commit 9f8f65018d672e77e7a7c66500fdaf06457a2da6
+Author: Nick Bargnesi <nick@den-4.com>
+Date:   Sun Oct 30 22:57:19 2011 -0400
+
+    Standardize CFLAGS, and include '-pipe'. Optimizations/debugging only switches
+    -O3 / -O0 -g3.
+
+commit d27e5d01f014da11a74e0144f26f9100d3c74bad
+Author: Nick Bargnesi <nick@den-4.com>
+Date:   Sun Oct 30 22:24:06 2011 -0400
+
+    Switch configure's --enable-tests to --disable-tests. Defaults to disabled.
+
+commit ad4a66a8596cdddff033eaccdb959dda7fc884a6
+Author: Nick Bargnesi <nick@den-4.com>
+Date:   Fri Oct 28 22:46:35 2011 -0400
+
+    Removing xosd support until it's used.
+
+commit 52061e9548aa299bea45ac1629340ff283c1b27a
+Author: Nick Bargnesi <nick@den-4.com>
+Date:   Fri Oct 28 22:21:02 2011 -0400
+
+    Remove AC_PATH_X macro in favor of PKG_CHECK for libraries only.
+
+commit 21e2515e39f1af8d98634241b7111e0dae95f951
+Author: Nick Bargnesi <nick@den-4.com>
+Date:   Fri Oct 28 22:19:48 2011 -0400
+
+    Backed out changeset a6ab6e06930e
+
+commit 9c0834306f2171c43e942278bc19c66c58153dd6
+Author: Nick Bargnesi <nick@den-4.com>
+Date:   Fri Oct 28 22:18:50 2011 -0400
+
+    Remove AC_PATH_X
+
+commit a22563bb1ca64172b77c79e1116b7d58d539b229
+Author: Nick Bargnesi <nick@den-4.com>
+Date:   Fri Oct 28 22:17:31 2011 -0400
+
+    Invoke set_process_name. Main thread is 'xy: main', broadcast thread is 'xy:
+    broadcast'.
+
+commit 7ac0af27a3f7a399d57dd5de2af182297916f22b
+Author: Nick Bargnesi <nick@den-4.com>
+Date:   Fri Oct 28 22:16:03 2011 -0400
+
+    Add set_process_name and unit test.
+
+commit e3dd5de324a4009d8e1e835ee2b55f88620a6f8f
+Author: Nick Bargnesi <nick@den-4.com>
+Date:   Fri Oct 21 00:00:54 2011 -0400
+
+    Support for restarting when RESTART is received via ipc.
+
+commit c9cdb8249fb753eb29d1f8aa846c6b47d6028691
+Author: Nick Bargnesi <nick@den-4.com>
+Date:   Fri Oct 21 00:00:08 2011 -0400
+
+    Here, too. Remove libusb, add jansson.
+
+commit e34ee74a2755214e93ee209d91049222f15c678c
+Author: Nick Bargnesi <nick@den-4.com>
+Date:   Thu Oct 20 23:59:47 2011 -0400
+
+    Remove libusb, add jansson.
+
+commit a68c163cd3d364ac382fac6763b1c12cb1ea002c
+Author: Nick Bargnesi <nick@den-4.com>
+Date:   Wed Oct 19 17:48:04 2011 -0400
+
+    Fix pthread_cond_wait call with un-held mutex (reported via check-threads).
+
+commit ec8fc81a95b30de3147ce5b0877be76a7138e95b
+Merge: 4cfa006 ba728c3
+Author: Nick Bargnesi <nick@den-4.com>
+Date:   Sun Oct 16 21:24:39 2011 -0400
+
+    Merge.
+
+commit ba728c3668f696bb862f427083089ac3272eeee4
+Author: Nick Bargnesi <nick@den-4.com>
+Date:   Sun Oct 16 21:23:57 2011 -0400
+
+    Remove LIBADD - no longer needed.
+
+commit 4cfa00657baff3c3e0e8bc2487918f11d75443a8
+Author: Nick Bargnesi <nick@den-4.com>
+Date:   Sun Oct 16 00:32:15 2011 -0400
+
+    Fix ifndef/define to include _XY_ prefix.
+
+commit c9a090616b9fcbe5c63836f613207ecd2ea2520f
+Merge: 7d88338 fe46b88
+Author: Nick Bargnesi <nick@den-4.com>
+Date:   Sun Oct 16 00:01:27 2011 -0400
+
+    Merge.
+
+commit fe46b888d785cba92f84e0822900d8ba567241a7
+Author: Nick Bargnesi <nick@den-4.com>
+Date:   Sun Oct 16 00:00:23 2011 -0400
+
+    Add callgrind and helgrind support. Use check- script convention.
+
+commit bb984d0d05d6de5140871d7bde797d01fb37353a
+Author: Nick Bargnesi <nick@den-4.com>
+Date:   Sat Oct 15 23:59:58 2011 -0400
+
+    Remove vg_suppressions from EXTRA_DIST. Support for running valgrind leak
+    tests is only available in the source tree, not the distributable package.
+
+commit c7374c3d1ce4998f257f3d29ff8b82c5914a2bff
+Author: Nick Bargnesi <nick@den-4.com>
+Date:   Sat Oct 15 23:58:29 2011 -0400
+
+    Remove leaktest and memcheck from EXTRA_DIST. These files should not be in the
+    distributed package.
+
+commit 4bd09fcc5e0730f6ea6d713cb0b1c7d4044adb4d
+Author: Nick Bargnesi <nick@den-4.com>
+Date:   Sat Oct 15 23:57:55 2011 -0400
+
+    Remove leaktest and memcheck from EXTRA_DIST. These files should not be in the
+    distributed package.
+
+commit 7d88338aacb6fb16e915ef143953d99ad7abb08b
+Author: Nick Bargnesi <nick@den-4.com>
+Date:   Sun Oct 9 22:28:32 2011 -0400
+
+    "autotool maintainers" -> "package maintainers"
+
+commit aed4aaa22c53525a9a7f5aec8542508884271c1c
+Author: Nick Bargnesi <nick@den-4.com>
+Date:   Tue Oct 4 22:49:03 2011 -0400
+
+    Test cases, add root_window(Display *).
+
+commit 0e5a9aa81bd0ea76570e10a5b9df5e88b956f0a5
+Author: Nick Bargnesi <nick@den-4.com>
+Date:   Tue Oct 4 22:48:41 2011 -0400
+
+    Add support for check CK_FORK="no" when debugging anything in tests/.
+    See http://check.sourceforge.net/doc/check_html/check_4.html.
+
+commit c1c6a1a74962866aa2458a2d0be1d4e9ca629e50
+Author: Nick Bargnesi <nick@den-4.com>
+Date:   Thu Sep 29 18:01:58 2011 -0400
+
+    Backed out changeset 86c7cf5a2ba3
+
+commit eb683316eabebec3b1dd36ff23480b235ead463d
+Author: Nick Bargnesi <nick@den-4.com>
+Date:   Thu Sep 29 17:56:27 2011 -0400
+
+    test
+
+commit 8b497fb0f1bc20776ba56cd594f3ed3761eec3ac
+Author: Nick Bargnesi <nick@den-4.com>
+Date:   Thu Sep 29 15:55:50 2011 -0400
+
+    Carry $@ to make dist.
+
+commit ae28fa77f905d82bd1140908bde848e8d0b4eb6e
+Author: Nick Bargnesi <nick@den-4.com>
+Date:   Tue Sep 13 22:00:44 2011 -0400
+
+    Don't run display-based tests if no display is available.
+
+commit f9c54a2f2303a963f3ea3b7b5ecf94e111fa340b
+Author: Nick Bargnesi <nick@den-4.com>
+Date:   Tue Sep 13 21:53:21 2011 -0400
+
+    Suppress printing of clean-local statements.
+
+commit db4aa128d91b317b8e0df05f6e7bb8d3f73a6c43
+Author: Nick Bargnesi <nick@den-4.com>
+Date:   Mon Sep 12 17:57:48 2011 -0400
+
+    Fix build.
+
+commit 34796010b767bfaaa9f7e29e10d1942b49db6dcd
+Author: Nick Bargnesi <nick@den-4.com>
+Date:   Mon Sep 12 17:56:11 2011 -0400
+
+    Test fixing build.
+
+commit 0af745f8e248c7a36f89daaa63ee0349a1d9e7ac
+Author: Nick Bargnesi <nick@den-4.com>
+Date:   Mon Sep 12 17:55:34 2011 -0400
+
+    Test breaking build.
+
+commit af96b1a75362fc6f08fb9dff2aed09b33336c42a
+Author: Nick Bargnesi <nick@den-4.com>
+Date:   Mon Sep 12 17:51:07 2011 -0400
+
+    Test fixing build.
+
+commit 1103649d879f3cc23aa25ace315cc962e0503eaa
+Author: Nick Bargnesi <nick@den-4.com>
+Date:   Mon Sep 12 17:47:19 2011 -0400
+
+    Test breaking build.
+
+commit 412ba380a0278d4db8915a4de36c61f9f189913d
+Author: Nick Bargnesi <nick@den-4.com>
+Date:   Mon Sep 12 09:58:42 2011 -0400
+
+    Test fixing build.
+
+commit 4dc61772b88b96ce7ff233031424aa4f9a5c5688
+Author: Nick Bargnesi <nick@den-4.com>
+Date:   Sun Sep 11 21:43:09 2011 -0400
+
+    Test breaking build.
+
+commit c13bf9f6fb718a35497325b2fdd4a87f2a5ca598
+Author: Nick Bargnesi <nick@den-4.com>
+Date:   Sat Sep 10 23:19:30 2011 -0400
+
+    Add TODO.
+
+commit 6e56b90a9ef5eb06af990c8c6645d25707083181
+Author: Nick Bargnesi <nick@den-4.com>
+Date:   Sat Sep 10 14:01:38 2011 -0400
+
+    Test fixing build.
+
+commit f6a9595f90000ad27ca9339ed440f33f250cb3af
+Author: Nick Bargnesi <nick@den-4.com>
+Date:   Sat Sep 10 14:01:24 2011 -0400
+
+    Test breaking build.
+
+commit 0326555aec12ec20c0a8741a6adf872309fc2afa
+Author: Nick Bargnesi <nick@den-4.com>
+Date:   Sat Sep 10 13:59:56 2011 -0400
+
+    Test fixing build.
+
+commit ac6e28eb0095f3bd664113a647b71c5cb9978156
+Author: Nick Bargnesi <nick@den-4.com>
+Date:   Sat Sep 10 13:58:45 2011 -0400
+
+    Test breaking build.
+
+commit d843775f86f9e8d9f397f1a5b0720872f3cd91b4
+Author: Nick Bargnesi <nick@den-4.com>
+Date:   Sat Sep 10 13:47:07 2011 -0400
+
+    Kick all configuration name-value pairs out to the debug log on startup.
+
+commit 0d1c6a175e4813474d490ac3cb4226b89a0a7f98
+Author: Nick Bargnesi <nick@den-4.com>
+Date:   Sat Sep 10 01:25:35 2011 -0400
+
+    Exec returns pid_t, instead of void.
+
+commit be65270c34403eef18c311e2a4c0ee43bf97a737
+Author: Nick Bargnesi <nick@den-4.com>
+Date:   Sat Sep 10 01:25:07 2011 -0400
+
+    Update bug report address.
+
+commit 8bfee9c9d47e2506de1f9b3161e95d9ae234da80
+Author: Nick Bargnesi <nick@den-4.com>
+Date:   Tue Sep 6 22:58:26 2011 -0400
+
+    Fix EXTRA_DIST.
+
+commit a6f8a1bddf126427d042c6f1c1e67aff4b5498b2
+Author: Nick Bargnesi <nick@den-4.com>
+Date:   Tue Sep 6 22:51:41 2011 -0400
+
+    Add monitor_tests and valgrind suppression file.
+
+commit 12a8975d2e9cdfda81eac92216a4ac3615a92b8c
+Author: Nick Bargnesi <nick@den-4.com>
+Date:   Tue Sep 6 22:47:57 2011 -0400
+
+    Debug and memcheck support overriding the target binary with $@. Added
+    leaktest to perform leak checks against all tests/*_tests using
+    valgrind.
+
+commit e6b55b7f598046c4a293d101ab94ae75929961a5
+Author: Nick Bargnesi <nick@den-4.com>
+Date:   Tue Sep 6 22:46:47 2011 -0400
+
+    Bump.
+
+commit b417510b01157ced6e838199d38e9f94ab49b555
+Author: Nick Bargnesi <nick@den-4.com>
+Date:   Mon Sep 5 11:54:38 2011 -0400
+
+    Ignore tests/*_tests.
+
+commit ae6e19678263d1612218e59cd4a6a35ff54d926d
+Author: Nick Bargnesi <nick@den-4.com>
+Date:   Sun Sep 4 12:50:11 2011 -0400
+
+    Bring in initial support for generic lists.
+
+commit 68f31fe84074f272ec6149396a0eca8893eba9f8
+Author: Nick Bargnesi <nick@den-4.com>
+Date:   Sun Sep 4 12:49:26 2011 -0400
+
+    Make clean-local remove xy-*tar* build files on 'make clean'.
+
+commit 51a4262247ac0d77d762e21fe3b52b1dd31a6a9e
+Author: Nick Bargnesi <nick@den-4.com>
+Date:   Sun Sep 4 01:22:52 2011 -0400
+
+    Fill out Xinerama-based monitor initialization.
+
+commit b996f8e9ca30aa97ef33898cf9002f778aea04ad
+Author: Nick Bargnesi <nick@den-4.com>
+Date:   Fri Sep 2 18:42:58 2011 -0400
+
+    Include testing the produced archive, and then running distcheck to check the
+    build.
+
+commit 371cb1baa68f651645c370defb7bdffb5805483e
+Author: Nick Bargnesi <nick@den-4.com>
+Date:   Fri Sep 2 18:42:24 2011 -0400
+
+    Fix out-of-tree builds, using top_srcdir and top_builddir.
+
+commit 1ff11dec97929e78188f310c6847a42bc2f6ea50
+Author: Nick Bargnesi <nick@den-4.com>
+Date:   Fri Sep 2 18:40:44 2011 -0400
+
+    Add -d arguments to gdb to specify source directories.
+
+commit 512cfc0897d9b216960429b43415a289b5f999b6
+Author: Nick Bargnesi <nick@den-4.com>
+Date:   Fri Sep 2 18:05:11 2011 -0400
+
+    Print to stdout.
+
+commit 95de9582735141646bf8f1f79a41f5c1edc8c928
+Author: Nick Bargnesi <nick@den-4.com>
+Date:   Fri Sep 2 18:04:51 2011 -0400
+
+    Removed gendoc, no longer needed with sphinx.
+
+commit 40bfe2c039f9d5931173fe1dd26670fbff132875
+Author: Nick Bargnesi <nick@den-4.com>
+Date:   Wed Aug 31 18:17:31 2011 -0400
+
+    Ignore tests/*_tests.
+
+commit b16ada404b21cb0c732784280808590ef1508326
+Author: Nick Bargnesi <nick@den-4.com>
+Date:   Wed Aug 31 18:13:39 2011 -0400
+
+    Ignore _tests and update hgignore.
+
+commit 5ac7fecef50805606fabc95b244633e723f5b3a6
+Author: Nick Bargnesi <nick@den-4.com>
+Date:   Tue Aug 30 21:56:54 2011 -0400
+
+    Break test_suite into xlib_tests and util_tests.
+
+commit 3d2cb2402dba32477161c85d390af30bb38a9a87
+Author: Nick Bargnesi <nick@den-4.com>
+Date:   Tue Aug 30 21:55:17 2011 -0400
+
+    Add lib headers to EXTRA_DIST. This includes them in the dist-all packages.
+
+commit 84d25ae65788360e7aad22a4021bbebc76122beb
+Merge: 6aded4c c8960ae
+Author: Nick Bargnesi <nick@den-4.com>
+Date:   Mon Aug 29 22:09:33 2011 -0400
+
+    Merge sphinx.
+
+commit 6aded4c48bb2891f83ff505b49e2053bc3f07ab5
+Author: Nick Bargnesi <nick@den-4.com>
+Date:   Mon Aug 29 22:00:41 2011 -0400
+
+    Update test support and build configuration. The configure argument
+    --enable-tests and --enable-optimizations enable test and compiler
+    optimizations.
+
+commit c8960ae2bdd62e339ac7b471f39d462d4cde15dd
+Author: Nick Bargnesi <nick@den-4.com>
+Date:   Mon Aug 29 21:51:06 2011 -0400
+
+    Migrate util documentation to sphinx.
+
+commit 4785e453610390506eeff8e1c5529dd3c3920d7a
+Author: Nick Bargnesi <nick@den-4.com>
+Date:   Sun Aug 28 01:12:04 2011 -0400
+
+    Start sphinx documentation branch.
+
+commit 36eae89e3c3257cb79821a6cbc0c27adfc223657
+Author: Nick Bargnesi <nick@den-4.com>
+Date:   Sun Aug 28 01:11:30 2011 -0400
+
+    Update hgignore.
+
+commit ea50020898b4f0352b1229ca40c03c4558c83282
+Author: Nick Bargnesi <nick@den-4.com>
+Date:   Sun Aug 28 00:25:04 2011 -0400
+
+    Add Makefile.in/am and remove test_suite binary.
+
+commit c06ecc6a9464234cc8f403305b082620a14ae99f
+Author: Nick Bargnesi <nick@den-4.com>
+Date:   Sun Aug 28 00:14:08 2011 -0400
+
+    Put tests in tests/, update hgignore.
+
+commit 2ec5b2fc0f78c6159a83106bd159324bd854f853
+Author: Nick Bargnesi <nick@den-4.com>
+Date:   Sun Aug 28 00:13:34 2011 -0400
+
+    Print an error if the AM_SANITY_CHECK "sleep 1" is inside configure.
+
+commit 782740e04ef572cb8a19c61fbeb62c3c4096d52f
+Author: Nick Bargnesi <nick@den-4.com>
+Date:   Sat Aug 27 00:09:17 2011 -0400
+
+    Add missing lib/Makefiles.
+
+commit fd5e72f2fbffcc342c3600ff4380923c54a76c0f
+Author: Nick Bargnesi <nick@den-4.com>
+Date:   Fri Aug 26 23:53:36 2011 -0400
+
+    Split src into lib and src, to keep test separate from main.
+
+commit 15976eb0b36e1053fb69380a728cbc2250de2135
+Author: Nick Bargnesi <nick@den-4.com>
+Date:   Wed Aug 24 17:07:36 2011 -0400
+
+    Remove CHANGES, add docs/Makefile*.
+
+commit fb4bcc3bfa8430d7ad90f0d13044e9fdccaf56df
+Author: Nick Bargnesi <nick@den-4.com>
+Date:   Sun Jul 10 00:09:10 2011 -0400
+
+    Make each broadcast example program as close to the other language equivalent.
+    I.e., print-broadcasts looks similar in both Python and Ruby.
+
+commit b607161ef4c307a09b6ccb2cd21be2d5cb1acc10
+Author: Nick Bargnesi <nick@den-4.com>
+Date:   Fri Jul 8 23:45:24 2011 -0400
+
+    Add Python print/speak variants to complement the Ruby examples.  The
+    Python-based speak implementation will use festival's text2wave and pyaudio
+    for audio output (see AUDIO_DEVICE_INDEX and AUDIO_CHUNK if nothing is heard.
+
+commit 4329814f2678e283b6734d6d03e59da57a52645f
+Author: Nick Bargnesi <nick@den-4.com>
+Date:   Thu Jul 7 22:56:59 2011 -0400
+
+    Add sphinx-based documentation output to docs/.
+
+commit 090718194b4b52ccf29234888095543a0e0dcce1
+Author: Nick Bargnesi <nick@den-4.com>
+Date:   Tue Jul 5 22:35:02 2011 -0400
+
+    Break the Ruby-based broadcast listener into a printer and a speaker via
+    festival.
+
+commit cfcf0b9fc1d379590fde26b97319106207971ba1
+Author: Nick Bargnesi <nick@den-4.com>
+Date:   Tue Jul 5 22:33:51 2011 -0400
+
+    Don't send the startup message until we hit the main loop.
+
+commit 6db250c84c435f72030182ef793d931737a3971c
+Author: Nick Bargnesi <nick@den-4.com>
+Date:   Thu Jun 23 01:18:19 2011 -0400
+
+    Documentation.
+
+commit 97ed97a35cd213589b6691c1957f67f4694a2f69
+Author: Nick Bargnesi <nick@den-4.com>
+Date:   Wed Jun 22 00:24:39 2011 -0400
+
+    Documentation.
+
+commit 36c9e7da06b078d789f9c8e0b628633e18b37e96
+Author: Nick Bargnesi <nick@den-4.com>
+Date:   Tue Jun 21 00:32:43 2011 -0400
+
+    Documentation.
+
+commit 6c397598d29676d53e4610797fb04f1ba4c4d312
+Author: Nick Bargnesi <nick@den-4.com>
+Date:   Wed Jun 8 22:47:14 2011 -0400
+
+    Finish documenting util, add test cases for same.
+
+commit 1319a699d1323722b6a321ff78263d7c401e748b
+Author: Nick Bargnesi <nick@den-4.com>
+Date:   Tue Jun 7 23:48:04 2011 -0400
+
+    Documentation updates.
+
+commit cfb830d10682b98ae8f3f5775ff856f2b82ebd0e
+Author: Nick Bargnesi <nick@den-4.com>
+Date:   Tue May 31 23:56:51 2011 -0400
+
+    Glob the src/*.o files in hgignore.
+
+commit 3dd977a7ce782cd6aeb2131e050c026869b53da2
+Author: Nick Bargnesi <nick@den-4.com>
+Date:   Wed May 25 21:49:18 2011 -0400
+
+    Initial support for monitor initialization.
+
+commit 5a0722a1e4a02ca6b7b18ef202084d91ab859cda
+Author: Nick Bargnesi <nick@den-4.com>
+Date:   Tue May 24 22:59:41 2011 -0400
+
+    Collapse color, wmcheck, and xinerama into xyxlib and util.
+
+commit 5131dbdb4360663eb1d20b7572a99c115c8f9291
+Author: Nick Bargnesi <nick@den-4.com>
+Date:   Mon May 23 21:35:24 2011 -0400
+
+    Collapse modules.  Restart into util, screen into xyxlib.
+
+commit edc3d3bb4a4c0cd91a3c0cd073064ac4d13caeaa
+Author: Nick Bargnesi <nick@den-4.com>
+Date:   Thu May 19 23:55:24 2011 -0400
+
+    Use get_xinerama_screens.
+
+commit 314bf8e18fdb32e1a2a47fc51993097a96a96480
+Author: Nick Bargnesi <nick@den-4.com>
+Date:   Thu May 19 23:51:42 2011 -0400
+
+    Monitor-based test cases.
+
+commit eafa1392d3e812a3b83830ad8fde80f4a81a97e7
+Author: Nick Bargnesi <nick@den-4.com>
+Date:   Wed May 18 23:30:04 2011 -0400
+
+    Integrate unit testing via check into tests subdirectory.  Add monitor module
+    and collapse display into xyxlib.
+
+commit 81b3b003ce0f7b3d3c926d0cb7819348383018a7
+Author: Nick Bargnesi <nick@den-4.com>
+Date:   Tue May 17 23:38:14 2011 -0400
+
+    Add unit test support via check, and DIE_MSG to print a message before dying.
+    A suicide note, if you will.
+
+commit dd5a8bca794a7d34980f542be7c5f690b2be4d1a
+Author: Nick Bargnesi <nick@den-4.com>
+Date:   Sun May 15 02:17:12 2011 -0400
+
+    Correct documentation.
+
+commit 1b65d586cec1906a269179195b4fc62aff876ebf
+Author: Nick Bargnesi <nick@den-4.com>
+Date:   Sun May 15 02:15:00 2011 -0400
+
+    Establish global access to all Xinerama screens on startup.  Broadcast the
+    number of screens and each screen's set of properties.
+
+commit de7f5ffdf55531936ec0da27a6276acda0c2731c
+Author: Nick Bargnesi <nick@den-4.com>
+Date:   Sun May 15 00:39:48 2011 -0400
+
+    Add memcheck, memory checking via valgrind.
+
+commit 537189c08d6329e72d81044c0851142a7784c38b
+Author: Nick Bargnesi <nick@den-4.com>
+Date:   Sun May 15 00:38:50 2011 -0400
+
+    Add doc generation support, via Natural Docs.
+    (http://www.naturaldocs.org/)
+
+commit 81b5c96e5eb67787a4fe238df94443bdb8a8f6f3
+Author: Nick Bargnesi <nick@den-4.com>
+Date:   Sat May 14 23:54:03 2011 -0400
+
+    Push main() into main.c.
+
+commit 67d00ba4a8e7b4e7e66203795788ffa7805572c2
+Author: Nick Bargnesi <nick@den-4.com>
+Date:   Fri May 13 22:52:48 2011 -0400
+
+    Fill out a handful of XEvent functions.
+
+commit 75d5a45efaff5aaea46620581f48d5e2f4dd3a0f
+Author: Nick Bargnesi <nick@den-4.com>
+Date:   Thu May 12 23:52:41 2011 -0400
+
+    Initial support for spawning a terminal.
+
+commit a7df0ac979e22a98a84184ed287f849f390aa1b8
+Author: Nick Bargnesi <nick@den-4.com>
+Date:   Wed May 11 22:50:50 2011 -0400
+
+    Add shortcut for shutting down xy.
+
+commit 4e2adbd2f3d6b9d42d7f0eb0b43518eb25deb463
+Author: Nick Bargnesi <nick@den-4.com>
+Date:   Wed May 11 22:11:21 2011 -0400
+
+    Add a shortcut for launching a terminal.
+
+commit b5b96b92f6d15b1ddc1237adc63e0b7db63c562a
+Author: Nick Bargnesi <nick@den-4.com>
+Date:   Tue May 10 23:28:08 2011 -0400
+
+    Finish key event parsing, considering keystr.  Add dump_stack.
+
+commit ec9197d5fed474f5c4509add4e13d0ef72ecaa8e
+Author: Nick Bargnesi <nick@den-4.com>
+Date:   Sat May 7 01:02:03 2011 -0400
+
+    Address TODO, implementing fill_config.  Start processing key shortcuts.
+
+commit dff2fcb02ca19d4ddeda7db43ef8e9a75adbaeb9
+Author: Nick Bargnesi <nick@den-4.com>
+Date:   Mon May 2 22:38:44 2011 -0400
+
+    Test.
+
+commit ef95930fe608d77e24b6236c17e279441ea41b4d
+Author: Nick Bargnesi <nick@den-4.com>
+Date:   Fri Apr 29 22:56:22 2011 -0400
+
+    Remove debug loggings for "servicing..." messages.
+
+commit 622c65f56934d0864d141659e006b5d06ce10117
+Author: Nick Bargnesi <nick@den-4.com>
+Date:   Fri Apr 29 22:50:35 2011 -0400
+
+    Add no-unused-variable to AM_CFLAGS.
+
+commit 8a79e620e2ec965eb8f1cc205603555ff401c4f7
+Author: Nick Bargnesi <nick@den-4.com>
+Date:   Fri Apr 29 22:50:05 2011 -0400
+
+    Add key state utility functions for key events.
+
+commit 43bf9ed314b9d0e7b52283ca87ad18d695e78590
+Author: Nick Bargnesi <nick@den-4.com>
+Date:   Mon Apr 25 20:16:49 2011 -0400
+
+    Add event and push configuration items into configuration.c.
+
+commit 678cbc1492e27b71762bd361ead89cc59d314e06
+Author: Nick Bargnesi <nick@den-4.com>
+Date:   Sun Apr 24 10:14:30 2011 -0400
+
+    TODOs.
+
+commit 440feda2c1aab7096a1863660263eb16d58cf4fe
+Author: Nick Bargnesi <nick@den-4.com>
+Date:   Sat Apr 23 13:19:46 2011 -0400
+
+    Remove TODO.
+
+commit feb10d95f69ef8142e74a6678508dc2d74e1cb59
+Author: Nick Bargnesi <nick@den-4.com>
+Date:   Sat Apr 23 00:40:58 2011 -0400
+
+    Beginning XEvent hooks.
+
+commit 45214c94fc8194ea231494d7d9193b7ecc87eec1
+Author: Nick Bargnesi <nick@den-4.com>
+Date:   Fri Apr 22 23:39:09 2011 -0400
+
+    Send SHUTDOWN message in correct location.
+
+commit defac68ca01a4fdcabe766b1ed20c6efb1019919
+Author: Nick Bargnesi <nick@den-4.com>
+Date:   Fri Apr 22 22:50:33 2011 -0400
+
+    Service the IPC socket.  Currently supports QUIT and PING.
+
+commit 0bd0ca1b281a7d502ebf6ddc6412d49091df0b93
+Author: Nick Bargnesi <nick@den-4.com>
+Date:   Fri Apr 22 22:49:54 2011 -0400
+
+    Update.
+
+commit 659695acae9fa164fc3d2b38681fbdbef32fdf66
+Author: Nick Bargnesi <nick@den-4.com>
+Date:   Fri Apr 22 22:49:01 2011 -0400
+
+    Remove accidental inclusion of broadcast.h.
+
+commit db803ce58c3360376493333612683a7a410a0773
+Author: Nick Bargnesi <nick@den-4.com>
+Date:   Fri Apr 22 22:17:13 2011 -0400
+
+    Send sys.argv[1] as IPC message.
+
+commit 1607f16faec55430eeed3621cbd1f3125cf4bc08
+Author: Nick Bargnesi <nick@den-4.com>
+Date:   Thu Apr 21 22:08:09 2011 -0400
+
+    Apply GPLv3 header.
+
+commit 83cc6d7d049f3c6346cb71fe682f97b84e09c950
+Author: Nick Bargnesi <nick@den-4.com>
+Date:   Thu Apr 21 21:53:26 2011 -0400
+
+    Fix DIE, add die(), add likely/unlikely.
+
+commit 80476bcdcfc788dfbd0da1b5a9d2ea3ee1776a56
+Author: Nick Bargnesi <nick@den-4.com>
+Date:   Thu Apr 21 21:21:16 2011 -0400
+
+    Initial select() loop inside main_loop.
+
+commit 5dc4451f84482a557359b0548caefc3c682ab2bd
+Author: Nick Bargnesi <nick@den-4.com>
+Date:   Thu Apr 21 21:20:39 2011 -0400
+
+    Remove old doxygen logo.
+
+commit b3715765bef46420680195eba55388416d3e07a9
+Author: Nick Bargnesi <nick@den-4.com>
+Date:   Thu Apr 21 20:48:59 2011 -0400
+
+    Update hgignore.
+
+commit a030d105e5424677617598e44996f4b2444d50d3
+Author: Nick Bargnesi <nick@den-4.com>
+Date:   Wed Apr 20 21:58:39 2011 -0400
+
+    ipc_close -> ipc_terminate, and initialize display and configuration in
+    lifecycle startup.
+
+commit 932e48deaa1c963f7f2ab299b3eb9ffc26c0c484
+Author: Nick Bargnesi <nick@den-4.com>
+Date:   Wed Apr 20 21:57:44 2011 -0400
+
+    AM_CFLAGS - include Werror.
+
+commit 2093f583d423b9b23489854968c91b8fa7265ca0
+Author: Nick Bargnesi <nick@den-4.com>
+Date:   Wed Apr 20 21:53:11 2011 -0400
+
+    Add -Werror to AM_CFLAGS.
+
+commit 5dbd74c412289bf09e19629c9fff715b449d68dc
+Author: Nick Bargnesi <nick@den-4.com>
+Date:   Mon Apr 18 21:43:27 2011 -0400
+
+    Add Python-based IPC example.
+
+commit 9e6e02cc9123fa7e89c15211684d5bf80e47c38a
+Author: Nick Bargnesi <nick@den-4.com>
+Date:   Mon Apr 18 21:36:47 2011 -0400
+
+    Add example IPC connector.
+
+commit a676ecb90fd4c26fff744cf47b3236039dc3d193
+Author: Nick Bargnesi <nick@den-4.com>
+Date:   Mon Apr 18 21:35:16 2011 -0400
+
+    Add main_loop function to xy, to execute select against IPC and X descriptors.
+
+commit ad31ea2a5a3538a4343805d7dc54787775a86d50
+Author: Nick Bargnesi <nick@den-4.com>
+Date:   Sat Apr 16 23:45:08 2011 -0400
+
+    Add ipc module.
+
+commit 7ee28badae46151792ff4bcb2b35f0868898a660
+Author: Nick Bargnesi <nick@den-4.com>
+Date:   Fri Apr 15 17:50:49 2011 -0400
+
+    Add broadcast receiver example, in Ruby.
+
+commit d7b63f11f4cc03af8d7991a5037e46eeae4ca209
+Author: Nick Bargnesi <nick@den-4.com>
+Date:   Fri Apr 15 17:50:11 2011 -0400
+
+    Better broadcast support, allowing for broadcasting lots of messages at a time
+    without loss beyond what is provided by UDP.
+
+commit 21e55eb789ca38444eb6aa4d55887407cd43031b
+Author: Nick Bargnesi <nick@den-4.com>
+Date:   Fri Apr 15 17:49:03 2011 -0400
+
+    Ditch doxygen in favor of natural docs.
+
+commit f8212e6f3d8e7c81707bfb86017185537ad610ff
+Author: Nick Bargnesi <nick@den-4.com>
+Date:   Thu Apr 14 23:20:04 2011 -0400
+
+    Integrate communication from xy out to receivers via unreliable UDP and
+    multicast.
+
+commit b6656a34a7e0a4a0b3bb73b34ad0d0bd07736e17
+Author: Nick Bargnesi <nick@den-4.com>
+Date:   Wed Apr 13 21:06:04 2011 -0400
+
+    Integrate doxygen.
+
+commit 3fd1af4343e659a241aa1d7034c84978d3183483
+Author: Nick Bargnesi <nick@den-4.com>
+Date:   Tue Apr 12 23:25:56 2011 -0400
+
+    Zero rcpath, append '/'.
+
+commit 6874c85d032314414eb07747f090e553a45e4d58
+Author: Nick Bargnesi <nick@den-4.com>
+Date:   Tue Apr 12 23:16:06 2011 -0400
+
+    Lifecycle updates.
+
+commit 19edd6dc093da4d1192eaf16e82ac56580046304
+Author: Nick Bargnesi <nick@den-4.com>
+Date:   Thu Apr 7 23:53:40 2011 -0400
+
+    Directory init logic.
+
+commit d1b80b50941e425cce61ac86bc3ecb49448e1105
+Author: Nick Bargnesi <nick@den-4.com>
+Date:   Thu Apr 7 23:53:21 2011 -0400
+
+    Bump.
+
+commit 377a1aae5d1e06044e5b7d0a0133d7cc2c1cc6f6
+Author: Nick Bargnesi <nick@den-4.com>
+Date:   Sun Apr 3 01:56:48 2011 -0400
+
+    Migrate startup to lifecycle, push more startup/shutdown logic in.
+
+commit a76d2af05a744111e586fa1027972b8ca366aaa3
+Author: Nick Bargnesi <nick@den-4.com>
+Date:   Sun Apr 3 00:36:24 2011 -0400
+
+    Push strings into constants.h.
+
+commit e322e7dc518a9f7ba4056583d7ca3c1b0e315cd1
+Author: Nick Bargnesi <nick@den-4.com>
+Date:   Fri Apr 1 23:59:13 2011 -0400
+
+    Begin making modules conform to _init and _terminate function names.  Push
+    startup logic into startup.c.
+
+commit 62440f23cc07135df09c1c8cec2fa22a95d7a9f5
+Author: Nick Bargnesi <nick@den-4.com>
+Date:   Wed Mar 30 18:18:21 2011 -0400
+
+    Start to pull out constants.  Add startup code and state machine placeholder.
+
+commit 6b0970b0ecea95f97cfc48de17b7b8aba289dc9c
+Author: Nick Bargnesi <nick@den-4.com>
+Date:   Thu Mar 24 23:48:40 2011 -0400
+
+    Initial import.
+
+commit 28a106d19abfb6db068aa9945126d4a3499c7873
+Author: Nick Bargnesi <nick@den-4.com>
+Date:   Thu Mar 24 23:47:22 2011 -0400
+
+    Removing.
+
+commit f6c1fe76b86bb7f7ecd663b21a17e3b57179f1f0
+Author: Nick Bargnesi <nick@den-4.com>
+Date:   Thu Mar 24 23:36:07 2011 -0400
+
+    Initial import of trunk.
+
+commit e70ce17eef91d73ecd2a1645405dfa7f1e4b49bd
+Author: Nick Bargnesi <nick@den-4.com>
+Date:   Thu Mar 24 23:34:47 2011 -0400
+
+    Remove.
+
+commit 2119260974d5320f9f4eb1704f7b0938ca79f545
+Author: Nick Bargnesi <nick@den-4.com>
+Date:   Thu Mar 24 23:33:23 2011 -0400
+
+    Initial import.
+
+commit 5b2529a6433396b6b982f5c3b65866f467c870f5
+Author: Nick Bargnesi <nick@den-4.com>
+Date:   Thu Mar 24 23:18:59 2011 -0400
+
+    Removing.
+
+commit 9fcb24bb358d1347bdbd3da34da33df37449fb24
+Author: Nick Bargnesi <nick@den-4.com>
+Date:   Thu Mar 24 23:14:49 2011 -0400
+
+    Initial commit.
