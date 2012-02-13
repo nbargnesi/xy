@@ -181,8 +181,8 @@ static void process_entry(char *name, char *value) {
     } else if (streq(name, CFG_MASTER_PERCENTAGE)) {
         float f = get_float(value);
         free(value);
-        if (f < 0.25) f = 0.25;
-        if (f > 0.75) f = 0.75;
+        if (f < 0.1) f = 0.1;
+        if (f > 0.9) f = 0.9;
         config->wm_master_prcnt = f;
     } else if (streq(name, CFG_BROADCAST_GROUP)) {
         free(config->bc_group);
