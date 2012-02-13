@@ -76,9 +76,6 @@ void write_default_config() {
     fprintf(cfg, "%s = ", CFG_WINDOW_MGR_NAME);
     fprintf(cfg, "%s\n", DFLT_WINDOW_MGR_NAME);
 
-    fprintf(cfg, "%s = ", CFG_MASTER_CLIENTS);
-    fprintf(cfg, "%d\n", DFLT_MASTER_CLIENTS);
-
     fprintf(cfg, "%s = ", CFG_MASTER_PERCENTAGE);
     fprintf(cfg, "%f\n", DFLT_MASTER_PERCENTAGE);
 
@@ -116,7 +113,6 @@ static CONFIG * default_config() {
     CONFIG *cfg = malloc(sizeof(CONFIG));
     memset(cfg, 0, sizeof(CONFIG));
 
-    cfg->wm_master_clnts = DFLT_MASTER_CLIENTS;
     cfg->wm_master_prcnt = DFLT_MASTER_PERCENTAGE;
     cfg->term_cmd = strdup(DFLT_TERMINAL_CMD);
     cfg->menu_cmd = strdup(DFLT_MENU_CMD);
@@ -175,9 +171,6 @@ static void process_entry(char *name, char *value) {
     } else if (streq(name, CFG_WINDOW_MGR_NAME)) {
         free(config->wm_name);
         config->wm_name = value;
-    } else if (streq(name, CFG_MASTER_CLIENTS)) {
-        config->wm_master_clnts = get_uint(value);
-        free(value);
     } else if (streq(name, CFG_MASTER_PERCENTAGE)) {
         float f = get_float(value);
         free(value);
@@ -212,7 +205,7 @@ static void process_entry(char *name, char *value) {
         free(config->ks_restart);
         config->ks_restart = value;
     } else {
-        fprintf(stderr, "unknown configuration %s\n", name);
+        fprintf(stderr, "unknown configuration item %s (ignoring it)\n", name);
     }
 }
 

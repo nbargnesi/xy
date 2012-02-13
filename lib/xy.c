@@ -389,7 +389,7 @@ struct _Monitor {
     Client *stack;
     _Monitor *next;
     Window barwin;
-    const Layout *lt[6];
+    const Layout *lt[7];
 };
 
 typedef struct {
@@ -459,7 +459,8 @@ static void spawn(const Arg *arg);
 static void tag(const Arg *arg);
 static void tagmon(const Arg *arg);
 static int textnw(const char *text, uint len);
-static void tile(_Monitor *);
+static void tile_left(_Monitor *);
+static void tile_right(_Monitor *);
 static void rows(_Monitor *);
 static void cols(_Monitor *);
 static void grid(_Monitor *);
@@ -525,7 +526,8 @@ static const Rule rules[] = {
 static const Bool resizehints = True; /* True means respect size hints in tiled resizals */
 
 static const Layout layouts[] = {
-    { "[tile] ",    tile },
+    { "[left] ",    tile_left },
+    { "[right]",    tile_right },
     { "[rows] ",    rows },
     { "[cols] ",    cols },
     { "[grid] ",    grid },
@@ -1978,7 +1980,7 @@ textnw(const char *text, uint len) {
 }
 
 void
-tile(_Monitor *m) {
+tile_left(_Monitor *m) {
     uint n;
     Client *c, **clients = tileable_clients(m, &n);
     if (n == 0) {
@@ -1988,26 +1990,61 @@ tile(_Monitor *m) {
 
     uint i, h, mw, my, ty;
 
-    uint master_clnts = globals->cfg->wm_master_clnts;
     float master_prcnt = m->mfact;
 
-    if (n > (uint) master_clnts)
-        mw = master_clnts ? m->ww * master_prcnt : 0;
-    else
-        mw = m->ww;
+    if (n == 1) {
+        c = clients[0];
+        uint offset = 2 * c->bw;
+        resize(c, m->wx, m->wy, m->ww - offset, m->wh - offset, False);
+        free(clients);
+        return;
+    }
 
-    for (i = my = ty = 0; i < n; i++) {
+    mw = m->ww * master_prcnt;
+    c = clients[0];
+    uint offset = 2 * c->bw;
+    resize(c, m->wx, m->wy, mw - offset, m->wh - offset, False);
+
+    for (i = 1, my = ty = 0; i < n; i++) {
         c = clients[i];
-        if (i < (uint) master_clnts) {
-            h = (m->wh - my) / (MIN(n, (uint) master_clnts) - i);
-            resize(c, m->wx, m->wy + my, mw - (2*c->bw), h - (2*c->bw), False);
-            my += HEIGHT(c);
-        }
-        else {
-            h = (m->wh - ty) / (n - i);
-            resize(c, m->wx + mw, m->wy + ty, m->ww - mw - (2*c->bw), h - (2*c->bw), False);
-            ty += HEIGHT(c);
-        }
+        h = (m->wh - ty) / (n - i);
+        resize(c, m->wx + mw, m->wy + ty, m->ww - mw - (2*c->bw), h - (2*c->bw), False);
+        ty += HEIGHT(c);
+    }
+    free(clients);
+}
+
+void
+tile_right(_Monitor *m) {
+    uint n;
+    Client *c, **clients = tileable_clients(m, &n);
+    if (n == 0) {
+        free(clients);
+        return;
+    }
+
+    uint i, h, mw, my, ty;
+
+    float master_prcnt = m->mfact;
+
+    if (n == 1) {
+        c = clients[0];
+        uint offset = 2 * c->bw;
+        resize(c, m->wx, m->wy, m->ww - offset, m->wh - offset, False);
+        free(clients);
+        return;
+    }
+
+    mw = m->ww * master_prcnt;
+    c = clients[0];
+    uint offset = 2 * c->bw;
+    resize(c, m->ww - mw, m->wy, mw - offset, m->wh - offset, False);
+
+    for (i = 1, my = ty = 0; i < n; i++) {
+        c = clients[i];
+        h = (m->wh - ty) / (n - i);
+        resize(c, m->wx, m->wy + ty, m->ww - mw - (2*c->bw), h - (2*c->bw), False);
+        ty += HEIGHT(c);
     }
     free(clients);
 }
@@ -2054,7 +2091,7 @@ void cols(_Monitor *m) {
 }
 
 void grid(_Monitor *m) {
-    tile(m);
+    tile_left(m);
 }
 
 void
