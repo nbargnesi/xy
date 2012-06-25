@@ -20,11 +20,11 @@ interfacing that aims to integrate the latest technology and hardware.
 
     Documentation: http://xy.readthedocs.org
 
-XY is licensed under version 3 of the `GNU General Public License`_; see LICENSE
-in the source distribution for details.
+XY is licensed under the `MIT License`_; see LICENSE in the source distribution
+for details.
 
 .. _XY: http://bb.den-4.com/xy
-.. _GNU General Public License: http://www.gnu.org/licenses/gpl-3.0.html
+.. _MIT License: http://www.opensource.org/licenses/MIT
 
 Contents
 --------
