@@ -507,11 +507,11 @@ static Window root;
 
 static const char font[]            = "-lfp-bright-medium-r-normal--9-90-75-75-c-60-iso8859-1";
 static const char normbordercolor[] = "#444444";
-static const char normbgcolor[]     = "#222222";
-static const char normfgcolor[]     = "#bbbbbb";
-static const char selbordercolor[]  = "#7f9496";
-static const char selbgcolor[]      = "#073642";
-static const char selfgcolor[]      = "#eeeeee";
+static const char normbgcolor[]     = "#a40000";
+static const char normfgcolor[]     = "#ffffff";
+static const char selbordercolor[]  = "#ef2929";
+static const char selbgcolor[]      = "#93c9d6";
+static const char selfgcolor[]      = "#000000";
 static const uint borderpx  = 2;        /* border pixel of windows */
 static const uint snap      = 32;       /* snap pixel */
 static const Bool showbar           = True;     /* False means no bar */
@@ -554,6 +554,7 @@ static Key keys[] = {
     /* modifier                     key        function        argument */
     { MODKEY,                       XK_r,      NULL,           {0} },
     { MODKEY,                       XK_Return, spawn,          {0} },
+    { MODKEY,                       XK_End,    spawn,          {0} },
     { MODKEY,                       XK_p,      spawn,          {.v = dmenucmd } },
     { MODKEY,                       XK_h,      setmfact,       {.f = -0.01} },
     { MODKEY,                       XK_l,      setmfact,       {.f = +0.01} },
@@ -1043,13 +1044,12 @@ drawbar(_Monitor *m) {
     dc.x += dc.w;
     x = dc.x;
     if (m == cur_mon) { /* status is only drawn on selected monitor */
-        dc.w = TEXTW(stext);
-        dc.x = m->ww - dc.w;
+        dc.x = m->ww;
         if (dc.x < x) {
             dc.x = x;
             dc.w = m->ww - x;
         }
-        drawtext(stext, dc.norm, False);
+        //drawtext(stext, dc.norm, False);
     }
     else
         dc.x = m->ww;
@@ -2042,12 +2042,13 @@ tile_right(_Monitor *m) {
     mw = m->ww * master_prcnt;
     c = clients[0];
     uint offset = 2 * c->bw;
-    resize(c, m->ww - mw, m->wy, mw - offset, m->wh - offset, False);
+    resize(c, m->wx + (m->ww - mw), m->wy, mw - offset, m->wh - offset, False);
 
     for (i = 1, my = ty = 0; i < n; i++) {
         c = clients[i];
         h = (m->wh - ty) / (n - i);
-        resize(c, m->wx, m->wy + ty, m->ww - mw - (2*c->bw), h - (2*c->bw), False);
+        offset = 2 * c->bw;
+        resize(c, m->wx, m->wy + ty, m->ww - mw - offset, h - offset, False);
         ty += HEIGHT(c);
     }
     free(clients);
