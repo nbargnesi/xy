@@ -34,6 +34,7 @@
 #define CFG_TERMINAL_CMD            "terminal_command"
 #define CFG_MENU_CMD                "menu_command"
 #define CFG_WARP                    "warp"
+#define CFG_RESPECT_SIZEHINTS       "respect_sizehints"
 #define CFG_KS_MENU                 "key_shortcut_menu"
 #define CFG_KS_TERMINAL             "key_shortcut_terminal"
 #define CFG_KS_QUIT                 "key_shortcut_quit"
@@ -48,6 +49,7 @@
 #define DFLT_TERMINAL_CMD           "urxvt"
 #define DFLT_MENU_CMD               "dmenu_run"
 #define DFLT_WARP                   true
+#define DFLT_RESPECT_SIZEHINTS      true
 #define DFLT_KS_MENU                "Mod4"KS_SEPARATOR"p"
 #define DFLT_KS_TERMINAL            "Mod4"KS_SEPARATOR"Return"
 #define DFLT_KS_QUIT                "Mod4"KS_SEPARATOR"q"
@@ -60,6 +62,7 @@ typedef struct {
     char *wm_name;
     bool wm_skip_check;
     bool wm_warp;
+    bool wm_respect_sizehints;
     float wm_master_prcnt;
 
     // Broadcast

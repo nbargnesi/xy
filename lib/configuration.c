@@ -85,6 +85,9 @@ void write_default_config() {
     fprintf(cfg, "%s = ", CFG_WARP);
     fprintf(cfg, "true\n");
 
+    fprintf(cfg, "%s = ", CFG_RESPECT_SIZEHINTS);
+    fprintf(cfg, "true\n");
+
     fprintf(cfg, "%s = ", CFG_BROADCAST_GROUP);
     fprintf(cfg, "%s\n", DFLT_BROADCAST_GROUP);
 
@@ -122,6 +125,7 @@ static CONFIG * default_config() {
     cfg->wm_name = strdup(DFLT_WINDOW_MGR_NAME);
     cfg->wm_skip_check = DFLT_SKIP_WINDOW_MGR_CHECK;
     cfg->wm_warp = DFLT_WARP;
+    cfg->wm_respect_sizehints = DFLT_RESPECT_SIZEHINTS;
     cfg->bc_port = DFLT_BROADCAST_PORT;
     cfg->bc_group = strdup(DFLT_BROADCAST_GROUP);
     cfg->ks_menu = strdup(DFLT_KS_MENU);
@@ -194,6 +198,9 @@ static void process_entry(char *name, char *value) {
         config->menu_cmd = value;
     } else if (streq(name, CFG_WARP)) {
         config->wm_warp = get_boolean(value);
+        free(value);
+    } else if (streq(name, CFG_RESPECT_SIZEHINTS)) {
+        config->wm_respect_sizehints = get_boolean(value);
         free(value);
     } else if (streq(name, CFG_KS_MENU)) {
         free(config->ks_menu);

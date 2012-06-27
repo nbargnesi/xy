@@ -525,9 +525,6 @@ static const Rule rules[] = {
     { "Gimp",     NULL,       NULL,       0,            True,        -1 },
 };
 
-/* layout(s) */
-static const Bool resizehints = True; /* True means respect size hints in tiled resizals */
-
 static const Layout layouts[] = {
     { "[left] ",    tile_left },
     { "[right]",    tile_right },
@@ -668,6 +665,9 @@ applysizehints(Client *c, int *x, int *y, int *w, int *h, Bool interact) {
         *h = bh;
     if (*w < bh)
         *w = bh;
+
+    bool resizehints = globals->cfg->wm_respect_sizehints;
+
     if (resizehints || c->isfloating || !c->mon->lt[c->mon->sellt]->arrange) {
         /* see last two sentences in ICCCM 4.1.2.3 */
         baseismin = c->basew == c->minw && c->baseh == c->minh;
