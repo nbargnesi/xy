@@ -505,14 +505,14 @@ static DC dc;
 static _Monitor *mons = NULL, *cur_mon = NULL;
 static Window root;
 
-static const char font[]            = "-lfp-bright-medium-r-normal--9-90-75-75-c-60-iso8859-1";
-static const char normbordercolor[] = "#444444";
-static const char normbgcolor[]     = "#a40000";
-static const char normfgcolor[]     = "#ffffff";
-static const char selbordercolor[]  = "#ef2929";
-static const char selbgcolor[]      = "#93c9d6";
-static const char selfgcolor[]      = "#000000";
-static const uint borderpx  = 2;        /* border pixel of windows */
+static const char font[]            = "-misc-fixed-medium-r-semicondensed--13-100-100-100-c-60-iso8859-1";
+static const char normbordercolor[] = "#0c1214";
+static const char normbgcolor[]     = "#2e3436";
+static const char normfgcolor[]     = "#888a85";
+static const char selbordercolor[]  = "#948585";
+static const char selbgcolor[]      = "#1d2325";
+static const char selfgcolor[]      = "#ffffff";
+static const uint borderpx  = 1;        /* border pixel of windows */
 static const uint snap      = 32;       /* snap pixel */
 static const Bool showbar           = True;     /* False means no bar */
 static const Bool topbar            = True;     /* False means bottom bar */
