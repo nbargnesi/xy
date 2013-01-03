@@ -140,7 +140,6 @@ void xy_terminate() {
 
 void main_loop() {
     register_shutdown_hook("xy", xy_terminate);
-    signal(SIGCHLD, SIG_IGN);
     ssize_t rslt;
     Display *d = globals->dpy;
 
@@ -1870,10 +1869,10 @@ void
 setup(void) {
     XSetWindowAttributes wa;
 
-    signal(SIGCHLD, SIG_IGN);
     struct sigaction sa;
     memset(&sa, 0, sizeof(sa));
-    sa.sa_flags = SA_RESTART | SA_NOCLDWAIT;
+    sa.sa_handler = SIG_IGN;
+    sigemptyset(&sa.sa_mask);
     sigaction(SIGCHLD, &sa, NULL);
 
     /* init screen */
