@@ -64,6 +64,7 @@
 #define FUNCTION_TRACE log_trace(globals->log, __FUNCTION__);
 
 static int epfd;
+static Time last_keyrelease_time;
 
 static void buttonpress(XEvent *e);
 static void clientmessage(XEvent *e);
@@ -74,6 +75,7 @@ static void enternotify(XEvent *e);
 static void _expose(XEvent *e);
 static void focusin(XEvent *e);
 static void keypress(XEvent *e);
+static void keyrelease(XEvent *e);
 static void mappingnotify(XEvent *e);
 static void maprequest(XEvent *e);
 static void motionnotify(XEvent *e);
@@ -100,7 +102,7 @@ static void (*handler[LASTEvent]) (XEvent *) = {
     [NoExpose] = eventsink,
     [CreateNotify] = eventsink,
     [MapNotify] = eventsink,
-    [KeyRelease] = eventsink,
+    [KeyRelease] = keyrelease,
     [LeaveNotify] = eventsink,
     [ReparentNotify] = eventsink,
     [ButtonRelease] = eventsink,
@@ -243,7 +245,8 @@ void ipc_ping() {
 }
 
 bool key_pressed(XKeyEvent *ev) {
-    KeySym keysym = XkbKeycodeToKeysym(globals->dpy, ev->keycode, 0, 0);
+    int keycode = ev->keycode;
+    KeySym keysym = XkbKeycodeToKeysym(globals->dpy, keycode, 0, 0);
     if (is_ks_pressed(globals->cfg->ks_menu, ev)) {
         exec(globals->cfg->menu_cmd);
         return true;
@@ -1367,6 +1370,8 @@ inline void eventsink(XEvent *e) {
 void
 keypress(XEvent *e) {
     XKeyEvent *ev = &e->xkey;
+    /* ignore key repeat events */
+    if (ev->time == last_keyrelease_time) return;
     if (key_pressed(ev)) return;
     uint i;
     KeySym keysym;
@@ -1377,6 +1382,12 @@ keypress(XEvent *e) {
         if (CLEANMASK(keys[i].mod) != CLEANMASK(ev->state)) continue;
         if (keys[i].func) keys[i].func(&(keys[i].arg));
     }
+}
+
+void
+keyrelease(XEvent *e) {
+    XKeyEvent *ev = &e->xkey;
+    last_keyrelease_time = ev->time;
 }
 
 void
