@@ -142,7 +142,6 @@ void xy_terminate() {
 
 void main_loop() {
     register_shutdown_hook("xy", xy_terminate);
-    ssize_t rslt;
     Display *d = globals->dpy;
 
     // XXX any >0 argument to epoll_create (see epoll_create man page)
@@ -215,7 +214,7 @@ void main_loop() {
             log_debug(globals->log, "servicing IPC");
             ipc_buffer = malloc(MSG_LEN);
             memset(ipc_buffer, 0, MSG_LEN);
-            rslt = read(globals->ipc_fd, ipc_buffer, MSG_LEN);
+            read(globals->ipc_fd, ipc_buffer, MSG_LEN);
             process_ipc_buffer(ipc_buffer);
         } else if (epev.data.fd == globals->in_fd) {
             // inotify needs servicing.
@@ -506,6 +505,7 @@ static Cursor cursor[CurLast];
 static DC dc;
 static _Monitor *mons = NULL, *cur_mon = NULL;
 static Window root;
+static struct sigaction *oldsa;
 
 static const char font[]            = "-misc-fixed-medium-r-semicondensed--13-100-100-100-c-60-iso8859-1";
 static const char normbordercolor[] = "#0c1214";
@@ -1880,11 +1880,14 @@ void
 setup(void) {
     XSetWindowAttributes wa;
 
+    oldsa = malloc(sizeof(struct sigaction));
+    memset(oldsa, 0, sizeof(struct sigaction));
+
     struct sigaction sa;
     memset(&sa, 0, sizeof(sa));
     sa.sa_handler = SIG_IGN;
     sigemptyset(&sa.sa_mask);
-    sigaction(SIGCHLD, &sa, NULL);
+    sigaction(SIGCHLD, &sa, oldsa);
 
     /* init screen */
     screen = DefaultScreen(globals->dpy);
@@ -2002,7 +2005,7 @@ tile_left(_Monitor *m) {
         return;
     }
 
-    uint i, h, mw, my, ty;
+    uint i, h, mw, ty;
 
     float master_prcnt = m->mfact;
 
@@ -2019,7 +2022,7 @@ tile_left(_Monitor *m) {
     uint offset = 2 * c->bw;
     resize(c, m->wx, m->wy, mw - offset, m->wh - offset, False);
 
-    for (i = 1, my = ty = 0; i < n; i++) {
+    for (i = 1, ty = 0; i < n; i++) {
         c = clients[i];
         h = (m->wh - ty) / (n - i);
         resize(c, m->wx + mw, m->wy + ty, m->ww - mw - (2*c->bw), h - (2*c->bw), False);
@@ -2037,7 +2040,7 @@ tile_right(_Monitor *m) {
         return;
     }
 
-    uint i, h, mw, my, ty;
+    uint i, h, mw, ty;
 
     float master_prcnt = m->mfact;
 
@@ -2054,7 +2057,7 @@ tile_right(_Monitor *m) {
     uint offset = 2 * c->bw;
     resize(c, m->wx + (m->ww - mw), m->wy, mw - offset, m->wh - offset, False);
 
-    for (i = 1, my = ty = 0; i < n; i++) {
+    for (i = 1, ty = 0; i < n; i++) {
         c = clients[i];
         h = (m->wh - ty) / (n - i);
         offset = 2 * c->bw;
