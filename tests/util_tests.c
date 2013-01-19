@@ -60,17 +60,17 @@ END_TEST
 
 START_TEST(util_exec) {
     char *cmd_false = "false", *cmd_true = "true";
-    pid_t pid, ec;
+    pid_t pid;
     int status;
 
     pid = exec(cmd_false);
-    ec = waitpid(pid, &status, 0);
+    waitpid(pid, &status, 0);
     if (WEXITSTATUS(status) != 1) {
         fail("expected 'false' to exit with 1");
     }
 
     pid = exec(cmd_true);
-    ec = waitpid(pid, &status, 0);
+    waitpid(pid, &status, 0);
     if (WEXITSTATUS(status) != 0) {
         fail("expected 'true' to exit with 0");
     }
