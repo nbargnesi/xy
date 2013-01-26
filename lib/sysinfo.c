@@ -50,9 +50,10 @@ CPUINFO * get_cpu_info() {
     CPUINFO *ret = ci_init();
     char cpu[3];
     uint buf[10];
+    int rc;
 
     FILE *f = fopen(PROC_STAT, "r");
-    fscanf(f, PROC_STAT_FORMAT, cpu, buf, buf + 1, buf + 2, buf + 3,
+    rc = fscanf(f, PROC_STAT_FORMAT, cpu, buf, buf + 1, buf + 2, buf + 3,
            buf + 4, buf + 5, buf + 6, buf + 7, buf + 8, buf + 9);
     fclose(f);
     if (rc == EOF) {
@@ -76,6 +77,7 @@ MEMINFO * get_mem_info() {
     MEMINFO *ret = mi_init();
     char desc[9], kb[2];
     uint buf[2];
+    int rc;
 
     FILE *f = fopen(PROC_MEMINFO, "r");
     rc = fscanf(f, PROC_MEMINFO_MEMTOTAL, desc, buf, kb);

@@ -61,7 +61,7 @@ END_TEST
 START_TEST(util_exec) {
     char *cmd_false = "false", *cmd_true = "true";
     pid_t pid;
-    int status;
+    int status, ec;
 
     pid = exec(cmd_false);
     ec = waitpid(pid, &status, 0);

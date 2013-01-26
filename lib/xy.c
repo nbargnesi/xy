@@ -140,6 +140,7 @@ void xy_terminate() {
 void main_loop() {
     register_shutdown_hook("xy", xy_terminate);
     Display *d = globals->dpy;
+    int rslt;
 
     // XXX any >0 argument to epoll_create (see epoll_create man page)
     epfd = epoll_create(1);
