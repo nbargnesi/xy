@@ -23,7 +23,6 @@
 #include <sys/prctl.h>
 #include "lifecycle.h"
 #include "xy.h"
-#include "logging.h"
 #include "constants.h"
 #include "broadcast.h"
 #include "ipc.h"
@@ -82,7 +81,7 @@ static CONFIG * xy_rc_init() {
         write_default_config();
     }
 
-    log_info(globals->log, READING_CONFIGURATION_MSG);
+    fprintf(stdout, "%s\n", READING_CONFIGURATION_MSG);
     ret = config_init();
     free(st);
     free(rcpath);
@@ -92,12 +91,7 @@ static CONFIG * xy_rc_init() {
 void xy_startup() {
     globals = malloc(sizeof(GLOBALS));    
 
-    if (!logging_init()) {
-        fprintf(stderr, INIT_LOGGING_FAILURE);
-        exit(1);
-    }
-    globals->log = get_logger("xy");
-    log_info(globals->log, STARTUP_MSG);
+    fprintf(stdout, "%s\n", STARTUP_MSG);
     xy_dir_init();
     globals->cfg = xy_rc_init();
 
@@ -110,13 +104,13 @@ void xy_startup() {
         fprintf(stderr, INIT_IPC_FAILURE);
         DIE;
     }
-    log_info(globals->log, IPC_STARTUP_MSG);
+    fprintf(stdout, "%s\n", IPC_STARTUP_MSG);
 
     if (!broadcast_init()) {
         fprintf(stderr, INIT_BROADCAST_FAILURE);
         DIE;
     }
-    log_info(globals->log, BROADCAST_STARTUP_MSG);
+    fprintf(stdout, "%s\n", BROADCAST_STARTUP_MSG);
 
     broadcast_send(STARTUP_MSG);
 
@@ -158,7 +152,7 @@ void xy_restart() {
 }
 
 void xy_shutting_down() {
-    log_info(globals->log, SHUTTING_DOWN_MSG);
+    fprintf(stdout, "%s\n", SHUTTING_DOWN_MSG);
     broadcast_send(SHUTTING_DOWN_MSG);
 
     // Invoke cleanup functions in reverse.
@@ -166,7 +160,7 @@ void xy_shutting_down() {
     for (int i = (hook_ct - 1); i >= 0; i--) {
         char *msg = malloc(strlen(fmt) + strlen(hooks[i].name));
         sprintf(msg, fmt, hooks[i].name);
-        log_info(globals->log, msg);
+        fprintf(stdout, "%s\n", msg);
         free(msg);
         hooks[i].hook();
     }
@@ -175,8 +169,7 @@ void xy_shutting_down() {
 void xy_shutdown() {
     free(run_cmd);
     close_display(globals->dpy);
-    log_info(globals->log, SHUTDOWN_MSG);
-    logging_terminate();
+    fprintf(stdout, "%s\n", SHUTDOWN_MSG);
     exit(EXIT_SUCCESS);
 }
 
@@ -184,7 +177,7 @@ void register_shutdown_hook(const char *name, shutdown_hook hook) {
     const char *fmt = "registered shutdown hook: %s";
     char *msg = malloc(strlen(fmt) + strlen(name));
     sprintf(msg, fmt, name);
-    log_info(globals->log, msg);
+    fprintf(stdout, "%s\n", msg);
     free(msg);
     hooks = realloc(hooks, (sizeof(SHUTDOWN_HOOK) * (hook_ct + 1)));
     hooks[hook_ct].hook = hook;

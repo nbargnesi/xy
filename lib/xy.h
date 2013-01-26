@@ -27,7 +27,6 @@
 #include "constants.h"
 #include "util.h"
 #include "xyxlib.h"
-#include "logging.h"
 #include "configuration.h"
 #include "xyxlib.h"
 #include "sysinfo.h"
@@ -41,7 +40,6 @@
 typedef struct {
     CONFIG *cfg;
     Display *dpy;
-    log4c_category_t *log; 
     int ipc_fd;
     int x_fd;
     int in_fd;

@@ -39,6 +39,13 @@
 #define CFG_KS_TERMINAL             "key_shortcut_terminal"
 #define CFG_KS_QUIT                 "key_shortcut_quit"
 #define CFG_KS_RESTART              "key_shortcut_restart"
+#define CFG_LOGGING_LEVEL           "logging_level"
+
+#define LOG_LEVEL_DEBUG             0
+#define LOG_LEVEL_INFO              1
+#define LOG_LEVEL_WARN              2
+#define LOG_LEVEL_ERROR             3
+#define LOG_LEVEL_FATAL             4
 
 #define DFLT_CFG_FILE_HDR           "# xy configuration file"
 #define DFLT_SKIP_WINDOW_MGR_CHECK  false
@@ -54,6 +61,7 @@
 #define DFLT_KS_TERMINAL            "Mod4"KS_SEPARATOR"Return"
 #define DFLT_KS_QUIT                "Mod4"KS_SEPARATOR"q"
 #define DFLT_KS_RESTART             "Mod4"KS_SEPARATOR"r"
+#define DFLT_LOGGING_LEVEL          LOG_LEVEL_INFO
 
 typedef struct {
     // Core
@@ -64,6 +72,7 @@ typedef struct {
     bool wm_warp;
     bool wm_respect_sizehints;
     float wm_master_prcnt;
+    short logging_level;
 
     // Broadcast
     uint bc_port;

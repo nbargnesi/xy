@@ -64,13 +64,15 @@ START_TEST(util_exec) {
     int status;
 
     pid = exec(cmd_false);
-    waitpid(pid, &status, 0);
+    ec = waitpid(pid, &status, 0);
+    if (ec == -1) fail("waitpid() returned -1");
     if (WEXITSTATUS(status) != 1) {
         fail("expected 'false' to exit with 1");
     }
 
     pid = exec(cmd_true);
-    waitpid(pid, &status, 0);
+    ec = waitpid(pid, &status, 0);
+    if (ec == -1) fail("waitpid() returned -1");
     if (WEXITSTATUS(status) != 0) {
         fail("expected 'true' to exit with 0");
     }

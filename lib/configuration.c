@@ -33,6 +33,7 @@
 static CONFIG * default_config();
 static void process_entry(char *, char*);
 static bool get_boolean(char *);
+static short get_short(char *);
 static uint get_uint(char *);
 static float get_float(char *);
 static void read_config(const char *);
@@ -112,6 +113,9 @@ void write_default_config() {
     fprintf(cfg, "%s = ", CFG_MENU_CMD);
     fprintf(cfg, "%s\n", DFLT_MENU_CMD);
 
+    fprintf(cfg, "%s = ", CFG_LOGGING_LEVEL);
+    fprintf(cfg, "%d\n", DFLT_LOGGING_LEVEL); 
+
     fclose(cfg);
 }
 
@@ -126,6 +130,7 @@ static CONFIG * default_config() {
     cfg->wm_skip_check = DFLT_SKIP_WINDOW_MGR_CHECK;
     cfg->wm_warp = DFLT_WARP;
     cfg->wm_respect_sizehints = DFLT_RESPECT_SIZEHINTS;
+    cfg->logging_level = DFLT_LOGGING_LEVEL;
     cfg->bc_port = DFLT_BROADCAST_PORT;
     cfg->bc_group = strdup(DFLT_BROADCAST_GROUP);
     cfg->ks_menu = strdup(DFLT_KS_MENU);
@@ -214,6 +219,9 @@ static void process_entry(char *name, char *value) {
     } else if (streq(name, CFG_KS_RESTART)) {
         free(config->ks_restart);
         config->ks_restart = value;
+    } else if (streq(name, CFG_LOGGING_LEVEL)) {
+        config->logging_level = get_short(value);
+        free(value);
     } else {
         fprintf(stderr, "unknown configuration item %s (ignoring it)\n", name);
     }
@@ -222,6 +230,10 @@ static void process_entry(char *name, char *value) {
 static bool get_boolean(char *c) {
     if (streq(c, "true")) return true;
     return false;
+}
+
+static short get_short(char *c) {
+    return (short) atoi(c);
 }
 
 static uint get_uint(char *c) {

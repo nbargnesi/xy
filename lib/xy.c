@@ -60,9 +60,6 @@
 
 #include "xy.h"
 
-//#define log log4c_category_log
-#define FUNCTION_TRACE log_trace(globals->log, __FUNCTION__);
-
 static int epfd;
 static Time last_keyrelease_time;
 
@@ -129,7 +126,7 @@ void xy_init() {
 
     if (!globals->cfg->wm_skip_check) {
         if (is_window_manager_running(globals->dpy)) {
-            log_fatal(globals->log, WINDOW_MGR_RUNNING);
+            fprintf(stderr, "%s\n", WINDOW_MGR_RUNNING);
         }
     }
     change_name(globals->dpy, globals->cfg->wm_name);
@@ -211,19 +208,17 @@ void main_loop() {
             }
         } else if (epev.data.fd == globals->ipc_fd) {
             // IPC needs servicing.
-            log_debug(globals->log, "servicing IPC");
             ipc_buffer = malloc(MSG_LEN);
             memset(ipc_buffer, 0, MSG_LEN);
-            read(globals->ipc_fd, ipc_buffer, MSG_LEN);
+            rslt = read(globals->ipc_fd, ipc_buffer, MSG_LEN);
+            if (rslt == -1) perror("read()");
             process_ipc_buffer(ipc_buffer);
         } else if (epev.data.fd == globals->in_fd) {
             // inotify needs servicing.
-            log_debug(globals->log, "servicing filesystem event");
             if (!xy_inotify_read()) {
 
                 // XXX check return here
                 epoll_ctl(epfd, EPOLL_CTL_DEL, globals->in_fd, &epev_in);
-                log_info(globals->log, "reloading configuration");
                 xy_inotify_reinit();
 
                 // TODO check in_fd is not -1 (like lifecycle)

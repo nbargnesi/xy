@@ -10,7 +10,6 @@ EXTRA_DIST = inotify.h \
              ipc.h \
              layout.h \
              lifecycle.h \
-             logging.h \
              monitor.h \
              state.h \
              sysinfo.h \
@@ -28,7 +27,6 @@ libxy_a_SOURCES     = inotify.c \
                       ipc.c \
                       layout.c \
                       lifecycle.c \
-                      logging.c \
                       monitor.c \
                       state.c \
                       sysinfo.c \
