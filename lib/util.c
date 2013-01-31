@@ -61,6 +61,7 @@ pid_t exec(const char *cmd) {
             close(globals->ipc_fd);
             close(globals->in_fd);
         }
+        sigaction(SIGCHLD, oldsa, NULL);
         execvp(*argv, argv);
     }
     free(cmd_dup);

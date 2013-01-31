@@ -501,7 +501,6 @@ static Cursor cursor[CurLast];
 static DC dc;
 static _Monitor *mons = NULL, *cur_mon = NULL;
 static Window root;
-static struct sigaction *oldsa;
 
 static const char font[]            = "-misc-fixed-medium-r-semicondensed--13-100-100-100-c-60-iso8859-1";
 static const char normbordercolor[] = "#0c1214";
