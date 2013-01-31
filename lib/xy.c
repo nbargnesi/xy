@@ -427,7 +427,6 @@ static void focusmon(const Arg *arg);
 static void focusstack(const Arg *arg);
 static Bool getrootptr(int *x, int *y);
 static long getstate(Window w);
-static Bool gettextprop(Window w, Atom atom, char *text, uint size);
 static void grabbuttons(Client *c, Bool focused);
 static void grabkeys(void);
 static void initfont(const char *fontstr);
@@ -477,7 +476,6 @@ static void updatenumlockmask(void);
 static void updatesizehints(Client *c);
 static void updatestatus(void);
 static void updatewindowtype(Client *c);
-static void updatetitle(Client *c);
 static void updatewmhints(Client *c);
 static void view(const Arg *arg);
 static void warp(const Client *c);
@@ -1253,31 +1251,6 @@ getstate(Window w) {
     return result;
 }
 
-Bool
-gettextprop(Window w, Atom atom, char *text, uint size) {
-    char **list = NULL;
-    int n;
-    XTextProperty name;
-
-    if (!text || size == 0)
-        return False;
-    text[0] = '\0';
-    XGetTextProperty(globals->dpy, w, &name, atom);
-    if (!name.nitems)
-        return False;
-    if (name.encoding == XA_STRING)
-        strncpy(text, (char *)name.value, size - 1);
-    else {
-        if (XmbTextPropertyToTextList(globals->dpy, &name, &list, &n) >= Success && n > 0 && *list) {
-            strncpy(text, *list, size - 1);
-            XFreeStringList(list);
-        }
-    }
-    text[size - 1] = '\0';
-    XFree(name.value);
-    return True;
-}
-
 void
 grabbuttons(Client *c, Bool focused) {
     updatenumlockmask();
@@ -1409,7 +1382,6 @@ manage(Window w, XWindowAttributes *wa) {
     if (!(c = calloc(1, sizeof(Client))))
         die("fatal: could not malloc() %u bytes\n", sizeof(Client));
     c->win = w;
-    updatetitle(c);
     if (XGetTransientForHint(globals->dpy, w, &trans) && (t = wintoclient(trans))) {
         c->mon = t->mon;
         c->tags = t->tags;
@@ -1606,7 +1578,6 @@ propertynotify(XEvent *e) {
             break;
         }
         if (ev->atom == XA_WM_NAME || ev->atom == netatom[NetWMName]) {
-            updatetitle(c);
             if (c == c->mon->sel)
                 drawbar(c->mon);
         }
@@ -1875,14 +1846,14 @@ void
 setup(void) {
     XSetWindowAttributes wa;
 
-    oldsa = malloc(sizeof(struct sigaction));
-    memset(oldsa, 0, sizeof(struct sigaction));
+    _sighndlr = malloc(sizeof(struct sigaction));
+    memset(_sighndlr, 0, sizeof(struct sigaction));
 
     struct sigaction sa;
     memset(&sa, 0, sizeof(sa));
     sa.sa_handler = SIG_IGN;
     sigemptyset(&sa.sa_mask);
-    sigaction(SIGCHLD, &sa, oldsa);
+    sigaction(SIGCHLD, &sa, _sighndlr);
 
     /* init screen */
     screen = DefaultScreen(globals->dpy);
@@ -2374,16 +2345,7 @@ updatesizehints(Client *c) {
 }
 
 void
-updatetitle(Client *c) {
-    if (!gettextprop(c->win, netatom[NetWMName], c->name, sizeof c->name))
-        gettextprop(c->win, XA_WM_NAME, c->name, sizeof c->name);
-    if (c->name[0] == '\0') /* hack to mark broken clients */
-        strcpy(c->name, broken);
-}
-
-void
 updatestatus(void) {
-    gettextprop(root, XA_WM_NAME, stext, sizeof(stext));
     drawbar(cur_mon);
 }
 

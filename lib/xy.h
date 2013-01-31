@@ -49,6 +49,8 @@ typedef struct {
 } GLOBALS;
 GLOBALS *globals;
 
+struct sigaction *_sighndlr;
+
 /*
  * Function: main
  *
@@ -57,7 +59,6 @@ GLOBALS *globals;
 int main(int, char **);
 
 void xy_init();
-struct sigaction *oldsa;
 
 /*
  * Function: main_loop
