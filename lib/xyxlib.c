@@ -75,6 +75,7 @@ void clients_list_free(CLIENTS_LIST *cl) {
 Display * open_display() {
     return XOpenDisplay(NULL);
 }
+
 void close_display(Display *d) {
     XCloseDisplay(d);
 }
@@ -107,6 +108,13 @@ int get_xinerama_screen_count(Display *d) {
 
 XineramaScreenInfo * get_xinerama_screens(Display *d, int *i) {
     return XineramaQueryScreens(d, i);
+}
+
+SCREEN * screens() {
+    // TODO XScreenOfDisplay XScreenCount
+    int x = XScreenCount(dpy);
+    fprintf(stderr, "%d\n", x);
+    return NULL;
 }
 
 bool is_window_manager_running(Display *d) {

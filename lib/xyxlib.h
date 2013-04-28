@@ -32,11 +32,24 @@ typedef struct {
     uint num_children;
 } CLIENTS_LIST;
 
+typedef struct {
+    // TODO
+} SCREEN;
+
 CLIENTS_LIST * get_clients(Display *, Window);
 XWindowAttributes * get_attributes(Display *, Window);
 void clients_list_free(CLIENTS_LIST *);
 Display * open_display();
 void close_display(Display *);
+
+// TODO use XScreenOfDisplay with XScreenCount
+/*
+ * Function: screens
+ *
+ * Get the screens.
+ */
+SCREEN * screens();
+
 
 /*
  * Function: get_color

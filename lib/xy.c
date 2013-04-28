@@ -117,7 +117,11 @@ static void (*handler[LASTEvent]) (XEvent *) = {
 };
 
 void xy_init() {
-    globals->dpy = open_display();
+    dpy = open_display();
+    // TODO deprecate globals->dpy in favor of dpy in core.h
+    globals->dpy = dpy;
+    screens();
+
     if (!globals->dpy) {
         DIE_MSG("failed to open display");
     }

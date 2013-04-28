@@ -60,6 +60,8 @@
 
 #include "types.h"
 
+Display *dpy;
+
 void die(const char *, ...);
 
 #define for_each_in_list(item, list) \
