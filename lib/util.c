@@ -25,7 +25,9 @@
 #include "types.h"
 #include "constants.h"
 
+#include <stdlib.h>
 #include <ctype.h>
+#include <string.h>
 #include <execinfo.h>
 #include <sys/prctl.h>
 
@@ -38,19 +40,26 @@ void dump_stack(int num_frames) {
     free(funcs);
 }
 
-void parse_command(char *cmd, char **argv) {
-    while (*cmd != '\0') {
-        while (*cmd == ' ') *cmd++ = '\0';
-        *argv++ = cmd;
-        while (*cmd != '\0' && *cmd != ' ') cmd++;
+char ** parse_command(const char *cmd) {
+    char *input = strdup(cmd);
+    int token_ct = 0;
+    char **tokens = malloc(sizeof(char *));
+    char *token = strtok(input, " ");
+
+    while (token != NULL) {
+        tokens = realloc(tokens, sizeof(char *) * (token_ct + 1));
+        tokens[token_ct] = strdup(token);
+        token_ct += 1;
+        token = strtok(NULL, " ");
     }
-    *argv = '\0';
+    tokens = realloc(tokens, sizeof(char *) * (token_ct + 1));
+    tokens[token_ct] = NULL;
+    free(input);
+    return tokens;
 }
 
 pid_t exec(const char *cmd) {
-    char * cmd_dup = strdup(cmd);
-    char *argv[64];
-    parse_command(cmd_dup, argv);
+    char **argv = parse_command(cmd);
     pid_t pid = fork();
     if (pid < 0) {
         perror("fork failed");
@@ -64,7 +73,6 @@ pid_t exec(const char *cmd) {
         sigaction(SIGCHLD, _sighndlr, NULL);
         execvp(*argv, argv);
     }
-    free(cmd_dup);
     return pid;
 }
 

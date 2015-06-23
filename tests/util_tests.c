@@ -48,13 +48,13 @@ END_TEST
 
 START_TEST(util_parse_command) {
     char *command = "some string here";
-    char *dup = strdup(command);
-    char *argv[3];
-    parse_command(dup, argv);
-    if (!streq(argv[0], "some")) fail("strings not equal");
-    if (!streq(argv[1], "string")) fail("strings not equal");
-    if (!streq(argv[2], "here")) fail("strings not equal");
-    free(dup);
+    char **argv = parse_command(command);
+    fprintf(stderr, "'%s'\n", argv[0]);
+    if (strcmp(argv[0], "some") != 0) fail("strings not equal");
+    if (strcmp(argv[1], "string") != 0) fail("strings not equal");
+    if (strcmp(argv[2], "here") != 0) fail("strings not equal");
+    if (argv[3] != NULL) fail("last element not null");
+    free(argv);
 }
 END_TEST
 

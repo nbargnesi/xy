@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2011-2013 Nick Bargnesi
+ * Copyright (c) 2011-2015 Nick Bargnesi
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to
@@ -27,8 +27,15 @@
 
 #define MAX_PROC_NAME_LEN 16
 
+#define foreach_free(array) {                   \
+            for (int i = 0; array[i]; i++) {    \
+                free(array[i]);                 \
+            }                                   \
+            free(array);                        \
+        }                                       \
+
 void dump_stack(int);
-void parse_command(char *, char **);
+char ** parse_command(const char *);
 pid_t exec(const char *);
 char * rc_path();
 void change_name(Display *, const char *);
